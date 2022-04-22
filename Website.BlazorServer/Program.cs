@@ -19,6 +19,14 @@ builder.Services.AddMBServices(loggingServiceConfiguration: Utilities.GetDefault
 builder.Services.AddHttpClient();
 builder.Services.AddTransient<ITeamsNotificationService, TeamsNotificationService>();
 
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.CheckConsentNeeded = context => true;
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+
+builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
 
 Log.Logger = new LoggerConfiguration()
@@ -39,6 +47,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseCookiePolicy(); 
 
 app.UseSerilogRequestLogging();
 

@@ -31,7 +31,7 @@ $color-accent: #F4DB7D;
     color: $color-dark;
     --mdc-theme-surface: white;
     --mdc-theme-on-surface: #{$color-dark};
-    --dw-obscured-color: var(--mdc-color-grey-600);
+    --dw-obscured-color: var(--mb-color-grey-600);
     --dw-color-primary-on-dark: #{$color-primary-on-dark};
     --dw-color-on-primary-on-dark: #{$color-dark};
     --dw-color-secondary-on-dark: #{$color-secondary-on-dark};

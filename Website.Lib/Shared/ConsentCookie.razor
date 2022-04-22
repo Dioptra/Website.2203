@@ -1,0 +1,17 @@
+﻿@inherits ComponentBase
+
+
+@if (ShowBanner)
+{
+    <div class="mdc-layout-grid dw-cookie-alert dw-dark mdc-elevation--z5 " role="alert">
+        <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell--span-12 dw-cookie-alert-content">
+                <p class="mdc-typography--body1">Dioptra's website uses cookies - please accept this to continue using the site</p>
+
+                <MBButton ButtonStyle="@MBButtonStyle.ContainedRaised"
+                          Label="Accept"
+                          @onclick="AcceptCookie"/>
+            </div>
+        </div>
+    </div>
+}

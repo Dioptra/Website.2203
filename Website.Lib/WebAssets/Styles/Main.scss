@@ -208,6 +208,27 @@ h1, h2, h3, h4, h5, h6, p {
     }
 }
 
+.dw-cookie-alert {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+}
+
+.dw-cookie-alert-content {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    & p {
+        margin: 0px;
+    }
+
+    & .mdc-button {
+        margin-left: 24px;
+    }
+}
+
 .dw-card-content {
     display: flex;
     flex-flow: column nowrap;
