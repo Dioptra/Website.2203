@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Website.Lib.Shared;
 
 namespace Website.Lib.Pages;
+[Sitemap(SitemapAttribute.ChangeFreqType.Weekly, 0.8)]
 public partial class Index : ComponentBase
 {
     private class CarouselDataType

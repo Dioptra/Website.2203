@@ -51,4 +51,8 @@ app.UseRouting();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
+app.MapGet("/sitemap.xml", async context => {
+    await Sitemap.Generate(context);
+});
+
 app.Run();

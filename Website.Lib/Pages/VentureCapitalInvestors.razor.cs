@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 
 namespace Website.Lib.Pages;
+[Sitemap(SitemapAttribute.ChangeFreqType.Weekly, 0.8)]
 public partial class VentureCapitalInvestors : ComponentBase
 {
     [Inject] private ITeamsNotificationService TeamsNotificationService { get; set; }

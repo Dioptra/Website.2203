@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using System.Linq;
 
 namespace Website.Lib.Pages;
+[Sitemap(SitemapAttribute.ChangeFreqType.Weekly, 0.8)]
 public partial class WorkForUs : ComponentBase
 {
     [Inject] private ITeamsNotificationService TeamsNotificationService { get; set; }
