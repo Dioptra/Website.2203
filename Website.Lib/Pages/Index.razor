@@ -14,7 +14,28 @@
 </HeadAndMetaContent>
 
 
-<div class="dw-section-regular">
+<div class="dw-section-condensed">
+    <div class="dw-max-width-content">
+        <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
+                <div class="mdc-layout-grid__cell--span-12">
+                    <div class="dw-panel-container">
+                        <MBCarousel Context="item"
+                                    Items="@CarouselData"
+                                    RolloverInterval="3000">
+                            <Content>
+                                <img style="width: 100%;" src="@item.Uri" alt="@item.Caption">
+                                <div><p class="mdc-typography--caption" style="text-align: center;">@item.Caption</p></div>
+                            </Content>
+                        </MBCarousel>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="dw-section-regular dw-dark">
     <div class="dw-max-width-content">
         <div class="mdc-layout-grid">
             <div class="mdc-layout-grid__inner">
@@ -32,39 +53,17 @@
                         employ strong security measures, including conducting periodic pentration tests.
                     </p>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="dw-section-condensed dw-accent">
-    <div class="dw-max-width-content">
-        <div class="mdc-layout-grid">
-            <div class="mdc-layout-grid__inner">
-                <div class="mdc-layout-grid__cell--span-12">
-                    <div class="dw-panel-container">
-                        <h2 class="mdc-typography--headline1">Dioptra Vectis</h2>
-                        <MBCarousel Context="item"
-                                    Items="@CarouselData"
-                                    RolloverInterval="3000">
-                            <Content>
-                                <img style="width: 100%;" src="@item.Uri" alt="@item.Caption">
-                                <div><p class="mdc-typography--caption" style="text-align: center;">@item.Caption</p></div>
-                            </Content>
-                        </MBCarousel>
-                    </div>
-                </div>
-
-                <div class="mdc-layout-grid__cell--span-4-phone dw-hidden-desktop-up dw-section-spacing"></div>
+                <div class="mdc-layout-grid__cell--span-12 dw-hidden-desktop-up dw-section-spacing"></div>
 
                 <div class="mdc-layout-grid__cell--span-12">
                     <div class="dw-panel-container">
                         <p class="mb-card__title mdc-typography--subtitle2">
-                            "Dioptra is beyond class leading; it defines a new class of investment analytics. Dioptra drives our treasury loan book management
-                            and gives us an unparalleled insight into both individual loan and broad portfolio risks."
+                            "Dioptra drives our loan book management and gives us an unparalleled insight into both individual loan and broad portfolio risks. No other loan system or real estate analytics provider we have seen comes close.
+                            Dioptra is by far the best property loan management platform that we have come across."
                         </p>
                         <p class="mb-card__title mdc-typography--subtitle1">
-                            CEO, <span class="dw-obscured">XXX Capital</span>
+                            Ed Marley-Shaw, CEO Clearwell Capital
                         </p>
                     </div>
                 </div>
@@ -112,7 +111,7 @@
                                     <div class="dw-card-content">
                                         <h3 class="mb-card__title mdc-typography--headline3">Venture Capital Investors</h3>
                                         <p class="mdc-typography--subtitle1">
-                                            Dioptra has bootstrapped to deploy a revenue generating product licenced to our first client, <span class="dw-obscured">XXX Capital</span>.
+                                            Dioptra has bootstrapped to deploy a revenue generating product licenced to our first client, Clearwell Capital.
                                             We are holding early talks with select VCs about a substantial seed round and we welcome further
                                             proposals.
                                         </p>

@@ -22,13 +22,24 @@
     <link rel="apple-touch-icon" sizes="512x512" href="_content/Website.Lib/images/icon-512.png" />
     <link rel="apple-touch-icon" sizes="192x192" href="_content/Website.Lib/images/icon-192.png" />
 
-    <script>window.dataLayer = window.dataLayer || [];
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173249047-3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){window.dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-173249047-3');
+    </script>
+    @*<script>
+        window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
         gtag('config', 'UA-173249047-3', {
             cookie_flags: 'max-age=7200; samesite=none; secure'
-        });</script>
+        });
+    </script>*@
 
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>

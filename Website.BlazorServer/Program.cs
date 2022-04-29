@@ -1,4 +1,5 @@
 ﻿using Material.Blazor;
+using Microsoft.AspNetCore.CookiePolicy;
 using Serilog;
 using Serilog.Events;
 using Website.Lib;
@@ -22,7 +23,9 @@ builder.Services.AddTransient<ITeamsNotificationService, TeamsNotificationServic
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     options.CheckConsentNeeded = context => true;
+    options.HttpOnly = HttpOnlyPolicy.None;
     options.MinimumSameSitePolicy = SameSiteMode.None;
+    options.Secure = CookieSecurePolicy.Always;
 });
 
 builder.Services.AddHttpContextAccessor();
