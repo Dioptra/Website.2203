@@ -136,10 +136,20 @@ h1, h2, h3, h4, h5, h6, p {
     margin: 0 auto;
 }
 
-.mb_carousel {
+.dw-carousel-container {
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
+
+    .mb-carousel {
+        width: 340px;
+
+        img {
+            position: relative;
+            width: 100%;
+            height: 191px;
+        }
+    }
 }
 
 .dw-section-condensed {
@@ -283,16 +293,6 @@ footer {
     }
 }
 
-.mb-carousel {
-    width: 340px;
-
-    img {
-        position: relative;
-        width: 100%;
-        height: 191px;
-    }
-}
-
 :root {
     --dw-scroll-color: var(--mdc-theme-primary);
     --dw-scroll-track-color: rgba(0, 0, 0, 0);
@@ -351,11 +351,13 @@ footer {
         }
     }
 
-    .mb-carousel {
-        width: 400px;
+    .dw-carousel-container {
+        .mb-carousel {
+            width: 400px;
 
-        img {
-            height: 304px;
+            img {
+                height: 304px;
+            }
         }
     }
 }
@@ -366,11 +368,13 @@ footer {
     }
 
 
-    .mb-carousel {
-        width: 800px;
+    .dw-carousel-container {
+        .mb-carousel {
+            width: 800px;
 
-        img {
-            height: 450px;
+            img {
+                height: 450px;
+            }
         }
     }
 }
