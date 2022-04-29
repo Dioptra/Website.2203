@@ -1,4 +1,5 @@
-﻿using Material.Blazor;
+﻿using Blazored.LocalStorage;
+using Material.Blazor;
 using Microsoft.AspNetCore.CookiePolicy;
 using Serilog;
 using Serilog.Events;
@@ -23,12 +24,24 @@ builder.Services.AddTransient<ITeamsNotificationService, TeamsNotificationServic
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     options.CheckConsentNeeded = context => true;
-    options.HttpOnly = HttpOnlyPolicy.None;
-    options.MinimumSameSitePolicy = SameSiteMode.None;
+    options.HttpOnly = HttpOnlyPolicy.Always;
+    options.MinimumSameSitePolicy = SameSiteMode.Strict;
     options.Secure = CookieSecurePolicy.Always;
 });
 
+builder.Services.Configure<StaticFileOptions>(options =>
+{
+    //Pen test fix
+    options.OnPrepareResponse = ctx =>
+    {
+        ctx.Context.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
+        ctx.Context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+    };
+});
+
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddBlazoredLocalStorage();
 
 var app = builder.Build();
 
@@ -58,6 +71,18 @@ app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
+//Pen test fix
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+    context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+    context.Response.Headers.Add("X-Xss-Protection", "1");
+    await next();
+});
+
+//Pen test fix
+app.UseMiddleware<NoCacheMiddleware>();
 
 app.UseRouting();
 

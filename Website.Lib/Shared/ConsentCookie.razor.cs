@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.JSInterop;
@@ -8,24 +9,32 @@ public partial class ConsentCookie : ComponentBase
 {
     [Inject] private IHttpContextAccessor Http { get; set; }
     [Inject] private IJSRuntime JSRuntime { get; set; }
+    [Inject] private ILocalStorageService LocalStorage { get; set; }
 
+
+    private const string CookieConsentKey = "CookieConsentKey";
+    private const string CookiesConsentedValue = "yes";
 
     private ITrackingConsentFeature ConsentFeature { get; set; }
-    private bool ShowBanner { get; set; }
-    private string CookieString { get; set; }
+    private bool ShowBanner { get; set; } = false;
 
 
-    protected override void OnInitialized()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        ConsentFeature = Http.HttpContext.Features.Get<ITrackingConsentFeature>();
-        ShowBanner = !ConsentFeature?.CanTrack ?? false;
-        CookieString = ConsentFeature?.CreateConsentCookie() ?? "";
+        if (firstRender)
+        {
+            var consentedValue = await LocalStorage.GetItemAsync<string>(CookieConsentKey).ConfigureAwait(false);
+
+            ShowBanner = consentedValue != CookiesConsentedValue;
+
+            await InvokeAsync(StateHasChanged).ConfigureAwait(false);
+        }
     }
 
 
     private async Task AcceptCookie()
     {
-        await JSRuntime.InvokeVoidAsync("Website.General.acceptCookie", CookieString).ConfigureAwait(false);
+        await LocalStorage.SetItemAsync(CookieConsentKey, CookiesConsentedValue);
         ShowBanner = false;
         await InvokeAsync(StateHasChanged).ConfigureAwait(false);
     }
