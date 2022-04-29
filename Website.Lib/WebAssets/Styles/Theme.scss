@@ -8,6 +8,7 @@ $color-primary-on-light: darken($color-primary-on-dark, 30%);
 $color-secondary-on-dark: #c44018;
 $color-secondary-on-light: darken($color-secondary-on-dark, 30%);
 $color-accent: #F4DB7D;
+$color-quote: #862C10;
 
 @use "@material/theme" as theme with ( 
     $primary: $color-primary-on-dark, 
@@ -64,4 +65,8 @@ $color-accent: #F4DB7D;
 
 .dw-boundary-image-path {
     fill: $color-dark;
+}
+
+.dw-quote-icon-fill {
+    fill: $color-quote;
 }

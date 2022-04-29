@@ -12,8 +12,8 @@
     $font-family: unquote("'Roboto', sans-serif"),
 
     $styles-headline1: (
-        font-family: unquote("'Roboto Serif', sans-serif"),
-        font-weight: 700,
+        font-family: unquote("'Roboto', sans-serif"),
+        font-weight: 400,
         font-size: 36px,
         line-height: normal,
     ),
@@ -56,15 +56,15 @@
     $styles-body1: (
         font-family: unquote("'Roboto', sans-serif"),
         font-weight: 400,
-        font-size: 16px,
-        line-height: normal,
+        font-size: 20px,
+        line-height: 1.2,
     ),
 
     $styles-body2: (
         font-family: unquote("'Roboto', sans-serif"),
         font-weight: 400,
-        font-size: 14px,
-        line-height: normal,
+        font-size: 16px,
+        line-height: 1.2,
     ),
 );
 
@@ -129,9 +129,6 @@ h1, h2, h3, h4, h5, h6, p {
 }
  
 .dw-panel-container {
-   /* display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;*/
     max-width: 1020px;
     margin: 0 auto;
 }
@@ -180,6 +177,14 @@ h1, h2, h3, h4, h5, h6, p {
 
     & .mb-card__autostyled {
         height: 280px;
+    }
+}
+
+ul.mdc-typography--body2 {
+    line-height: 1.2;
+
+    &>li {
+        margin-bottom: 8px;
     }
 }
 
@@ -283,7 +288,7 @@ h1, h2, h3, h4, h5, h6, p {
 header {
     .dw-boundary-image svg {
         transform: rotate(180deg);
-        margin-top: -90px;
+        margin-top: -40px;
     }
 }
 
@@ -296,6 +301,10 @@ footer {
 :root {
     --dw-scroll-color: var(--mdc-theme-primary);
     --dw-scroll-track-color: rgba(0, 0, 0, 0);
+}
+
+.mb-carousel__lower {
+    padding-top: 24px;
 }
 
 @media (max-width: map.get(layout-grid.$breakpoints, "tablet") - 1px) {
@@ -360,13 +369,20 @@ footer {
             }
         }
     }
+
+    .dw-quote {
+        font-size: 32px !important;
+    }
+
+    .dw-quote-icon {
+        margin-left: -77px;
+    }
 }
 
 @media (min-width: map.get(layout-grid.$breakpoints, "desktop")) {
     .dw-hidden-desktop-up {
         display: none !important;
     }
-
 
     .dw-carousel-container {
         .mb-carousel {
@@ -376,6 +392,32 @@ footer {
                 height: 450px;
             }
         }
+    }
+}
+
+.dw-quote {
+    font-family: Lora;
+    line-height: 1.5;
+    font-size: 22px;
+    margin-top: 0px;
+}
+
+.dw-quoted {
+    text-align: right;
+}
+
+.dw-quote-icon {
+    height: 40px;
+    overflow: visible;
+}
+
+.dw-header {
+    display: inline-flex;
+    flex-flow: column nowrap;
+    width: 100%;
+
+    .dw-quote {
+        text-align: center !important;
     }
 }
 
@@ -505,7 +547,7 @@ footer {
 */
 a:not(.mdc-deprecated-list-item):not(.mb-tooltip-anchor) {
     position: relative;
-    box-shadow: inset 0 -2px 0 theme.$secondary;
+    box-shadow: inset 0 -4px 0 theme.$primary;
     display: inline-flex;
     z-index: 1;
     color: inherit;
@@ -515,13 +557,13 @@ a:not(.mdc-deprecated-list-item):not(.mb-tooltip-anchor) {
 
 a:not(.mdc-deprecated-list-item):not(.mb-tooltip-anchor):hover {
     box-shadow: none;
-    color: theme.$on-secondary;
+    color: theme.$on-primary;
     text-decoration: none;
 }
 
 a:not(.mdc-deprecated-list-item):not(.mb-tooltip-anchor)::after {
     content: "";
-    background: theme.$secondary;
+    background: theme.$primary;
     position: absolute;
     left: -2px;
     bottom: 0;
