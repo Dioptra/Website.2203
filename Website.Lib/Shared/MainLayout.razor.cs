@@ -11,7 +11,6 @@ public partial class MainLayout : LayoutComponentBase
     [Inject] private IJSRuntime JSRuntime { get; set; }
 
     private MBDialog ContactDialog { get; set; } = new();
-    private MBFloatingActionButton HomeButton { get; set; }
     private bool HomeButtonExited { get; set; } = true;
     private ContactMessage ContactMessage { get; set; } = new();
 
@@ -28,11 +27,13 @@ public partial class MainLayout : LayoutComponentBase
         await ContactDialog.HideAsync();
     }
 
+
     private async Task ContactDialogSubmittedAsync()
     {
         await ContactDialog.HideAsync();
         await TeamsNotificationService.SendNotification(ContactMessage);
     }
+
 
     private async Task HomeClick()
     {
@@ -42,18 +43,11 @@ public partial class MainLayout : LayoutComponentBase
         await InvokeAsync(StateHasChanged).ConfigureAwait(false);
     }
 
+
     private void ShowHomeButton(bool show)
     {
-        _ = Task.Run(async () =>
-        {
-            if (show)
-            {
-                await Task.Delay(500);
-            }
-
-            HomeButtonExited = !show;
-            await InvokeAsync(StateHasChanged).ConfigureAwait(false);
-        });
+        HomeButtonExited = !show;
+        _ = InvokeAsync(StateHasChanged);
     }
 
 

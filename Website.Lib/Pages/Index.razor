@@ -14,7 +14,7 @@
 </HeadAndMetaContent>
 
 
-<div class="dw-section-condensed">
+<div class="dw-section-condensed dw-hero">
     <div class="dw-max-width-content">
         <div class="mdc-layout-grid">
             <div class="mdc-layout-grid__inner">
@@ -22,25 +22,16 @@
                     <div class="dw-panel-container">
                         <MBCarousel Context="item"
                                     Items="@CarouselData"
-                                    RolloverInterval="3000">
+                                    RolloverInterval="4000">
                             <Content>
-                                <img style="width: 100%;" src="@item.Uri" alt="@item.Caption">
+                                <img src="@item.Uri" alt="@item.Caption">
                                 <div><p class="mdc-typography--caption" style="text-align: center;">@item.Caption</p></div>
                             </Content>
                         </MBCarousel>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="dw-section-regular dw-dark">
-    <div class="dw-max-width-content">
-        <div class="mdc-layout-grid">
-            <div class="mdc-layout-grid__inner">
                 <div class="mdc-layout-grid__cell--span-12">
-                    <h2 class="mdc-typography--headline1">About us</h2>
                     <p class="mdc-typography--body1">
                         Dioptra is an enterprise FinTech/PropTech startup. We deliver forward looking financial analytics for institutional real estate investors.
                         We have a first product deployed, managing a complex senior and mezzanine real estate loan portfolio. During 2022 we shall
@@ -53,16 +44,22 @@
                         employ strong security measures, including conducting periodic pentration tests.
                     </p>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <div class="mdc-layout-grid__cell--span-12 dw-hidden-desktop-up dw-section-spacing"></div>
-
+<div class="dw-section-regular dw-dark">
+    <div class="dw-max-width-content">
+        <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
                 <div class="mdc-layout-grid__cell--span-12">
                     <div class="dw-panel-container">
-                        <p class="mb-card__title mdc-typography--subtitle2">
+                        <p class="mdc-typography--subtitle2">
                             "Dioptra drives our loan book management and gives us an unparalleled insight into both individual loan and broad portfolio risks. No other loan system or real estate analytics provider we have seen comes close.
                             Dioptra is by far the best property loan management platform that we have come across."
                         </p>
-                        <p class="mb-card__title mdc-typography--subtitle1">
+                        <p class="mdc-typography--subtitle1">
                             Ed Marley-Shaw, CEO Clearwell Capital
                         </p>
                     </div>

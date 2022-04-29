@@ -61,3 +61,7 @@ $color-accent: #F4DB7D;
     --mdc-theme-background: #{$color-accent};
     background-color: $color-accent;
 }
+
+.dw-boundary-image-path {
+    fill: $color-dark;
+}
