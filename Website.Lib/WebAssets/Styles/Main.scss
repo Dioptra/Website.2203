@@ -15,6 +15,7 @@
         font-family: unquote("'Roboto', sans-serif"),
         font-weight: 400,
         font-size: 36px,
+        font-style: normal,
         line-height: normal,
     ),
 
@@ -22,6 +23,7 @@
         font-family: unquote("'Roboto Serif', sans-serif"),
         font-weight: 700,
         font-size: 32px,
+        font-style: normal,
         line-height: normal,
     ),
 
@@ -29,6 +31,7 @@
         font-family: unquote("'Roboto Serif', sans-serif"),
         font-weight: 600,
         font-size: 28px,
+        font-style: normal,
         line-height: normal,
     ),
 
@@ -36,6 +39,7 @@
         font-family: unquote("'Roboto Serif', sans-serif"),
         font-weight: 600,
         font-size: 24px,
+        font-style: normal,
         line-height: normal,
     ),
 
@@ -43,6 +47,7 @@
         font-family: unquote("'Roboto Serif', sans-serif"),
         font-weight: 600,
         font-size: 22px,
+        font-style: normal,
         line-height: normal,
     ),
 
@@ -50,6 +55,7 @@
         font-family: unquote("'Roboto Serif', sans-serif"),
         font-weight: 600,
         font-size: 20px,
+        font-style: normal,
         line-height: normal,
     ),
 
@@ -57,6 +63,7 @@
         font-family: unquote("'Roboto', sans-serif"),
         font-weight: 400,
         font-size: 20px,
+        font-style: normal,
         line-height: 1.2,
     ),
 
@@ -64,6 +71,7 @@
         font-family: unquote("'Roboto', sans-serif"),
         font-weight: 400,
         font-size: 16px,
+        font-style: normal,
         line-height: 1.2,
     ),
 );
@@ -396,9 +404,11 @@ footer {
 }
 
 .dw-quote {
-    font-family: Lora;
-    line-height: 1.5;
+    font-family: Lora, sans-serif;
+    font-weight: 500;
+    font-style: italic;
     font-size: 22px;
+    line-height: 1.5;
     margin-top: 0px;
 }
 
