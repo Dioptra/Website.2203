@@ -23,6 +23,7 @@ builder.Services.AddTransient<ITeamsNotificationService, TeamsNotificationServic
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
+    // Has Pentest fixes
     options.CheckConsentNeeded = context => true;
     options.HttpOnly = HttpOnlyPolicy.Always;
     options.MinimumSameSitePolicy = SameSiteMode.Strict;
@@ -31,7 +32,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 
 builder.Services.Configure<StaticFileOptions>(options =>
 {
-    //Pen test fix
+    // Pentest fix
     options.OnPrepareResponse = ctx =>
     {
         ctx.Context.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -72,7 +73,7 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
-//Pen test fix
+// Pentest fix
 app.Use(async (context, next) =>
 {
     context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
@@ -81,7 +82,7 @@ app.Use(async (context, next) =>
     await next();
 });
 
-//Pen test fix
+// Pentest fix
 app.UseMiddleware<NoCacheMiddleware>();
 
 app.UseRouting();
