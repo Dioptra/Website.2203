@@ -531,6 +531,16 @@ footer {
     height: 100%;
     width: 100%;
     z-index: 1000;
+
+    & .mdc-dialog__title {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    & .material-icons-outlined {
+        margin-right: 18px;
+        color: var(--mdc-theme-error);
+    }
 }
 
 #blazor-error-ui .dismiss {
