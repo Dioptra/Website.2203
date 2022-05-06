@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Components.Web
 @namespace BlazorServer.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Website.Lib
+@inject NonceService NonceService
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +27,7 @@
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173249047-3"></script>
-    <script>
+    <script nonce="@NonceService.NonceValue">
         window.dataLayer = window.dataLayer || [];
         function gtag(){window.dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -69,12 +72,7 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
-    
     <script src="_content/Material.Blazor/material.blazor.min.js"></script>
     <script src="_content/Website.Lib/js/dioptra.js"></script>
-
-    <script>
-        Website.General.instantiateErrorDialog();
-    </script>
 </body>
 </html>

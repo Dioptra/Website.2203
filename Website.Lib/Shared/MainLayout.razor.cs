@@ -14,6 +14,13 @@ public partial class MainLayout : LayoutComponentBase
     private bool HomeButtonExited { get; set; } = true;
     private ContactMessage ContactMessage { get; set; } = new();
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("Website.General.instantiateErrorDialog");
+        }
+    }
 
     private async Task OpenContactDialogAsync()
     {
