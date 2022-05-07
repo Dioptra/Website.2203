@@ -9,7 +9,7 @@
                     TwitterImage="">
     @foreach (var item in CarouselData)
     {
-        <link rel="preload" href="@item.Uri" as="image">
+        <link nonce="nonce-@NonceService.NonceValue" rel="preload" href="@item.Uri" as="image">
     }
 </HeadAndMetaContent>
 

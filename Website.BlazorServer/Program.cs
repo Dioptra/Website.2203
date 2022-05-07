@@ -15,6 +15,7 @@ builder.Host.UseSerilog();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
 
 builder.Services.AddMBServices(loggingServiceConfiguration: Utilities.GetDefaultLoggingServiceConfiguration(), toastServiceConfiguration: Utilities.GetDefaultToastServiceConfiguration(), snackbarServiceConfiguration: Utilities.GetDefaultSnackbarServiceConfiguration());
 
@@ -90,6 +91,8 @@ app.Use(async (context, next) =>
 
     var source = (app.Environment.IsDevelopment() ? "'self' " : "") + $"'nonce-{nonceValue}'";
 
+    var baseUri = context.Request.Host.ToString();
+
     var csp = 
         "base-uri 'self'; " +
         "block-all-mixed-content; " +
@@ -102,9 +105,12 @@ app.Use(async (context, next) =>
         "form-action 'none'; " +
         "img-src data: https:; " +
         "object-src 'none'; " +
+        $"report-to https://{baseUri}/CspEndpoint/UriReport; " +
+        $"report-uri https://{baseUri}/CspEndpoint/UriReport; " +
         $"script-src {source} 'unsafe-inline' 'report-sample';" +
         "style-src 'self' 'unsafe-inline' 'report-sample' fonts.googleapis.com fonts.gstatic.com; " +
-        "upgrade-insecure-requests;";
+        "upgrade-insecure-requests; " +
+        "worker-src 'self';";
 
     context.Response.Headers.Add("X-Frame-Options", "DENY");
     context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
@@ -129,5 +135,7 @@ app.MapFallbackToPage("/_Host");
 app.MapGet("/sitemap.xml", async context => {
     await Sitemap.Generate(context);
 });
+
+app.UseMvcWithDefaultRoute();
 
 app.Run();
