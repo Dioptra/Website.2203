@@ -52,24 +52,6 @@ builder.Services.Configure<StaticFileOptions>(options =>
     };
 });
 
-//builder.Services.Configure<IpRateLimitOptions>(options =>
-//{
-//    options.EnableEndpointRateLimiting = true;
-//    options.StackBlockedRequests = false;
-//    options.HttpStatusCode = 429;
-//    options.RealIpHeader = "X-Real-IP";
-//    options.ClientIdHeader = "X-ClientId";
-//    options.GeneralRules = new List<RateLimitRule>
-//        {
-//            new RateLimitRule
-//            {
-//                Endpoint = "POST:/api/CspReporting/UriReport",
-//                Period = "10s",
-//                Limit = 2,
-//            }
-//        };
-//});
-
 builder.Services.AddOptions();
 // needed to store rate limit counters and ip rules
 builder.Services.AddMemoryCache();
