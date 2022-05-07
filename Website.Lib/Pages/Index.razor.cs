@@ -12,7 +12,6 @@ public partial class Index : ComponentBase
 
 
     [Inject] private NavigationManager NavigationManager { get; set; }
-    [Inject] private NonceService NonceService { get; set; }
 
     [CascadingParameter] private Action<bool> ShowHomeButton { get; set; }
 

@@ -92,18 +92,22 @@ app.Use(async (context, next) =>
     var source = (app.Environment.IsDevelopment() ? "'self' " : "") + $"'nonce-{nonceValue}'";
 
     var baseUri = context.Request.Host.ToString();
+    var baseDomain = context.Request.Host.Host;
 
     var csp = 
         "base-uri 'self'; " +
         "block-all-mixed-content; " +
         "child-src 'self' ; " +
-        "connect-src 'self' ws: www.google-analytics.com; " +
+        $"connect-src 'self' wss://{baseDomain}:* www.google-analytics.com; " +
         "default-src 'self'; " +
         "font-src fonts.googleapis.com fonts.gstatic.com; " +
         "frame-ancestors 'none'; " +
         "frame-src 'self'; " +
         "form-action 'none'; " +
-        "img-src data: https:; " +
+        "img-src 'self' www.google-analytics.com; " +
+        "manifest-src 'self'; " +
+        "media-src 'self'; " +
+        "prefetch-src 'self'; " +
         "object-src 'none'; " +
         $"report-to https://{baseUri}/CspEndpoint/UriReport; " +
         $"report-uri https://{baseUri}/CspEndpoint/UriReport; " +
