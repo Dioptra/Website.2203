@@ -86,8 +86,25 @@ app.UseStaticFiles();
 // Pentest fix
 app.Use(async (context, next) =>
 {
-    var nonceService = context.RequestServices.GetService<NonceService>();
-    var nonceValue = nonceService?.NonceValue ?? "service-unavailable";
+    var nonceValue = context.RequestServices.GetService<NonceService>()?.NonceValue ?? throw new Exception("Nonce service unavailable");
+
+    var source = (app.Environment.IsDevelopment() ? "'self' " : "") + $"'nonce-{nonceValue}'";
+
+    var csp = 
+        "base-uri 'self'; " +
+        "block-all-mixed-content; " +
+        "child-src 'self' ; " +
+        "connect-src 'self' ws: www.google-analytics.com; " +
+        "default-src 'self'; " +
+        "font-src fonts.googleapis.com fonts.gstatic.com; " +
+        "frame-ancestors 'none'; " +
+        "frame-src 'self'; " +
+        "form-action 'none'; " +
+        "img-src data: https:; " +
+        "object-src 'none'; " +
+        $"script-src {source} 'unsafe-inline' 'report-sample';" +
+        "style-src 'self' 'unsafe-inline' 'report-sample' fonts.googleapis.com fonts.gstatic.com; " +
+        "upgrade-insecure-requests;";
 
     context.Response.Headers.Add("X-Frame-Options", "DENY");
     context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
@@ -96,19 +113,7 @@ app.Use(async (context, next) =>
     context.Response.Headers.Add("X-Permitted-Cross-Domain-Policies", "none");
     context.Response.Headers.Add("Permissions-Policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
     context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
-    context.Response.Headers.Add("Content-Security-Policy",
-        "base-uri 'self'; " +
-        "block-all-mixed-content; " +
-        "child-src 'self' ; " +
-        "connect-src 'self' ws: www.google-analytics.com; " +
-        "default-src 'self'; " +
-        "font-src fonts.googleapis.com fonts.gstatic.com; " +
-        "frame-src 'self' ; " +
-        "img-src data: https:; " +
-        "object-src 'none'; " +
-        $"script-src 'self' www.googletagmanager.com 'nonce-{nonceValue}';" +
-        "style-src 'self' 'unsafe-inline' fonts.googleapis.com fonts.gstatic.com; " +
-        "upgrade-insecure-requests;");
+    context.Response.Headers.Add("Content-Security-Policy", csp);
 
     await next();
 });
