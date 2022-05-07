@@ -1,4 +1,5 @@
-﻿using Blazored.LocalStorage;
+﻿using AspNetCoreRateLimit;
+using Blazored.LocalStorage;
 using Material.Blazor;
 using Microsoft.AspNetCore.CookiePolicy;
 using Serilog;
@@ -50,6 +51,39 @@ builder.Services.Configure<StaticFileOptions>(options =>
         ctx.Context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
     };
 });
+
+//builder.Services.Configure<IpRateLimitOptions>(options =>
+//{
+//    options.EnableEndpointRateLimiting = true;
+//    options.StackBlockedRequests = false;
+//    options.HttpStatusCode = 429;
+//    options.RealIpHeader = "X-Real-IP";
+//    options.ClientIdHeader = "X-ClientId";
+//    options.GeneralRules = new List<RateLimitRule>
+//        {
+//            new RateLimitRule
+//            {
+//                Endpoint = "POST:/api/CspReporting/UriReport",
+//                Period = "10s",
+//                Limit = 2,
+//            }
+//        };
+//});
+
+builder.Services.AddOptions();
+// needed to store rate limit counters and ip rules
+builder.Services.AddMemoryCache();
+
+//load general configuration from appsettings.json
+builder.Services.Configure<ClientRateLimitOptions>(builder.Configuration.GetSection("ClientRateLimiting"));
+
+//load client rules from appsettings.json
+builder.Services.Configure<ClientRateLimitPolicies>(builder.Configuration.GetSection("ClientRateLimitPolicies"));
+
+builder.Services.AddInMemoryRateLimiting();
+
+// configuration (resolvers, counter key builders)
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
 
 builder.Services.AddHttpContextAccessor();
 
@@ -109,8 +143,8 @@ app.Use(async (context, next) =>
         "media-src 'self'; " +
         "prefetch-src 'self'; " +
         "object-src 'none'; " +
-        $"report-to https://{baseUri}/CspEndpoint/UriReport; " +
-        $"report-uri https://{baseUri}/CspEndpoint/UriReport; " +
+        $"report-to https://{baseUri}/api/CspReporting/UriReport; " +
+        $"report-uri https://{baseUri}/api/CspReporting/UriReport; " +
         $"script-src {source} 'unsafe-inline' 'report-sample';" +
         "style-src 'self' 'unsafe-inline' 'report-sample' fonts.googleapis.com fonts.gstatic.com; " +
         "upgrade-insecure-requests; " +
@@ -119,6 +153,7 @@ app.Use(async (context, next) =>
     context.Response.Headers.Add("X-Frame-Options", "DENY");
     context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
     context.Response.Headers.Add("X-Xss-Protection", "1");
+    context.Response.Headers.Add("X-ClientId", "dioptra");
     context.Response.Headers.Add("Referrer-Policy", "no-referrer");
     context.Response.Headers.Add("X-Permitted-Cross-Domain-Policies", "none");
     context.Response.Headers.Add("Permissions-Policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
@@ -133,13 +168,14 @@ app.UseMiddleware<NoCacheMiddleware>();
 
 app.UseRouting();
 
+app.UseClientRateLimiting();
+
+app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.MapGet("/sitemap.xml", async context => {
     await Sitemap.Generate(context);
 });
-
-app.UseMvcWithDefaultRoute();
 
 app.Run();
