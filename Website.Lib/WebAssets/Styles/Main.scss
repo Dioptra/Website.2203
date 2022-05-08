@@ -246,7 +246,7 @@ ul.mdc-typography--body2 {
 
 .dw-cookie-alert {
     position: sticky;
-    bottom: 0;
+    top: 100vh;
     width: 100%;
 }
 
@@ -258,6 +258,7 @@ ul.mdc-typography--body2 {
 
     & p {
         margin: 0px;
+        font-size: var(--mdc-typography-body2-font-size);
     }
 
     & .mdc-button {
@@ -385,6 +386,13 @@ footer {
     .dw-quote-icon {
         margin-left: -77px;
     }
+
+    .dw-cookie-alert-content {
+        & p {
+            font-size: var(--mdc-typography-body1-font-size, 20px);
+        }
+    }
+
 }
 
 @media (min-width: map.get(layout-grid.$breakpoints, "desktop")) {
