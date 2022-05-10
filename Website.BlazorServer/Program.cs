@@ -110,7 +110,7 @@ app.Use(async (context, next) =>
     var baseUri = context.Request.Host.ToString();
     var baseDomain = context.Request.Host.Host;
 
-    var csp = 
+    var csp =
         "base-uri 'self'; " +
         "block-all-mixed-content; " +
         "child-src 'self' ; " +
@@ -120,7 +120,7 @@ app.Use(async (context, next) =>
         "frame-ancestors 'none'; " +
         "frame-src 'self'; " +
         "form-action 'none'; " +
-        "img-src 'self' www.google-analytics.com; " +
+        "img-src 'self' www.google-analytics.com *.openstreetmap.org data: w3.org/svg/2000; " +
         "manifest-src 'self'; " +
         "media-src 'self'; " +
         "prefetch-src 'self'; " +
