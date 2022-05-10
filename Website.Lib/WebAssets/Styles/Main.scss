@@ -312,8 +312,13 @@ footer {
     --dw-scroll-track-color: rgba(0, 0, 0, 0);
 }
 
+.mb-carousel__upper {
+    overflow-x: visible;
+}
+
 .mb-carousel__lower {
     padding-top: 24px;
+    width: 100vw !important;
 }
 
 @media (max-width: map.get(layout-grid.$breakpoints, "tablet") - 1px) {
