@@ -10,6 +10,13 @@ $color-secondary-on-light: darken($color-secondary-on-dark, 30%);
 $color-accent: #F4DB7D;
 $color-quote: #862C10;
 
+
+$color-yellow: #FFE77F;
+$color-green: #F2FA7F;
+$color-blue: #B3CDE3;
+$color-magenta: #F99BCC;
+
+
 @use "@material/theme" as theme with ( 
     $primary: $color-primary-on-dark, 
     $secondary: $color-secondary-on-dark,
@@ -43,6 +50,59 @@ $color-quote: #862C10;
     --dw-color-on-secondary-on-light: white;
 }
 
+div.dw-yellow {
+    --mdc-theme-surface: #{$color-yellow};
+    --mdc-theme-on-surface: black;
+    --mdc-theme-background: #{$color-yellow};
+    --mdc-theme-primary: #{$color-blue};
+    --mdc-theme-on-primary: black;
+    --mdc-theme-secondary: #{$color-yellow};
+    --mdc-theme-on-secondary: black;
+    background-color: $color-yellow;
+    color: black;
+    --dw-obscured-color: var(--mdc-color-grey-300);
+}
+
+svg.dw-yellow g {
+    fill: $color-yellow;
+}
+
+div.dw-green {
+    --mdc-theme-surface: #{$color-green};
+    --mdc-theme-on-surface: black;
+    --mdc-theme-background: #{$color-green};
+    --mdc-theme-primary: #{$color-magenta};
+    --mdc-theme-on-primary: black;
+    --mdc-theme-secondary: #{$color-green};
+    --mdc-theme-on-secondary: black;
+    background-color: $color-green;
+    color: black;
+    --dw-obscured-color: var(--mdc-color-grey-300);
+}
+
+svg.dw-green g {
+    fill: $color-green;
+}
+
+div.dw-blue {
+    --mdc-theme-surface: #{$color-blue};
+    --mdc-theme-on-surface: black;
+    --mdc-theme-background: #{$color-blue};
+    --mdc-theme-primary: #{$color-yellow};
+    --mdc-theme-on-primary: black;
+    --mdc-theme-secondary: #{$color-blue};
+    --mdc-theme-on-secondary: black;
+    background-color: $color-blue;
+    color: black;
+    --dw-obscured-color: var(--mdc-color-grey-300);
+}
+
+svg.dw-blue g {
+    fill: $color-blue;
+}
+
+
+
 .dw-dark {
     --mdc-theme-surface: #{$color-dark};
     --mdc-theme-on-surface: white;
@@ -61,10 +121,6 @@ $color-quote: #862C10;
     --mdc-theme-on-surface: #{$color-dark};
     --mdc-theme-background: #{$color-accent};
     background-color: $color-accent;
-}
-
-.dw-boundary-image-path {
-    fill: $color-dark;
 }
 
 .dw-quote-icon-fill {

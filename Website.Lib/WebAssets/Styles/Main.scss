@@ -580,7 +580,7 @@ footer {
 */
 a:not(.mdc-deprecated-list-item):not(.mb-tooltip-anchor) {
     position: relative;
-    box-shadow: inset 0 -4px 0 theme.$primary;
+    box-shadow: inset 0 -4px 0 var(--mdc-theme-primary);
     display: inline-flex;
     z-index: 1;
     color: inherit;
@@ -590,13 +590,13 @@ a:not(.mdc-deprecated-list-item):not(.mb-tooltip-anchor) {
 
 a:not(.mdc-deprecated-list-item):not(.mb-tooltip-anchor):hover {
     box-shadow: none;
-    color: theme.$on-primary;
+    color: var(--mdc-theme-on-primary);
     text-decoration: none;
 }
 
 a:not(.mdc-deprecated-list-item):not(.mb-tooltip-anchor)::after {
     content: "";
-    background: theme.$primary;
+    background: var(--mdc-theme-primary);
     position: absolute;
     left: -2px;
     bottom: 0;

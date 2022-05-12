@@ -1,18 +1,27 @@
-﻿namespace Website.Lib.Shared;
-
-using Material.Blazor;
+﻿using Material.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-public partial class MainLayout : LayoutComponentBase
+namespace Website.Lib.Shared;
+
+public partial class GeneralPageLayout : ComponentBase
 {
     [Inject] private ITeamsNotificationService TeamsNotificationService { get; set; }
     [Inject] private NavigationManager NavigationManager { get; set; }
     [Inject] private IJSRuntime JSRuntime { get; set; }
 
+
+
+    [Parameter] public string ColorClass { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+
+
     private MBDialog ContactDialog { get; set; } = new();
     private bool HomeButtonExited { get; set; } = true;
     private ContactMessage ContactMessage { get; set; } = new();
+
+
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -51,12 +60,9 @@ public partial class MainLayout : LayoutComponentBase
     }
 
 
-    private void ShowHomeButton(bool show)
+    public void ShowHomeButton(bool show)
     {
         HomeButtonExited = !show;
         _ = InvokeAsync(StateHasChanged);
     }
-
-
 }
-

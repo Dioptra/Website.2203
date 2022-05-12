@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Website.Lib.Shared;
+
 
 namespace Website.Lib.Pages;
 [Sitemap(SitemapAttribute.ChangeFreqType.Weekly, 0.8)]
@@ -13,7 +15,8 @@ public partial class Index : ComponentBase
 
     [Inject] private NavigationManager NavigationManager { get; set; }
 
-    [CascadingParameter] private Action<bool> ShowHomeButton { get; set; }
+
+    private GeneralPageLayout GeneralPageLayout { get; set; }
 
 
     private static readonly CarouselDataType[] CarouselData = new CarouselDataType[]
@@ -30,11 +33,12 @@ public partial class Index : ComponentBase
     };
 
 
-    protected override void OnInitialized()
+    protected override void OnAfterRender(bool firstRender)
     {
-        base.OnInitialized();
-
-        ShowHomeButton(false);
+        if (firstRender)
+        {
+            GeneralPageLayout.ShowHomeButton(false);
+        }
     }
 
 
