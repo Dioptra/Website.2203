@@ -282,7 +282,38 @@ ul.mdc-typography--body2 {
     flex-flow: row nowrap;
     justify-content: end;
     align-items: center;
-    color: var(--mdc-theme-secondary);
+    color: var(--mdc-theme-primary);
+}
+
+.dw-tagline {
+    margin: 48px 0;
+    padding: 48px !important;
+    text-align: center !important;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1020px;
+    border: solid;
+    border-width: 4px !important;
+    border-radius: 12px;
+    border-color: var(--mdc-theme-primary) !important;
+
+    .mdc-typography--headline2, mdc-typography--headline4 {
+        margin-top: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .mdc-button {
+        margin-bottom: 0;
+    }
+}
+
+.dw-skyline {
+    background-image: url('/_content/Website.Lib/images/skyline.jpg');
+    width: 100%;
+    height: 160px;
+    background-size: auto;
+    background-repeat: no-repeat;
 }
 
 .dw-boundary-image {
@@ -357,6 +388,12 @@ footer .dw-boundary-image svg {
             position: sticky;
             margin-top: -28px;
             top: 12px;
+        }
+    }
+
+    .dw-dialog {
+        .mdc-dialog__surface {
+            width: 480px;
         }
     }
 

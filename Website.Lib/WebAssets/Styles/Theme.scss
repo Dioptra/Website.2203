@@ -51,16 +51,15 @@ $color-magenta: #F99BCC;
 }
 
 .dw-yellow {
+    --mdc-theme-primary: #{$color-blue};
+    --mdc-theme-secondary: #{$color-yellow};
+    --mdc-theme-on-primary: black;
+    --mdc-theme-on-secondary: black;
+
     header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab {
         --mdc-theme-surface: #{$color-yellow};
-        --mdc-theme-on-surface: black;
         --mdc-theme-background: #{$color-yellow};
-        --mdc-theme-primary: #{$color-blue};
-        --mdc-theme-on-primary: black;
-        --mdc-theme-secondary: #{$color-yellow};
-        --mdc-theme-on-secondary: black;
         background-color: $color-yellow;
-        color: black;
         --dw-obscured-color: var(--mdc-color-grey-300);
     }
 }
@@ -70,16 +69,15 @@ $color-magenta: #F99BCC;
 }
 
 .dw-green {
+    --mdc-theme-primary: #{$color-magenta};
+    --mdc-theme-secondary: #{$color-green};
+    --mdc-theme-on-primary: black;
+    --mdc-theme-on-secondary: black;
+
     header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab {
         --mdc-theme-surface: #{$color-green};
-        --mdc-theme-on-surface: black;
         --mdc-theme-background: #{$color-green};
-        --mdc-theme-primary: #{$color-magenta};
-        --mdc-theme-on-primary: black;
-        --mdc-theme-secondary: #{$color-green};
-        --mdc-theme-on-secondary: black;
         background-color: $color-green;
-        color: black;
         --dw-obscured-color: var(--mdc-color-grey-300);
     }
 }
@@ -89,16 +87,15 @@ $color-magenta: #F99BCC;
 }
 
 .dw-blue {
+    --mdc-theme-primary: #{$color-yellow};
+    --mdc-theme-secondary: #{$color-blue};
+    --mdc-theme-on-primary: black;
+    --mdc-theme-on-secondary: black;
+
     header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab {
         --mdc-theme-surface: #{$color-blue};
-        --mdc-theme-on-surface: black;
         --mdc-theme-background: #{$color-blue};
-        --mdc-theme-primary: #{$color-yellow};
-        --mdc-theme-on-primary: black;
-        --mdc-theme-secondary: #{$color-blue};
-        --mdc-theme-on-secondary: black;
         background-color: $color-blue;
-        color: black;
         --dw-obscured-color: var(--mdc-color-grey-300);
     }
 }

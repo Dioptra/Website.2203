@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Material.Blazor;
+using Microsoft.AspNetCore.Components;
 using Website.Lib.Shared;
 
 
@@ -14,9 +15,14 @@ public partial class Index : ComponentBase
 
 
     [Inject] private NavigationManager NavigationManager { get; set; }
+    [Inject] private ITeamsNotificationService TeamsNotificationService { get; set; }
+
 
 
     private GeneralPageLayout GeneralPageLayout { get; set; }
+    private MBDialog Dialog { get; set; }
+    private RealEstateInvestorEnquiry RealEstateInvestorEnquiry { get; set; } = new();
+
 
 
     private static readonly CarouselDataType[] CarouselData = new CarouselDataType[]
@@ -57,6 +63,27 @@ public partial class Index : ComponentBase
     private void WorkForUsClick()
     {
         NavigationManager.NavigateTo("/work-for-us#dw-main-top");
+    }
+
+
+    private async Task OpenDialogAsync()
+    {
+        RealEstateInvestorEnquiry = new();
+
+        await Dialog.ShowAsync();
+    }
+
+
+    private async Task CloseDialogAsync()
+    {
+        await Dialog.HideAsync();
+    }
+
+
+    private async Task DialogSubmittedAsync()
+    {
+        await Dialog.HideAsync();
+        await TeamsNotificationService.SendNotification(RealEstateInvestorEnquiry);
     }
 }
 

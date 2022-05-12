@@ -30,6 +30,46 @@
                             </MBCarousel>
                         </div>
                     </div>
+                </div>
+
+                <div class="mdc-layout-grid__inner dw-skyline">
+                    <div class="mdc-layout-grid__cell--span-12 dw-tagline">
+                        <h2 class="mdc-typography--headline2">A new FinTech company</h2>
+                        <h3 class="mdc-typography--headline4">bringing forward looking investment analytics to institutional real estate investors</h3>
+                        <MBButton ButtonStyle="@MBButtonStyle.ContainedUnelevated" Label="Join the Waitlist" TrailingIcon="email" @onclick="@OpenDialogAsync" />
+                    </div>
+                </div>
+
+                <div class="mdc-layout-grid__inner">
+                    <div class="mdc-layout-grid__cell--span-12 dw-tagline">
+                        <h2 class="mdc-typography--headline2">A new FinTech company</h2>
+                        <h3 class="mdc-typography--headline4">bringing forward looking investment analytics to institutional real estate investors</h3>
+                        <MBButton ButtonStyle="@MBButtonStyle.ContainedUnelevated" Label="Join the Waitlist" TrailingIcon="email" @onclick="@OpenDialogAsync" />
+                    </div>
+
+                    <div class="mdc-layout-grid__cell--span-4">
+                        <h3 class="mdc-typography--headline3">It's about funds</h3>
+                    </div>
+
+                    <div class="mdc-layout-grid__cell--span-4">
+                        <h3 class="mdc-typography--headline3">What we'll do for you</h3>
+                    </div>
+
+                    <div class="mdc-layout-grid__cell--span-4">
+                        <h3 class="mdc-typography--headline3">Portfolio performance</h3>
+                    </div>
+
+                    <div class="mdc-layout-grid__cell--span-4">
+                        <h3 class="mdc-typography--headline3">Exposing risk</h3>
+                    </div>
+
+                    <div class="mdc-layout-grid__cell--span-4">
+                        <h3 class="mdc-typography--headline3">Revealing opportunity</h3>
+                    </div>
+
+                    <div class="mdc-layout-grid__cell--span-4">
+                        <h3 class="mdc-typography--headline3">Modern technology</h3>
+                    </div>
 
                     <div class="mdc-layout-grid__cell--span-12">
                         <p class="mdc-typography--body1">We're an enterprise FinTech/PropTech startup delivering forward looking financial analytics for institutional real estate investors.</p>
@@ -74,30 +114,6 @@
                         <div class="dw-card-container">
                             <MBCard class="mb-basic-with-header mb-ui-control dw-link-card"
                                     CardStyle="@MBCardStyle.Default"
-                                    @onclick="@RealEstateClientsClick" >
-
-                                <PrimaryAction>
-                                    <div class="mb-card__autostyled">
-                                        <div class="dw-card-content">
-                                            <h3 class="mb-card__title mdc-typography--headline3">Real Estate Investment Funds</h3>
-                                            <p class="mdc-typography--subtitle1">
-                                                Find out about Dioptra's progress building a banking-grade investment analytics solution to monitor
-                                                both asset and fund level returns, plus forecast risk and opportunities.
-                                            </p>
-                                            <p class="mdc-typography--subtitle1 dw-more">more <MBIcon IconName="navigate_next" /></p>
-                                        </div>
-                                    </div>
-                                </PrimaryAction>
-                            </MBCard>
-                        </div>
-                    </div>
-
-                    <div class="mdc-layout-grid__cell--span-12 dw-hidden-tablet-up dw-section-spacing"></div>
-                
-                    <div class="mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-4 dw-card-cell-span">
-                        <div class="dw-card-container">
-                            <MBCard class="mb-basic-with-header mb-ui-control dw-link-card"
-                                    CardStyle="@MBCardStyle.Default"
                                     @onclick="@WorkForUsClick" >
 
                                 <PrimaryAction>
@@ -120,3 +136,70 @@
         </div>
     </div>
 </GeneralPageLayout>
+
+                                            
+
+<MBDialog class="dw-dialog"
+          EscapeKeyAction=""
+          @ref="@Dialog"
+          ScrimClickAction=""
+          Title="Join the Client Waitlist">
+    <Body>
+        <EditForm Model="@RealEstateInvestorEnquiry"
+                  OnValidSubmit="@DialogSubmittedAsync">
+
+            <DataAnnotationsValidator />
+
+            <MBTextField @bind-Value="@RealEstateInvestorEnquiry.Name"
+                         Label="Name"
+                         style="width: 100%; margin-top: 6px;"
+                         TextInputStyle="@MBTextInputStyle.Outlined"
+                         ValidationMessageFor="@(() => RealEstateInvestorEnquiry.Name)" />
+
+
+            <MBTextField @bind-Value="@RealEstateInvestorEnquiry.Email"
+                         Label="Email"
+                         style="width: 100%; margin-top: 6px;"
+                         TextInputStyle="@MBTextInputStyle.Outlined"
+                         ValidationMessageFor="@(() => RealEstateInvestorEnquiry.Email)" />
+
+            <MBTextField @bind-Value="@RealEstateInvestorEnquiry.Phone"
+                         Label="Phone Number"
+                         style="width: 100%; margin-top: 6px;"
+                         TextInputStyle="@MBTextInputStyle.Outlined"
+                         ValidationMessageFor="@(() => RealEstateInvestorEnquiry.Phone)" />
+
+            <MBTextField @bind-Value="@RealEstateInvestorEnquiry.CompanyName"
+                         Label="Company Name"
+                         style="width: 100%; margin-top: 6px;"
+                         TextInputStyle="@MBTextInputStyle.Outlined"
+                         ValidationMessageFor="@(() => RealEstateInvestorEnquiry.CompanyName)" />
+
+            <MBTextField @bind-Value="@RealEstateInvestorEnquiry.Website"
+                         Label="Website"
+                         style="width: 100%; margin-top: 6px;"
+                         TextInputStyle="@MBTextInputStyle.Outlined"
+                         ValidationMessageFor="@(() => RealEstateInvestorEnquiry.Website)" />
+
+            <MBTextArea @bind-Value="@RealEstateInvestorEnquiry.HowCanWeHelp"
+                        Label="How can we help you?"
+                        Rows="5"
+                        style="width: 100%; margin-top: 6px;"
+                        TextInputStyle="@MBTextInputStyle.Outlined"
+                        ValidationMessageFor="@(() => RealEstateInvestorEnquiry.HowCanWeHelp)" />
+
+            <div class="mdc-layout-grid__cell--span-12" style="text-align: right;">
+                <MBButton Label="Send"
+                          ButtonStyle="@MBButtonStyle.ContainedUnelevated"
+                          style="margin: 0.75em 0.25em 0.25em 0.25em;"
+                          type="submit" />
+
+                <MBButton Label="Cancel"
+                          ButtonStyle="@MBButtonStyle.ContainedUnelevated"
+                          @onclick="@CloseDialogAsync"
+                          style="margin: 0.75em 0.25em 0.25em 0.25em;"
+                          type="button" />
+            </div>
+        </EditForm>
+    </Body>
+</MBDialog>
