@@ -50,54 +50,60 @@ $color-magenta: #F99BCC;
     --dw-color-on-secondary-on-light: white;
 }
 
-div.dw-yellow {
-    --mdc-theme-surface: #{$color-yellow};
-    --mdc-theme-on-surface: black;
-    --mdc-theme-background: #{$color-yellow};
-    --mdc-theme-primary: #{$color-blue};
-    --mdc-theme-on-primary: black;
-    --mdc-theme-secondary: #{$color-yellow};
-    --mdc-theme-on-secondary: black;
-    background-color: $color-yellow;
-    color: black;
-    --dw-obscured-color: var(--mdc-color-grey-300);
+.dw-yellow {
+    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab {
+        --mdc-theme-surface: #{$color-yellow};
+        --mdc-theme-on-surface: black;
+        --mdc-theme-background: #{$color-yellow};
+        --mdc-theme-primary: #{$color-blue};
+        --mdc-theme-on-primary: black;
+        --mdc-theme-secondary: #{$color-yellow};
+        --mdc-theme-on-secondary: black;
+        background-color: $color-yellow;
+        color: black;
+        --dw-obscured-color: var(--mdc-color-grey-300);
+    }
 }
 
-svg.dw-yellow g {
+.dw-yellow .dw-boundary-image > svg > g {
     fill: $color-yellow;
 }
 
-div.dw-green {
-    --mdc-theme-surface: #{$color-green};
-    --mdc-theme-on-surface: black;
-    --mdc-theme-background: #{$color-green};
-    --mdc-theme-primary: #{$color-magenta};
-    --mdc-theme-on-primary: black;
-    --mdc-theme-secondary: #{$color-green};
-    --mdc-theme-on-secondary: black;
-    background-color: $color-green;
-    color: black;
-    --dw-obscured-color: var(--mdc-color-grey-300);
+.dw-green {
+    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab {
+        --mdc-theme-surface: #{$color-green};
+        --mdc-theme-on-surface: black;
+        --mdc-theme-background: #{$color-green};
+        --mdc-theme-primary: #{$color-magenta};
+        --mdc-theme-on-primary: black;
+        --mdc-theme-secondary: #{$color-green};
+        --mdc-theme-on-secondary: black;
+        background-color: $color-green;
+        color: black;
+        --dw-obscured-color: var(--mdc-color-grey-300);
+    }
 }
 
-svg.dw-green g {
+.dw-green .dw-boundary-image > svg > g {
     fill: $color-green;
 }
 
-div.dw-blue {
-    --mdc-theme-surface: #{$color-blue};
-    --mdc-theme-on-surface: black;
-    --mdc-theme-background: #{$color-blue};
-    --mdc-theme-primary: #{$color-yellow};
-    --mdc-theme-on-primary: black;
-    --mdc-theme-secondary: #{$color-blue};
-    --mdc-theme-on-secondary: black;
-    background-color: $color-blue;
-    color: black;
-    --dw-obscured-color: var(--mdc-color-grey-300);
+.dw-blue {
+    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab {
+        --mdc-theme-surface: #{$color-blue};
+        --mdc-theme-on-surface: black;
+        --mdc-theme-background: #{$color-blue};
+        --mdc-theme-primary: #{$color-yellow};
+        --mdc-theme-on-primary: black;
+        --mdc-theme-secondary: #{$color-blue};
+        --mdc-theme-on-secondary: black;
+        background-color: $color-blue;
+        color: black;
+        --dw-obscured-color: var(--mdc-color-grey-300);
+    }
 }
 
-svg.dw-blue g {
+.dw-blue .dw-boundary-image > svg > g {
     fill: $color-blue;
 }
 

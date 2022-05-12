@@ -166,7 +166,7 @@ h1, h2, h3, h4, h5, h6, p {
     }
 
     &.dw-hero {
-        margin-top: -150px !important;
+        margin-top: -120px !important;
     }
 }
 
@@ -294,17 +294,13 @@ ul.mdc-typography--body2 {
     }
 }
 
-header {
-    .dw-boundary-image svg {
-        transform: rotate(180deg);
-        margin-top: -40px;
-    }
+header .dw-boundary-image svg {
+    transform: rotate(180deg);
+    margin-top: -90px;
 }
 
-footer {
-    .dw-boundary-image svg {
-        margin-bottom: -90px;
-    }
+footer .dw-boundary-image svg {
+    margin-bottom: -90px;
 }
 
 :root {

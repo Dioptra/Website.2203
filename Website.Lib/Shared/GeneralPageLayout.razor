@@ -2,33 +2,31 @@
 
 
 <CascadingValue Value="@ShowHomeButton">
-    <div id="dw-main-top" class="mdc-drawer-app-content dw-main-content">
+    <div id="dw-main-top" class="mdc-drawer-app-content dw-main-content @ColorClass">
         <div class="dw-content">
             <header>
-                <div class="@ColorClass">
+                <div>
                     <div class="dw-max-width-content">
                         <div class="mdc-layout-grid">
                             <div class="mdc-layout-grid__inner dw-header">
                                 <div class="mdc-layout-grid__cell--span-12 dw-header-large dw-hidden-phone-down">
                                     <span style="min-width: 120px; margin-right: 36px;"><DioptraLogo Color="black" Height="120" /></span>
-                                    <h1 class="mdc-typography--headline1">DIOPTRA</h1>
+                                    <h1 class="mdc-typography--headline1" style="font-weight: 700;">DIOPTRA</h1>
                                 </div>
 
                                 <div class="mdc-layout-grid__cell--span-12 dw-header-small dw-hidden-tablet-up">
                                     <span style="min-width: 80px; margin-bottom: 6px;"><DioptraLogo Color="black" Height="80" /></span>
-                                    <h1 class="mdc-typography--headline4">DIOPTRA</h1>
+                                    <h1 class="mdc-typography--headline4" style="font-weight: 700;">DIOPTRA</h1>
                                 </div>
-
-                                <p class="dw-quote">Real Estate Investment Analytics</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <MainBoundary ColorClass="@ColorClass" />
+                <MainBoundary />
             </header>
 
-            <div class="dw-home @ColorClass">
+            <div class="dw-home">
                 <MBFloatingActionButton Icon="home" Exited="@HomeButtonExited" @onclick="HomeClick" />
             </div>
 
@@ -38,9 +36,9 @@
         </div>
 
         <footer class="dw-footer">
-            <MainBoundary ColorClass="@ColorClass" />
+            <MainBoundary />
 
-            <div class="@ColorClass">
+            <div>
                 <div class="dw-max-width-content">
                     <div class="mdc-layout-grid">
                         <div class="mdc-layout-grid__inner">
