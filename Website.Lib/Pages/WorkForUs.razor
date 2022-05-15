@@ -10,7 +10,7 @@
 </HeadAndMetaContent>
 
 
-<GeneralPageLayout @ref="@GeneralPageLayout" ColorClass="dw-blue" >
+<GeneralPageLayout @ref="@GeneralPageLayout" ColorClass="dw-green" >
     <div class="dw-section-regular">
         <div class="dw-max-width-content">
             <div class="mdc-layout-grid">
@@ -93,66 +93,67 @@
             </div>
         </div>
     </div>
+
+    <MBDialog EscapeKeyAction=""
+              @ref="@RecruitmentEnquiryDialog"
+              ScrimClickAction=""
+              Title="@HiringDialogTitle">
+        <Body>
+            <EditForm Model="@RecruitmentEnquiry"
+                      OnValidSubmit="@DialogSubmittedAsync">
+
+                <DataAnnotationsValidator />
+
+                <MBTextField @bind-Value="@RecruitmentEnquiry.Name"
+                             Label="Name"
+                             style="width: 100%; margin-top: 6px;"
+                             TextInputStyle="@MBTextInputStyle.Outlined"
+                             ValidationMessageFor="@(() => RecruitmentEnquiry.Name)" />
+
+
+                <MBTextField @bind-Value="@RecruitmentEnquiry.Email"
+                             Label="Email"
+                             style="width: 100%; margin-top: 6px;"
+                             TextInputStyle="@MBTextInputStyle.Outlined"
+                             ValidationMessageFor="@(() => RecruitmentEnquiry.Email)" />
+
+                <MBTextField @bind-Value="@RecruitmentEnquiry.Phone"
+                             Label="Phone Number"
+                             style="width: 100%; margin-top: 6px;"
+                             TextInputStyle="@MBTextInputStyle.Outlined"
+                             ValidationMessageFor="@(() => RecruitmentEnquiry.Phone)" />
+
+                @if (ShowProspectiveRole)
+                {
+                    <MBSelect @bind-Value="@RecruitmentEnquiry.ProspectiveRole"
+                              Items="@SelectElements"
+                              ItemValidation="@MBItemValidation.NoSelection"
+                              SelectInputStyle="@MBSelectInputStyle.Outlined"
+                              Label="Your Prospective Role"
+                              style="width: 100%; margin-bottom: 16px;" />
+                }
+
+                <MBTextArea @bind-Value="@RecruitmentEnquiry.AboutMe"
+                            Label="About Me"
+                            Rows="5"
+                            style="width: 100%; margin-top: 6px;"
+                            TextInputStyle="@MBTextInputStyle.Outlined"
+                            ValidationMessageFor="@(() => RecruitmentEnquiry.AboutMe)" />
+
+                <div class="mdc-layout-grid__cell--span-12" style="text-align: right;">
+                    <MBButton Label="Send"
+                              ButtonStyle="@MBButtonStyle.ContainedUnelevated"
+                              style="margin: 0.75em 0.25em 0.25em 0.25em;"
+                              type="submit" />
+
+                    <MBButton Label="Cancel"
+                              ButtonStyle="@MBButtonStyle.Outlined"
+                              @onclick="@ClosegDialogAsync"
+                              style="margin: 0.75em 0.25em 0.25em 0.25em;"
+                              type="button" />
+                </div>
+
+            </EditForm>
+        </Body>
+    </MBDialog>
 </GeneralPageLayout>
-
-<MBDialog EscapeKeyAction=""
-          @ref="@RecruitmentEnquiryDialog"
-          ScrimClickAction=""
-          Title="@HiringDialogTitle">
-    <Body>
-        <EditForm Model="@RecruitmentEnquiry"
-                  OnValidSubmit="@DialogSubmittedAsync">
-
-            <DataAnnotationsValidator />
-
-            <MBTextField @bind-Value="@RecruitmentEnquiry.Name"
-                         Label="Name"
-                         style="width: 100%; margin-top: 6px;"
-                         TextInputStyle="@MBTextInputStyle.Outlined"
-                         ValidationMessageFor="@(() => RecruitmentEnquiry.Name)" />
-
-
-            <MBTextField @bind-Value="@RecruitmentEnquiry.Email"
-                         Label="Email"
-                         style="width: 100%; margin-top: 6px;"
-                         TextInputStyle="@MBTextInputStyle.Outlined"
-                         ValidationMessageFor="@(() => RecruitmentEnquiry.Email)" />
-
-            <MBTextField @bind-Value="@RecruitmentEnquiry.Phone"
-                         Label="Phone Number"
-                         style="width: 100%; margin-top: 6px;"
-                         TextInputStyle="@MBTextInputStyle.Outlined"
-                         ValidationMessageFor="@(() => RecruitmentEnquiry.Phone)" />
-
-            @if (ShowProspectiveRole)
-            {
-                <MBSelect @bind-Value="@RecruitmentEnquiry.ProspectiveRole"
-                          Items="@SelectElements"
-                          ItemValidation="@MBItemValidation.NoSelection"
-                          SelectInputStyle="@MBSelectInputStyle.Outlined"
-                          Label="Your Prospective Role"
-                          style="width: 100%; margin-bottom: 16px;" />
-            }
-
-            <MBTextArea @bind-Value="@RecruitmentEnquiry.AboutMe"
-                        Label="About Me"
-                        Rows="5"
-                        style="width: 100%; margin-top: 6px;"
-                        TextInputStyle="@MBTextInputStyle.Outlined"
-                        ValidationMessageFor="@(() => RecruitmentEnquiry.AboutMe)" />
-
-            <div class="mdc-layout-grid__cell--span-12" style="text-align: right;">
-                <MBButton Label="Send"
-                          ButtonStyle="@MBButtonStyle.Outlined"
-                          style="margin: 0.75em 0.25em 0.25em 0.25em;"
-                          type="submit" />
-
-                <MBButton Label="Cancel"
-                          @onclick="@ClosegDialogAsync"
-                          style="margin: 0.75em 0.25em 0.25em 0.25em;"
-                          type="button" />
-            </div>
-
-        </EditForm>
-    </Body>
-</MBDialog>

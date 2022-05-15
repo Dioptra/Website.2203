@@ -73,7 +73,8 @@
 
 <CookieConsentBanner ColorClass="@ColorClass" />
 
-<MBDialog EscapeKeyAction=""
+<MBDialog class="@ColorClass"
+          EscapeKeyAction=""
           @ref="@ContactDialog"
           ScrimClickAction=""
           Title="Contact Dioptra">
@@ -110,11 +111,12 @@
 
             <div class="mdc-layout-grid__cell--span-12" style="text-align: right;">
                 <MBButton Label="Send"
-                          ButtonStyle="@MBButtonStyle.Outlined"
+                          ButtonStyle="@MBButtonStyle.ContainedUnelevated"
                           style="margin: 0.75em 0.25em 0.25em 0.25em;"
                           type="submit" />
 
                 <MBButton Label="Cancel"
+                          ButtonStyle="@MBButtonStyle.Outlined"
                           @onclick="@CloseContactDialogAsync"
                           style="margin: 0.75em 0.25em 0.25em 0.25em;"
                           type="button" />
