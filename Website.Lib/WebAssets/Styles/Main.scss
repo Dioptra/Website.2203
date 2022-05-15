@@ -1,4 +1,6 @@
 ﻿$fade-in-out: 20000ms;
+$body-font: canada-type-gibson,Arial,Helvetica,sans-serif;
+$heading-font: apertura,Arial,Helvetica,sans-serif;
 
 @use 'sass:map';
 
@@ -9,70 +11,70 @@
 );
 
 @use "@material/typography" with ( 
-    $font-family: unquote("'Roboto', sans-serif"),
+    $font-family: $body-font,
 
     $styles-headline1: (
-        font-family: unquote("'Roboto', sans-serif"),
-        font-weight: 400,
+        font-family: $heading-font,
+        font-weight: 800,
         font-size: 36px,
         font-style: normal,
         line-height: normal,
     ),
 
     $styles-headline2: (
-        font-family: unquote("'Roboto Serif', sans-serif"),
-        font-weight: 700,
+        font-family: $heading-font,
+        font-weight: 800,
         font-size: 32px,
         font-style: normal,
         line-height: normal,
     ),
 
     $styles-headline3: (
-        font-family: unquote("'Roboto Serif', sans-serif"),
-        font-weight: 600,
+        font-family: $heading-font,
+        font-weight: 800,
         font-size: 28px,
         font-style: normal,
         line-height: normal,
     ),
 
     $styles-headline4: (
-        font-family: unquote("'Roboto Serif', sans-serif"),
-        font-weight: 600,
+        font-family: $heading-font,
+        font-weight: 800,
         font-size: 24px,
         font-style: normal,
         line-height: normal,
     ),
 
     $styles-headline5: (
-        font-family: unquote("'Roboto Serif', sans-serif"),
-        font-weight: 600,
+        font-family: $heading-font,
+        font-weight: 800,
         font-size: 22px,
         font-style: normal,
         line-height: normal,
     ),
 
     $styles-headline6: (
-        font-family: unquote("'Roboto Serif', sans-serif"),
-        font-weight: 600,
+        font-family: $heading-font,
+        font-weight: 800,
         font-size: 20px,
         font-style: normal,
         line-height: normal,
     ),
 
     $styles-body1: (
-        font-family: unquote("'Roboto', sans-serif"),
+        font-family: $body-font,
         font-weight: 400,
         font-size: 20px,
         font-style: normal,
-        line-height: 1.2,
+        //line-height: 1.2,
     ),
 
     $styles-body2: (
-        font-family: unquote("'Roboto', sans-serif"),
+        font-family: $body-font,
         font-weight: 400,
         font-size: 16px,
         font-style: normal,
-        line-height: 1.2,
+        //line-height: 1.2,
     ),
 );
 
@@ -145,28 +147,31 @@ h1, h2, h3, h4, h5, h6, p {
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
+    --mdc-theme-secondary: rgba(0, 0, 0, 0.87);
+
 
     .mb-carousel {
         width: 340px;
 
+        .mdc-fab {
+            background-color: white;
+        }
+
         img {
             position: relative;
             width: 100%;
-            height: 191px;
+            height: 213px;
         }
     }
 }
 
 .dw-section-condensed {
-    padding-top: 48px;
-    padding-bottom: 48px;
-
     .dw-section-spacing {
         height: 24px;
     }
 
     &.dw-hero {
-        margin-top: -120px !important;
+        margin-top: -52px;
     }
 }
 
@@ -177,6 +182,23 @@ h1, h2, h3, h4, h5, h6, p {
     .dw-section-spacing {
         height: 48px;
     }
+}
+
+.dw-feature {
+    margin: 0px;
+}
+
+.dw-feature:first-of-type {
+    margin-top: 48px;
+}
+
+.dw-feature:last-of-type {
+    margin-bottom: 48px;
+}
+
+.dw-accent-panel {
+    padding-top: 48px;
+    padding-bottom: 48px;
 }
 
 .dw-card-container {
@@ -203,6 +225,7 @@ ul.mdc-typography--body2 {
     width: 100%;
     height: 0px;
     top: 0px;
+    z-index: 2;
 }
 
 .dw-content {
@@ -286,16 +309,11 @@ ul.mdc-typography--body2 {
 }
 
 .dw-tagline {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
     margin: 48px 0;
-    padding: 48px !important;
     text-align: center !important;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1020px;
-    border: solid;
-    border-width: 4px !important;
-    border-radius: 12px;
-    border-color: var(--mdc-theme-primary) !important;
 
     .mdc-typography--headline2, mdc-typography--headline4 {
         margin-top: 0;
@@ -303,17 +321,17 @@ ul.mdc-typography--body2 {
         margin-right: 0;
     }
 
+    div {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        max-width: 600px;
+        justify-content: center;
+    }
+
     .mdc-button {
         margin-bottom: 0;
     }
-}
-
-.dw-skyline {
-    background-image: url('/_content/Website.Lib/images/skyline.jpg');
-    width: 100%;
-    height: 160px;
-    background-size: auto;
-    background-repeat: no-repeat;
 }
 
 .dw-boundary-image {
@@ -344,13 +362,16 @@ footer .dw-boundary-image svg {
 }
 
 .mb-carousel__lower {
-    padding-top: 24px;
     width: 100vw !important;
 }
 
 @media (max-width: map.get(layout-grid.$breakpoints, "tablet") - 1px) {
-    .mb-carousel__lower .mdc-touch-target-wrapper {
-        margin: 0 -6px;
+    .mb-carousel__lower {
+        padding-top: 12px !important;
+
+        .mdc-touch-target-wrapper {
+            margin: 0 -6px;
+        }
     }
 
     .dw-hidden-phone-down {
@@ -366,6 +387,10 @@ footer .dw-boundary-image svg {
             margin-left: 12px;
         }
     }
+
+    .dw-tagline img {
+        display: none;
+    }
 }
 
 @media (max-width: map.get(layout-grid.$breakpoints, "desktop") - 1px) {
@@ -375,6 +400,10 @@ footer .dw-boundary-image svg {
 }
 
 @media (min-width: map.get(layout-grid.$breakpoints, "tablet")) {
+    .mb-carousel__lower {
+        padding-top: 24px !important;
+    }
+
     .dw-hidden-tablet-up {
         display: none !important;
     }
@@ -389,6 +418,23 @@ footer .dw-boundary-image svg {
             margin-top: -28px;
             top: 12px;
         }
+    }
+
+    .dw-title {
+        font-size: 36px;
+    }
+
+    .dw-section-condensed {
+        padding-top: 48px;
+        padding-bottom: 48px;
+
+        &.dw-hero {
+            margin-top: -120px;
+        }
+    }
+
+    .dw-feature {
+        margin: 48px 0px;
     }
 
     .dw-dialog {
@@ -410,9 +456,38 @@ footer .dw-boundary-image svg {
     .dw-carousel-container {
         .mb-carousel {
             width: 400px;
-
+            
             img {
                 height: 304px;
+            }
+        }
+    }
+
+    .dw-tagline {
+        div {
+            display: flex;
+            justify-content: center;
+
+            .mdc-button {
+                margin-top: 80px;
+            }
+        }
+
+        .dw-picture-left {
+            align-items: flex-end;
+            padding-right: 60px;
+
+            p {
+                text-align: right;
+            }
+        }
+
+        .dw-picture-right {
+            align-items: flex-start;
+            padding-left: 60px;
+
+            p {
+                text-align: left;
             }
         }
     }
@@ -430,7 +505,6 @@ footer .dw-boundary-image svg {
             font-size: var(--mdc-typography-body1-font-size, 20px);
         }
     }
-
 }
 
 @media (min-width: map.get(layout-grid.$breakpoints, "desktop")) {
@@ -443,15 +517,15 @@ footer .dw-boundary-image svg {
             width: 800px;
 
             img {
-                height: 450px;
+                height: 500px;
             }
         }
     }
 }
 
 .dw-quote {
-    font-family: Lora, sans-serif;
-    font-weight: 500;
+    font-family: angie-sans, sans-serif;
+    font-weight: 600;
     font-style: italic;
     font-size: 22px;
     line-height: 1.5;
@@ -467,6 +541,10 @@ footer .dw-boundary-image svg {
     overflow: visible;
 }
 
+.dw-quote-icon-fill {
+    fill: var(--mdc-theme-primary);
+}
+
 .dw-header {
     display: inline-flex;
     flex-flow: column nowrap;
@@ -477,19 +555,36 @@ footer .dw-boundary-image svg {
     }
 }
 
+.dw-title {
+    font-family: angie-sans, sans-serif;
+    font-weight: 800;
+    font-style: italic;
+    line-height: 1.0;
+    margin: 0px;
+}
+
 .dw-header-large {
     display: inline-flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
+
+    .dw-title {
+        font-size: 36px;
+    }
 }
 
 .dw-header-small {
     display: inline-flex;
-    flex-flow: column nowrap;
-    justify-content: center;
+    padding: 0px 28px 0px 6px;
+    flex-flow: row nowrap;
+    justify-content: space-between;
     align-items: center;
     text-align: center;
+
+    .dw-title {
+        font-size: 28px;
+    }
 }
 
 .dw-loading {

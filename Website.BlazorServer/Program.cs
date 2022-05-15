@@ -116,7 +116,7 @@ app.Use(async (context, next) =>
         "child-src 'self' ; " +
         $"connect-src 'self' wss://{baseDomain}:* www.google-analytics.com; " +
         "default-src 'self'; " +
-        "font-src fonts.googleapis.com fonts.gstatic.com; " +
+        "font-src use.typekit.net fonts.gstatic.com; " +
         "frame-ancestors 'none'; " +
         "frame-src 'self'; " +
         "form-action 'none'; " +
@@ -128,18 +128,18 @@ app.Use(async (context, next) =>
         $"report-to https://{baseUri}/api/CspReporting/UriReport; " +
         $"report-uri https://{baseUri}/api/CspReporting/UriReport; " +
         $"script-src {source} 'unsafe-inline' 'report-sample';" +
-        "style-src 'self' 'unsafe-inline' 'report-sample' fonts.googleapis.com fonts.gstatic.com; " +
+        "style-src 'self' 'unsafe-inline' 'report-sample' p.typekit.net use.typekit.net fonts.gstatic.com; " +
         "upgrade-insecure-requests; " +
         "worker-src 'self';";
 
     context.Response.Headers.Add("X-Frame-Options", "DENY");
     context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
-    context.Response.Headers.Add("X-Xss-Protection", "1");
+    context.Response.Headers.Add("X-Xss-Protection", "1; mode=block");
     context.Response.Headers.Add("X-ClientId", "dioptra");
     context.Response.Headers.Add("Referrer-Policy", "no-referrer");
     context.Response.Headers.Add("X-Permitted-Cross-Domain-Policies", "none");
     context.Response.Headers.Add("Permissions-Policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
-    context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+    context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
     context.Response.Headers.Add("Content-Security-Policy", csp);
 
     await next();

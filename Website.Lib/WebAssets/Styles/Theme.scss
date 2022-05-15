@@ -7,8 +7,6 @@ $color-primary-on-dark: #9DAAF2;
 $color-primary-on-light: darken($color-primary-on-dark, 30%);
 $color-secondary-on-dark: #c44018;
 $color-secondary-on-light: darken($color-secondary-on-dark, 30%);
-$color-accent: #F4DB7D;
-$color-quote: #862C10;
 
 
 $color-yellow: #FFE77F;
@@ -56,7 +54,7 @@ $color-magenta: #F99BCC;
     --mdc-theme-on-primary: black;
     --mdc-theme-on-secondary: black;
 
-    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab {
+    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab, .dw-accent-panel, &.dw-cookie-alert {
         --mdc-theme-surface: #{$color-yellow};
         --mdc-theme-background: #{$color-yellow};
         background-color: $color-yellow;
@@ -74,7 +72,7 @@ $color-magenta: #F99BCC;
     --mdc-theme-on-primary: black;
     --mdc-theme-on-secondary: black;
 
-    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab {
+    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab, .dw-accent-panel, &.dw-cookie-alert {
         --mdc-theme-surface: #{$color-green};
         --mdc-theme-background: #{$color-green};
         background-color: $color-green;
@@ -92,7 +90,7 @@ $color-magenta: #F99BCC;
     --mdc-theme-on-primary: black;
     --mdc-theme-on-secondary: black;
 
-    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab {
+    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab, .dw-accent-panel, &.dw-cookie-alert {
         --mdc-theme-surface: #{$color-blue};
         --mdc-theme-background: #{$color-blue};
         background-color: $color-blue;
@@ -117,15 +115,4 @@ $color-magenta: #F99BCC;
     background-color: $color-dark;
     color: white;
     --dw-obscured-color: var(--mdc-color-grey-300);
-}
-
-.dw-accent {
-    --mdc-theme-surface: #{$color-accent};
-    --mdc-theme-on-surface: #{$color-dark};
-    --mdc-theme-background: #{$color-accent};
-    background-color: $color-accent;
-}
-
-.dw-quote-icon-fill {
-    fill: $color-quote;
 }
