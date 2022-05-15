@@ -64,11 +64,16 @@ $blue-on-secondary: black;
     --mdc-theme-on-primary: #{$yellow-on-primary};
     --mdc-theme-on-secondary: #{$yellow-on-secondary};
 
-    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab, .dw-accent-panel, &.dw-cookie-alert {
+    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .dw-accent-panel, &.dw-cookie-alert {
         --mdc-theme-surface: #{$yellow-secondary};
         --mdc-theme-background: #{$yellow-secondary};
         background-color: $yellow-secondary;
         --dw-obscured-color: var(--mdc-color-grey-300);
+    }
+
+    .mdc-fab {
+        --mdc-theme-secondary: #{$yellow-primary};
+        --mdc-theme-on-secondary: #{$yellow-on-primary};
     }
 }
 
@@ -82,11 +87,16 @@ $blue-on-secondary: black;
     --mdc-theme-on-primary: #{$green-on-primary};
     --mdc-theme-on-secondary: #{$green-on-secondary};
 
-    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab, .dw-accent-panel, &.dw-cookie-alert {
+    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .dw-accent-panel, &.dw-cookie-alert {
         --mdc-theme-surface: #{$green-secondary};
         --mdc-theme-background: #{$green-secondary};
         background-color: $green-secondary;
         --dw-obscured-color: var(--mdc-color-grey-300);
+    }
+
+    .mdc-fab {
+        --mdc-theme-secondary: #{$green-primary};
+        --mdc-theme-on-secondary: #{$green-on-primary};
     }
 }
 
@@ -100,11 +110,16 @@ $blue-on-secondary: black;
     --mdc-theme-on-primary: #{$blue-on-primary};
     --mdc-theme-on-secondary: #{$blue-on-secondary};
 
-    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .mdc-fab, .dw-accent-panel, &.dw-cookie-alert {
+    header > div:not(.dw-boundary-image), footer > div:not(.dw-boundary-image), .dw-accent-panel, &.dw-cookie-alert {
         --mdc-theme-surface: #{$blue-secondary};
         --mdc-theme-background: #{$blue-secondary};
         background-color: $blue-secondary;
         --dw-obscured-color: var(--mdc-color-grey-300);
+    }
+
+    .mdc-fab {
+        --mdc-theme-secondary: #{$blue-primary};
+        --mdc-theme-on-secondary: #{$blue-on-primary};
     }
 }
 

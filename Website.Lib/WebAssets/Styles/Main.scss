@@ -66,7 +66,8 @@ $heading-font: apertura,Arial,Helvetica,sans-serif;
         font-weight: 400,
         font-size: 20px,
         font-style: normal,
-        //line-height: 1.2,
+        line-height: 1.6,
+        margin-bottom: 1.5rem,
     ),
 
     $styles-body2: (
@@ -74,7 +75,8 @@ $heading-font: apertura,Arial,Helvetica,sans-serif;
         font-weight: 400,
         font-size: 16px,
         font-style: normal,
-        //line-height: 1.2,
+        line-height: 1.6,
+        margin-bottom: 1.5rem,
     ),
 );
 
@@ -88,7 +90,9 @@ $heading-font: apertura,Arial,Helvetica,sans-serif;
     App layout styling
 */
 :root {
-}
+/*    --mdc-typography-body1-line-height: 1.2;
+    --mdc-typography-body2-line-height: 1.2;
+*/}
 
 body {
     height: 100vh;
@@ -147,14 +151,15 @@ h1, h2, h3, h4, h5, h6, p {
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
-    --mdc-theme-secondary: rgba(0, 0, 0, 0.87);
+    --mdc-theme-secondary: rgba(0, 0, 0, 0.54);
 
 
     .mb-carousel {
         width: 340px;
 
         .mdc-fab {
-            background-color: white;
+            --mdc-theme-secondary: white;
+            --mdc-theme-on-secondary: black;
         }
 
         img {
@@ -421,11 +426,8 @@ footer .dw-boundary-image svg {
     }
 
     .dw-section-condensed {
-        padding-top: 48px;
-        padding-bottom: 48px;
-
         &.dw-hero {
-            margin-top: -120px;
+            margin-top: -72px;
         }
     }
 
@@ -568,11 +570,15 @@ footer .dw-boundary-image svg {
     .dw-title {
         font-size: 48px;
     }
+
+    span > svg {
+        margin-left: -28px;
+    }
 }
 
 .dw-header-small {
     display: inline-flex;
-    padding: 0px 28px 0px 6px;
+    padding: 0px 10px;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
@@ -580,6 +586,10 @@ footer .dw-boundary-image svg {
 
     .dw-title {
         font-size: 32px;
+    }
+
+    span > svg {
+        margin-left: -20px;
     }
 }
 
