@@ -265,6 +265,10 @@ ul.mdc-typography--body2 {
     &.dw-footer-address {
         justify-content: left;
         align-items: flex-start;
+
+        p {
+            line-height: 1.2;
+        }
     }
 
     & a {

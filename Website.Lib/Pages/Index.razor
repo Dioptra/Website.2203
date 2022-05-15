@@ -7,7 +7,17 @@
                     Description="Dioptra provides sophisticated, banking grade financial analytics to institutional real estate investors."
                     OpenGraphImage=""
                     TwitterImage="">
-    @foreach (var item in CarouselData)
+    @foreach (var item in CarouselImages)
+    {
+        <link rel="prefetch" href="@item.Uri" as="image">
+    }
+
+    @foreach (var item in SkylineImages)
+    {
+        <link rel="prefetch" href="@item.Uri" as="image">
+    }
+
+    @foreach (var item in ProgrammerImages)
     {
         <link rel="prefetch" href="@item.Uri" as="image">
     }
@@ -21,7 +31,7 @@
                     <div class="mdc-layout-grid__cell--span-12">
                         <div class="dw-panel-container dw-carousel-container">
                             <MBCarousel Context="item"
-                                        Items="@CarouselData"
+                                        Items="@CarouselImages"
                                         RolloverInterval="4000">
                                 <Content>
                                     <img src="@item.Uri" alt="@item.Caption">
@@ -41,9 +51,10 @@
                 <div class="mdc-layout-grid__inner">
                     <div class="mdc-layout-grid__cell--span-12 dw-tagline">
                         <picture>
-                            <source media="(max-width: 1219px)" srcset="_content/Website.Lib/images/london-320.jpg">
-                            <source media="(min-width: 1220px)" srcset="_content/Website.Lib/images/london-640.jpg">
-                            <img src="_content/Website.Lib/images/london-640.jpg" alt="London nighttime arial view">
+                            <source media="(max-width: 1019px)" srcset="@SkylineImages[2].Uri" width="@SkylineImages[2].Width" height="@SkylineImages[2].Height">
+                            <source media="(min-width: 1020px) and (max-width: 1219px)" srcset="@SkylineImages[1].Uri" width="@SkylineImages[1].Width" height="@SkylineImages[1].Height">
+                            <source media="(min-width: 1220px)" srcset="@SkylineImages[0].Uri" width="@SkylineImages[0].Width" height="@SkylineImages[0].Height">
+                            <img src="@SkylineImages[0].Uri" alt="@SkylineImages[0].Caption">
                         </picture>
 
                         <div class="dw-picture-left">
@@ -146,9 +157,10 @@
                         </div>
 
                         <picture>
-                            <source media="(max-width: 1219px)" srcset="_content/Website.Lib/images/london-320.jpg">
-                            <source media="(min-width: 1220px)" srcset="_content/Website.Lib/images/london-640.jpg">
-                            <img src="_content/Website.Lib/images/london-640.jpg" alt="London nighttime arial view">
+                            <source media="(max-width: 1019px)" srcset="@ProgrammerImages[2].Uri" width="@ProgrammerImages[2].Width" height="@ProgrammerImages[2].Height">
+                            <source media="(min-width: 1020px) and (max-width: 1219px)" srcset="@ProgrammerImages[1].Uri" width="@ProgrammerImages[1].Width" height="@ProgrammerImages[1].Height">
+                            <source media="(min-width: 1220px)" srcset="@ProgrammerImages[0].Uri" width="@ProgrammerImages[0].Width" height="@ProgrammerImages[0].Height">
+                            <img src="@ProgrammerImages[0].Uri" alt="@ProgrammerImages[0].Caption">
                         </picture>
                     </div>
                 </div>
