@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Website.Lib\Website.Lib.csproj" />
     <ProjectReference Include="..\Client\Website.BlazorWebAssembly.Client.csproj" />
     <ProjectReference Include="..\Shared\Website.BlazorWebAssembly.Shared.csproj" />
   </ItemGroup>
