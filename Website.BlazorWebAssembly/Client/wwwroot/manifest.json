@@ -1,6 +1,6 @@
 {
-  "name": "Website.2203",
-  "short_name": "Website.2203",
+  "name": "Website.BlazorWebAssembly",
+  "short_name": "Website.BlazorWebAssembly",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
