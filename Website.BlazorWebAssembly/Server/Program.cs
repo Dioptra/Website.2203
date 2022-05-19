@@ -148,7 +148,7 @@ app.Use(async (context, next) =>
     context.Response.Headers.Add("X-Permitted-Cross-Domain-Policies", "none");
     context.Response.Headers.Add("Permissions-Policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
     context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
-    context.Response.Headers.Add("Content-Security-Policy", csp);
+    //context.Response.Headers.Add("Content-Security-Policy", csp);
 
     await next();
 });

@@ -1,6 +1,5 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http;
 namespace Website.Lib.Shared;
 public partial class CookieConsentBanner : ComponentBase
 {

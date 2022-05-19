@@ -1,6 +1,6 @@
 ﻿namespace Website.Lib;
 [AttributeUsage(AttributeTargets.Assembly)]
-class BuildDateAttribute : Attribute
+public class BuildDateAttribute : Attribute
 {
     public readonly string DateString;
 

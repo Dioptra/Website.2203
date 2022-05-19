@@ -1,7 +1,7 @@
 ﻿namespace Website.Lib;
 
 [AttributeUsage(AttributeTargets.Class)]
-internal class SitemapAttribute : Attribute
+public class SitemapAttribute : Attribute
 {
     public enum ChangeFreqType { always, Hourly, Daily, Weekly, Monthly, Yearly, Never };
 

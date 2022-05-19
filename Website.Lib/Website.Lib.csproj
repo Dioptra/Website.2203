@@ -4,7 +4,6 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<DockerTargetOS>Linux</DockerTargetOS>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -21,13 +20,6 @@
 		<PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
 		<PackageReference Include="libphonenumber-csharp" Version="8.12.46" />
 		<PackageReference Include="Material.Blazor" Version="3.0.0-preview.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.4" />
-		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
-		<PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
