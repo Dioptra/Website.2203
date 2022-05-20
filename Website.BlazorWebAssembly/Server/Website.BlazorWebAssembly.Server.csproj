@@ -4,8 +4,11 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>2c7682da-980e-4948-9745-6c4c2a7ce1aa</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<DockerfileContext>..\..</DockerfileContext>
+		<DockerComposeProjectPath>..\..\docker-compose-blazor-webassembly.dcproj</DockerComposeProjectPath>
+		<DockerfileTag>website-2203-blazor-webassembly</DockerfileTag>
 	</PropertyGroup>
 
 	<ItemGroup>
