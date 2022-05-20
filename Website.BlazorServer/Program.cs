@@ -127,7 +127,7 @@ app.Use(async (context, next) =>
         "object-src 'none'; " +
         $"report-to https://{baseUri}/api/CspReporting/UriReport; " +
         $"report-uri https://{baseUri}/api/CspReporting/UriReport; " +
-        $"script-src {source} 'unsafe-inline' 'report-sample';" +
+        $"script-src {source} 'report-sample';" +
         "style-src 'self' 'unsafe-inline' 'report-sample' p.typekit.net use.typekit.net fonts.gstatic.com; " +
         "upgrade-insecure-requests; " +
         "worker-src 'self';";

@@ -132,10 +132,10 @@ app.Use(async (context, next) =>
         "manifest-src 'self'; " +
         "media-src 'self'; " +
         "prefetch-src 'self'; " +
-        "object-src 'none'; " +
+        "object-src  data: 'unsafe-eval'; " +
         $"report-to https://{baseUri}/api/CspReporting/UriReport; " +
         $"report-uri https://{baseUri}/api/CspReporting/UriReport; " +
-        $"script-src {source} 'unsafe-inline' 'report-sample';" +
+        $"script-src {source} 'strict-dynamic' 'report-sample' 'unsafe-eval';" +
         "style-src 'self' 'unsafe-inline' 'report-sample' p.typekit.net use.typekit.net fonts.gstatic.com; " +
         "upgrade-insecure-requests; " +
         "worker-src 'self';";
@@ -148,7 +148,10 @@ app.Use(async (context, next) =>
     context.Response.Headers.Add("X-Permitted-Cross-Domain-Policies", "none");
     context.Response.Headers.Add("Permissions-Policy", "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()");
     context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
-    //context.Response.Headers.Add("Content-Security-Policy", csp);
+
+#if !DEBUG
+    context.Response.Headers.Add("Content-Security-Policy", csp);
+#endif
 
     await next();
 });
