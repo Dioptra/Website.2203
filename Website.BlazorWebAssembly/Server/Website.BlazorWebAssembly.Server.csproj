@@ -4,6 +4,8 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>..\..</DockerfileContext>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -12,10 +14,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\Website.ServerLib\Website.ServerLib.csproj" />
+		<ProjectReference Include="..\..\Website.ServerLib\Website.ServerLib.csproj" />
 		<ProjectReference Include="..\Client\Website.BlazorWebAssembly.Client.csproj" />
 		<ProjectReference Include="..\Shared\Website.BlazorWebAssembly.Shared.csproj" />
 	</ItemGroup>
-
 
 </Project>
