@@ -9,7 +9,7 @@ public class ContentSecurityPolicyService
     /// <summary>
     /// The Scoped nonce value.
     /// </summary>
-    public readonly string NonceValue = "";
+    //public readonly string NonceValue = "";
 
 
     public readonly string ScriptSrc = "'self'";
@@ -20,13 +20,13 @@ public class ContentSecurityPolicyService
 
     public ContentSecurityPolicyService()
     {
-        var bytes = new byte[32];
+        //var bytes = new byte[32];
 
-        var rnd = new Random();
+        //var rnd = new Random();
 
-        rnd.NextBytes(bytes);
+        //rnd.NextBytes(bytes);
 
-        NonceValue = Convert.ToBase64String(bytes);
+        //NonceValue = Convert.ToBase64String(bytes);
 
         var hashesFilePath = AppContext.BaseDirectory + "hashes.csv";
 
@@ -68,10 +68,10 @@ public class ContentSecurityPolicyService
     /// </summary>
     /// <param name="inlineScript"></param>
     /// <returns></returns>
-    public string GenerateInlineScriptElement(string inlineScript)
-    {
-        return $"<script nonce=\"{NonceValue}\">{inlineScript}</script>";
-    }
+    //public string GenerateInlineScriptElement(string inlineScript)
+    //{
+    //    return $"<script nonce=\"{NonceValue}\">{inlineScript}</script>";
+    //}
 
 
     /// <summary>
@@ -79,8 +79,8 @@ public class ContentSecurityPolicyService
     /// </summary>
     /// <param name="inlineScript"></param>
     /// <returns></returns>
-    public string GenerateInlineScriptElements(IEnumerable<string> inlineScripts)
-    {
-        return string.Concat(inlineScripts.Select(x => GenerateInlineScriptElement(x)));
-    }
+    //public string GenerateInlineScriptElements(IEnumerable<string> inlineScripts)
+    //{
+    //    return string.Concat(inlineScripts.Select(x => GenerateInlineScriptElement(x)));
+    //}
 }
