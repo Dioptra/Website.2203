@@ -51,7 +51,7 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddTransient<INotificationService, NotificationService>();
 
-builder.Services.AddScoped<ContentSecurityPolicyService>();
+builder.Services.AddSingleton<ContentSecurityPolicyService>();
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
@@ -139,9 +139,19 @@ app.UseStaticFiles();
 // Pentest fix
 app.Use(async (context, next) =>
 {
-    var nonceValue = context.RequestServices.GetService<ContentSecurityPolicyService>()?.NonceValue ?? throw new Exception("Nonce service unavailable");
+    var cspService = context.RequestServices.GetService<ContentSecurityPolicyService>();
+    if (cspService == null)
+    {
+        throw new Exception("ContentSecurityPolicy service unavailable");
+    }
 
-    var source = (app.Environment.IsDevelopment() ? "'self' " : "") + $"'nonce-{nonceValue}'";
+//    var scriptSource = app.Environment.IsDevelopment() ? "'self' " : cspService.ScriptSrc;
+
+//    var styleSource = app.Environment.IsDevelopment() ? "'self' " : cspService.StyleSrc;
+
+    var scriptSource = cspService.ScriptSrc;
+
+    var styleSource = cspService.StyleSrc;
 
     var baseUri = context.Request.Host.ToString();
     var baseDomain = context.Request.Host.Host;
@@ -163,8 +173,8 @@ app.Use(async (context, next) =>
         "object-src 'none'; " +
         $"report-to https://{baseUri}/api/CspReporting/UriReport; " +
         $"report-uri https://{baseUri}/api/CspReporting/UriReport; " +
-        $"script-src {source} 'report-sample' 'strict-dynamic';" +
-        "style-src 'self' 'unsafe-inline' 'report-sample' p.typekit.net use.typekit.net fonts.gstatic.com; " +
+        $"script-src {scriptSource} 'report-sample' 'strict-dynamic'; " +
+        $"style-src {styleSource} 'unsafe-inline' 'report-sample' p.typekit.net use.typekit.net fonts.gstatic.com; " +
         "upgrade-insecure-requests; " +
         "worker-src 'self';";
 

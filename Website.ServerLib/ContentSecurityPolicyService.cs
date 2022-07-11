@@ -15,6 +15,9 @@ public class ContentSecurityPolicyService
     public readonly string ScriptSrc = "'self'";
 
 
+    public readonly string StyleSrc = "'self'";
+
+
     public ContentSecurityPolicyService()
     {
         var bytes = new byte[32];
@@ -34,7 +37,9 @@ public class ContentSecurityPolicyService
 
         using StreamReader sr = new(hashesFilePath);
 
-        string str = "";
+        string scriptString = "";
+
+        string styleString = "";
 
         while (sr.Peek() >= 0)
         {
@@ -44,11 +49,17 @@ public class ContentSecurityPolicyService
 
             if (extension == "js")
             {
-                str += $"'sha256-{csvSplit[1]}' ";
+                scriptString += $"'sha256-{csvSplit[1]}' ";
+            }
+
+            if (extension == "css")
+            {
+                styleString += $"'sha256-{csvSplit[1]}' ";
             }
         }
 
-        ScriptSrc = str.Trim();
+        ScriptSrc = scriptString.Trim();
+        StyleSrc = styleString.Trim();
     }
 
 

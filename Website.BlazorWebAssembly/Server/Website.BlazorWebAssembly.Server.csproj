@@ -21,12 +21,12 @@
 		<ProjectReference Include="..\Client\Website.BlazorWebAssembly.Client.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<FilesToHash Include="$(PublishDir)wwwroot\**\*.js;$(PublishDir)wwwroot\**\*.css;$(PublishDir)wwwroot\**\*.json" />
-		<HashFileOutput Include="$(PublishDir)hashes.csv" />
-	</ItemGroup>
-	
 	<Target Name="BuildHashes" AfterTargets="Publish">
+		<ItemGroup>
+			<FilesToHash Include="$(PublishDir)wwwroot\**\*.js;$(PublishDir)wwwroot\**\*.css;$(PublishDir)wwwroot\**\*.json" />
+			<HashFileOutput Include="$(PublishDir)hashes.csv" />
+		</ItemGroup>
+
 		<GetFileHash Files="@(FilesToHash)" Algorithm="SHA256" HashEncoding="base64">
 			<Output TaskParameter="Items" ItemName="FilesWithHashes" />
 		</GetFileHash>
