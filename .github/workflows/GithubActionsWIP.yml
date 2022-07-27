@@ -11,7 +11,7 @@ env:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   outputCSFB: ${{github.workspace}}/siteCSFB
-  projectCSFB: 'Website.2203/docker-compose-blazor-webassembly.dcproj'
+  projectCSFB: './docker-compose-blazor-webassembly.dcproj'
 #  projectTest: 'CompressedStaticFiles.AspNetCore.Test/CompressedStaticFiles.AspNetCore.Test.csproj'
 
 jobs:
@@ -146,7 +146,7 @@ jobs:
 # This is hard-skipped when we only want to perform a comparison (github.event_name != 'workflow_dispatch')
 ############################################################################################################
   build-package:
-    name: Build nuget package
+    name: Build docker container
     needs: [info, test, version]
 
     runs-on: windows-latest
