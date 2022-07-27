@@ -22,15 +22,15 @@ jobs:
   is-on-fork:
     name: Running on a fork?
     runs-on: ubuntu-latest
-    if: github.repository != 'Material-Blazor/CompressedStaticFiles.AspNetCore'
+    if: github.repository != 'Dioptra/Website.2203'
     steps:
     - name: Nothing to see here
       run: echo ""
 
-  is-on-material-blazor:
-    name: Running on Material-Blazor/CompressedStaticFiles.AspNetCore?
+  is-on-dioptra:
+    name: Running on Dioptra/Website.2203?
     runs-on: ubuntu-latest
-    if: github.repository == 'Material-Blazor/CompressedStaticFiles.AspNetCore'
+    if: github.repository == 'Dioptra/Website.2203'
     steps:
     - name: Nothing to see here
       run: echo ""
@@ -49,7 +49,7 @@ jobs:
       if: github.event_name != 'workflow_dispatch'
 
     - name: Set ciSuffix as env variable
-      run: echo "ciSuffix=ci.$(date +'%Y-%m-%d--%H%M')" >> $GITHUB_ENV
+      run: echo "ciSuffix=ci.$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
       shell: bash
       if: github.event_name != 'workflow_dispatch'
 
