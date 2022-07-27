@@ -11,8 +11,8 @@ env:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   outputCSFB: ${{github.workspace}}/siteCSFB
-  projectCSFB: 'CompressedStaticFiles.AspNetCore/CompressedStaticFiles.AspNetCore.csproj'
-  projectTest: 'CompressedStaticFiles.AspNetCore.Test/CompressedStaticFiles.AspNetCore.Test.csproj'
+  projectCSFB: 'Website.2203/docker-compose-blazor-webassembly.dcproj'
+#  projectTest: 'CompressedStaticFiles.AspNetCore.Test/CompressedStaticFiles.AspNetCore.Test.csproj'
 
 jobs:
 
@@ -145,28 +145,28 @@ jobs:
 # Build nuget package
 # This is hard-skipped when we only want to perform a comparison (github.event_name != 'workflow_dispatch')
 ############################################################################################################
-  #build-package:
-  #  name: Build nuget package
-  #  needs: [info, test, version]
+  build-package:
+    name: Build nuget package
+    needs: [info, test, version]
 
-  #  runs-on: windows-latest
-  #  if: github.event_name != 'workflow_dispatch'
+    runs-on: windows-latest
+    if: github.event_name != 'workflow_dispatch'
 
-  #  steps:
-  #  - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
-  #    uses: actions/checkout@v2
-  #    with:
-  #      persist-credentials: false
+    steps:
+    - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
 
-  #  - name: Use prelease dotnet
-  #    uses: actions/setup-dotnet@v1
-  #    with:
-  #      dotnet-version: '6.0.x'
-  #      include-prerelease: true
-  #    if: github.event_name != 'workflow_dispatch'
+    - name: Use prelease dotnet
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+        include-prerelease: true
+      if: github.event_name != 'workflow_dispatch'
 
-  #  - name: Build CompressedStaticFiles.AspNetCore 🔧
-  #    run: dotnet build ${{env.projectCSFB}} --configuration ${{env.buildConfiguration}} --version-suffix ${{needs.version.outputs.suffix}}
+    - name: Build docker-compose-blazor-webassembly.dcproj 🔧
+      run: dotnet build ${{env.projectCSFB}} --configuration ${{env.buildConfiguration}} --version-suffix ${{needs.version.outputs.suffix}}
 
   #  - name: Generate the NuGet package 🔧
   #    run: dotnet pack ${{env.projectCSFB}} --no-build --configuration ${{env.buildConfiguration}} --output ${{env.outputCSFB}} -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --version-suffix ${{needs.version.outputs.suffix}}
