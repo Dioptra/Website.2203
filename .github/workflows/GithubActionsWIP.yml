@@ -169,7 +169,7 @@ jobs:
     - name: View directory
       run: ls -alt
     - name: Docker Compose Blazor Webassembly 🔧
-      run: docker-compose -d -f ${{webassemblyDC}} up
+      run: docker-compose -d -f ${{env.webassemblyDC}} up
       #run: dotnet build ${{env.projectCSFB}} --configuration ${{env.buildConfiguration}} --version-suffix ${{needs.version.outputs.suffix}}
 
   #  - name: Generate the NuGet package 🔧
