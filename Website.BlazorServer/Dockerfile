@@ -6,6 +6,14 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV DEBCONF_NOWARNINGS="yes"
+RUN apt-get update
+RUN apt-get install --no-install-recommends --yes apt-utils python3 nodejs npm
+RUN dotnet --info
+RUN dotnet workload install wasm-tools
+
 WORKDIR /src
 COPY ["Website.Lib/Website.Lib.csproj", "Website.Lib/"]
 COPY ["Website.ServerLib/Website.ServerLib.csproj", "Website.ServerLib/"]
