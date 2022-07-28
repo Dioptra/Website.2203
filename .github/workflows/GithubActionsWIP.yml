@@ -83,20 +83,20 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build . --file ${{ blazorServerDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ needs.version.outputs.suffix }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ needs.version.outputs.suffix }}
+        docker build . --file ${{ env.blazorServerDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }}
 
     - name: 'Deploy to Azure Container Instances'
       uses: 'azure/aci-deploy@v1'
       with:
         resource-group: ${{ secrets.RESOURCE_GROUP }}
         dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
-        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ blazorServerAppName }}:${{ needs.version.outputs.suffix }}
+        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }}
         registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registry-username: ${{ secrets.REGISTRY_USERNAME }}
         registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        name: ${{ registryName }}
-        location: ${{ registryLocation }}      
+        name: ${{ env.registryName }}
+        location: ${{ env.registryLocation }}      
       
 
 ############################################################################################################
@@ -126,17 +126,17 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build . --file ${{ blazorWebAssemblyDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ needs.version.outputs.suffix }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ needs.version.outputs.suffix }}
+        docker build . --file ${{ blazorWebAssemblyDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }}
 
     - name: 'Deploy to Azure Container Instances'
       uses: 'azure/aci-deploy@v1'
       with:
         resource-group: ${{ secrets.RESOURCE_GROUP }}
         dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
-        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }}
+        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }}
         registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registry-username: ${{ secrets.REGISTRY_USERNAME }}
         registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        name: ${{ registryName }}
-        location: ${{ registryLocation }}
+        name: ${{ env.registryName }}
+        location: ${{ env.registryLocation }}
