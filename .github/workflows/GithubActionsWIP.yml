@@ -199,6 +199,9 @@ jobs:
     #- name: Cleanup
     #  uses: AutoModality/action-clean@v1
 
+    - name: looksee
+      run: pwd && ls -alt
+
     - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
       uses: actions/checkout@v2
       with:
