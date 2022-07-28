@@ -24,8 +24,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Message Text="ProjectDir: $(ProjectDir)" Importance="high"/>
-		<Message Text="PublishDir: $(PublishDir)" Importance="high"/>
 		<ImageFiles Include="$(ProjectDir)WebAssets\Images\*.*" />
 		<PWAFiles Include="$(ProjectDir)WebAssets\PWA\*.*" />
 		<AndroidImageFiles Include="$(ProjectDir)WebAssets\android-images\*.*" />
@@ -61,6 +59,8 @@
 	</ItemGroup>
 
 	<Target Name="WWWRootFileCopy" BeforeTargets="PreBuildEvent">
+		<Message Text="ProjectDir: $(ProjectDir)" Importance="high"/>
+		<Message Text="PublishDir: $(PublishDir)" Importance="high"/>
 		<Copy SourceFiles="@(ImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/images" />
 		<Copy SourceFiles="@(PWAFiles)" DestinationFolder="$(ProjectDir)wwwroot/pwa" />
 		<Copy SourceFiles="@(AndroidImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/android-images" />
