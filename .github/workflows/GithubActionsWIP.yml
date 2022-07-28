@@ -248,9 +248,8 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        echo $ciSuffix
-        docker build . --file ./Website.BlazorServer/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:$ciSuffix
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:$ciSuffix
+        docker build . --file ./Website.BlazorServer/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{needs.version.outputs.suffix}} ${env:ciSuffix}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{needs.version.outputs.suffix}} ${env:ciSuffix}
 
     - name: 'Deploy to Azure Container Instances'
       uses: 'azure/aci-deploy@v1'
