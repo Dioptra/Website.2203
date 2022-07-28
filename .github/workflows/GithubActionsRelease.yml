@@ -1,13 +1,5 @@
 ﻿name: GithubActionsRelease
 
-############################################################################################################
-# All of thes jobs runs commands only on a tag push in the Material-Blazor\Material.Blazor repository
-# The publishing actions in forked repositories were handled by the WIP workflow
-# An 'ExitWorkflow' action is sorely needed
-############################################################################################################
-# NUGET_API_KEY is valid through 9/11/2021
-############################################################################################################
-
 on:
   push:
     tags:
@@ -16,12 +8,13 @@ on:
       - experimental-release-workflow
 
 env:
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-  outputCSFB: ${{github.workspace}}\siteCSFB
-  projectCSFB: 'CompressedStaticFiles.AspNetCore/CompressedStaticFiles.AspNetCore.csproj'
-  projectTest: 'CompressedStaticFiles.AspNetCore.Test/CompressedStaticFiles.AspNetCore.Test.csproj'
- 
+  blazorServerDockerFile: './Website.BlazorServer/Dockerfile'
+  blazorServerAppName: 'website-2203-blazor-server'
+  blazorWebAssemblyDockerFile: './Website.BlazorWebAssembly/Server/Dockerfile'
+  blazorWebAssemblyAppName: 'website-2203-blazor-webassembly'
+  registryName: 'dioptraregistry'
+  registryLocation: 'uk south'
+
 jobs:
 
 ############################################################################################################
@@ -30,136 +23,119 @@ jobs:
   is-on-fork:
     name: Running on a fork?
     runs-on: ubuntu-latest
-    if: github.repository != 'Material-Blazor/CompressedStaticFiles.AspNetCore'
+    if: github.repository != 'Dioptra/Website.2203'
     steps:
     - name: Nothing to see here
       run: echo ""
 
-  is-on-material-blazor:
-    name: Running on Material-Blazor/CompressedStaticFiles.AspNetCore?
+  is-on-dioptra:
+    name: Running on Dioptra/Website.2203?
     runs-on: ubuntu-latest
-    if: github.repository == 'Material-Blazor/CompressedStaticFiles.AspNetCore'
+    if: github.repository == 'Dioptra/Website.2203'
     steps:
     - name: Nothing to see here
       run: echo ""
-
-############################################################################################################
-# Run the test project. Should this fail, we don't perform any deploy action
-############################################################################################################
-  test:
-    name: Run .NET tests
-    runs-on: windows-latest
-    env:
-      config: 'Release'
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET6
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '6.0.x'
-        include-prerelease: true
-#    - name: Install dependencies
-#      run: dotnet restore --verbosity normal
-#    - name: Build
-#      run: dotnet build --configuration $config --no-restore
-#    - name: Test
-#      run: dotnet test --configuration $config --no-restore --no-build --verbosity normal --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=lcov
-#    - name: Find lcov file path
-#      id: find-lcov-file-path
-#      shell: pwsh
-#      run: |
-#        $FilePath = (Get-ChildItem CompressedStaticFiles.Tests\TestResults\* | Select-Object -First 1 | Get-ChildItem).FullName
-#        Write-Host ::set-output name=path::$FilePath
-#    - name: Publish coverage report to coveralls.io
-#      uses: coverallsapp/github-action@master
-#      with:
-#        github-token: ${{ secrets.GITHUB_TOKEN }}
-#        path-to-lcov: ${{ steps.find-lcov-file-path.outputs.path }}
 
 ############################################################################################################
 # Store the version information
 ############################################################################################################
   version:
-    name: Set version identifier
+    name: Set version suffix
     runs-on: ubuntu-latest
 
     steps:
     - id: get
       run: |
-        echo "::set-output name=identifier::${GITHUB_REF/refs\/tags\//}"
+        echo "::set-output name=suffix::$(date +'%Y-%m-%d--%H-%M-%S')--${GITHUB_REF/refs\/tags\//}"
     - id: show
       run: |
-        echo "${{ steps.get.outputs.identifier }}"
+        echo "${{ steps.get.outputs.suffix }}"
     outputs:
-      identifier: ${{ steps.get.outputs.identifier }}
+      suffix: ${{ steps.get.outputs.suffix }}
+      
+      
+
 ############################################################################################################
-# Store the branch information
+# Build blazor server container
+# This is hard-skipped when we only want to perform a comparison (github.event_name != 'workflow_dispatch')
 ############################################################################################################
-  branch:
-    name: Set branch identifier
+  build-blazor-server:
+    name: Build Website.BlazorServer docker container
+    needs: [version]
     runs-on: ubuntu-latest
+
     steps:
-    - id: get
-      run: |
-        echo "::set-output name=identifier::${GITHUB_REF/refs\/heads\//}"
-    - id: show
-      run: |
-        echo "${{ steps.get.outputs.identifier }}"
-    outputs:
-      identifier: ${{ steps.get.outputs.identifier }}
+    - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+    - name: 'Build and push images'
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    - run: |
+        docker build . --file ${{ env.blazorServerDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }}
+
+    - name: 'Deploy to Azure Container Instances'
+      uses: 'azure/aci-deploy@v1'
+      with:
+        resource-group: ${{ secrets.RESOURCE_GROUP }}
+        dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
+        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }}
+        registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        name: ${{ env.registryName }}
+        location: ${{ env.registryLocation }}      
+      
 
 ############################################################################################################
-# Build package and deploy
+# Build blazor webassembly container
+# This is hard-skipped when we only want to perform a comparison (github.event_name != 'workflow_dispatch')
 ############################################################################################################
-  #build-and-deploy-package:
-  #  name: Build nuget package & deploy to nuget
-  #  needs: [version, branch, is-on-material-blazor, test]
+  build-blazor-webassembly:
+    name: Build Website.BlazorWebAssembly docker container
+    needs: [version]
+    runs-on: ubuntu-latest
 
-  #  runs-on: windows-latest
+    steps:
+    - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
 
-  #  steps:
-  #  - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
-  #    uses: actions/checkout@v2
-  #    with:
-  #      persist-credentials: false
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+    - name: 'Build and push images'
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    - run: |
+        docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }}
 
-  #  - name: Use prelease dotnet
-  #    uses: actions/setup-dotnet@v1
-  #    with:
-  #      dotnet-version: '6.0.x'
-  #      include-prerelease: true
-
-  #  - name: Build CompressedStaticFiles.AspNetCore 🔧
-  #    run: dotnet build ${{env.projectCSFB}} --configuration ${{env.buildConfiguration}} -p:Version=${{needs.version.outputs.identifier}}
-
-  #  - name: Generate the NuGet package 🔧
-  #    run: dotnet pack ${{env.projectCSFB}} --no-build --configuration ${{env.buildConfiguration}} --output ${{env.outputCSFB}} -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:Version=${{needs.version.outputs.identifier}}
-
-  #  - name: Display CompressedStaticFiles.AspNetCore package output Ꙫ
-  #    run: dir ${{env.outputCSFB}}
-
-  #  - name: Upload Package 🚀
-  #    run: dotnet nuget push ${{env.outputCSFB}}\*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
-  #    if: needs.branch.outputs.identifier != 'experimental-release-workflow' # this check is important to allow testing this workflow on a non-main branch without deploying to nuget: this critical action is not performed when not on main.
-
-############################################################################################################
-# Create release
-############################################################################################################
-  #create-release:
-  #  name: Create release
-  #  needs: [build-and-deploy-package, branch, version, is-on-material-blazor]
-
-  #  runs-on: ubuntu-latest
-
-  #  steps:
-  #  - name: Create Release
-  #    if: needs.branch.outputs.identifier != 'experimental-release-workflow' # this check is important to allow testing this workflow on a non-main branch without deploying to nuget: this critical action is not performed when not on main.
-  #    uses: actions/create-release@v1
-  #    env:
-  #      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #    with:
-  #      tag_name: ${{needs.version.outputs.identifier}}
-  #      release_name: Release ${{needs.version.outputs.identifier}}
-  #      draft: false
-  #      prerelease: false
+    - name: 'Deploy to Azure Container Instances'
+      uses: 'azure/aci-deploy@v1'
+      with:
+        resource-group: ${{ secrets.RESOURCE_GROUP }}
+        dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
+        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }}
+        registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        name: ${{ env.registryName }}
+        location: ${{ env.registryLocation }}
