@@ -11,8 +11,6 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NOWARNINGS="yes"
 RUN apt-get update
 RUN apt-get install --no-install-recommends --yes apt-utils python3 nodejs npm
-RUN dotnet --info
-RUN dotnet workload install wasm-tools
 
 WORKDIR /src
 COPY ["Website.Lib/Website.Lib.csproj", "Website.Lib/"]
