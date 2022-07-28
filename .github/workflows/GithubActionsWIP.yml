@@ -175,7 +175,7 @@ jobs:
     #  if: github.event_name != 'workflow_dispatch'
 
     - name: Docker Compose Blazor WebAssembly 🔧
-      run: docker build . --file ./Website.BlazorWebAssembly/Dockerfile --tag my-image-name:"a-tag"
+      run: docker build . --file ./Website.BlazorWebAssembly/Server/Dockerfile --tag my-image-name:"a-tag"
       #run: docker-compose --verbose --file ${{env.webassemblyDC}} up
       #run: dotnet build ${{env.projectCSFB}} --configuration ${{env.buildConfiguration}} --version-suffix ${{needs.version.outputs.suffix}}
 
