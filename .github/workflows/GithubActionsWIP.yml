@@ -158,15 +158,16 @@ jobs:
       with:
         persist-credentials: false
 
-    - name: Use prelease dotnet
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '6.0.x'
-        include-prerelease: true
-      if: github.event_name != 'workflow_dispatch'
+    #- name: Use prelease dotnet
+    #  uses: actions/setup-dotnet@v1
+    #  with:
+    #    dotnet-version: '6.0.x'
+    #    include-prerelease: true
+    #  if: github.event_name != 'workflow_dispatch'
 
-    - name: Build Website.2203 🔧
-      run: dotnet build ${{env.projectCSFB}} --configuration ${{env.buildConfiguration}} --version-suffix ${{needs.version.outputs.suffix}}
+    - name: Docker Compose Blazor Webassembly 🔧
+      run: docker-compose up -d -f docker-compose-blazor-webassembly.yml
+      #run: dotnet build ${{env.projectCSFB}} --configuration ${{env.buildConfiguration}} --version-suffix ${{needs.version.outputs.suffix}}
 
   #  - name: Generate the NuGet package 🔧
   #    run: dotnet pack ${{env.projectCSFB}} --no-build --configuration ${{env.buildConfiguration}} --output ${{env.outputCSFB}} -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --version-suffix ${{needs.version.outputs.suffix}}
