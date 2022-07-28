@@ -167,7 +167,9 @@ jobs:
     #  if: github.event_name != 'workflow_dispatch'
 
     - name: View directory
+      shell: bash
       run: ls -alt
+
     - name: Docker Compose Blazor Webassembly 🔧
       run: docker-compose -d -f ${{env.webassemblyDC}} up
       #run: dotnet build ${{env.projectCSFB}} --configuration ${{env.buildConfiguration}} --version-suffix ${{needs.version.outputs.suffix}}
