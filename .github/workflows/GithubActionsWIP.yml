@@ -51,7 +51,7 @@ jobs:
       if: github.event_name != 'workflow_dispatch'
 
     - name: Set ciSuffix as env variable
-      run: echo "ciSuffix=ci.$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
+      run: echo "ciSuffix=ci--$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_ENV
       shell: bash
       if: github.event_name != 'workflow_dispatch'
 
@@ -100,7 +100,7 @@ jobs:
     steps:
     - id: get
       run: |
-        echo "::set-output name=suffix::ci.$(date +'%Y-%m-%d--%H-%M-%S')"
+        echo "::set-output name=suffix::ci--$(date +'%Y-%m-%d--%H-%M-%S')"
     - id: show
       run: |
         echo "${{ steps.get.outputs.suffix }}"
@@ -247,7 +247,7 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build . --file ./Website.BlazorServer/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}
+        docker build . --file ./Website.BlazorServer/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ end.ciSuffix }}
         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}
 
     - name: 'Deploy to Azure Container Instances'
