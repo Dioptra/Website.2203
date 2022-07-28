@@ -192,7 +192,7 @@ jobs:
     name: Build Blazor Server docker container
     needs: [info, version]
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     if: github.event_name != 'workflow_dispatch'
 
     steps:
@@ -205,4 +205,5 @@ jobs:
         persist-credentials: false
 
     - name: Docker Compose Blazor Server 🔧
-      run: docker-compose --verbose --file ${{env.serverDC}} up
+      #run: docker-compose --verbose --file ${{env.serverDC}} up
+      run: docker build . --file ./Website.Blazor/Dockerfile --tag my-image-name:${{ciSuffix}}
