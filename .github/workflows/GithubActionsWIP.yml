@@ -248,6 +248,7 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
+        echo ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ env.ciSuffix }}
         docker build . --file ./Website.BlazorServer/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ env.ciSuffix }}
         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ env.ciSuffix }}
 
