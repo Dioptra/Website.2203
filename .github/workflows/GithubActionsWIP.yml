@@ -11,6 +11,7 @@ env:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   outputCSFB: ${{github.workspace}}/siteCSFB
+  webassemblyDC: './docker-compose-blazor-webassembly.yml'
   projectCSFB: 'Website.BlazorWebAssembly/Server/Website.BlazorWebAssembly.Server.csproj'
 #  projectTest: 'CompressedStaticFiles.AspNetCore.Test/CompressedStaticFiles.AspNetCore.Test.csproj'
 
@@ -165,8 +166,10 @@ jobs:
     #    include-prerelease: true
     #  if: github.event_name != 'workflow_dispatch'
 
+    - name: View directory
+      run: ls -alt
     - name: Docker Compose Blazor Webassembly 🔧
-      run: docker-compose up -d -f docker-compose-blazor-webassembly.yml
+      run: docker-compose -d -f ${{webassemblyDC}} up
       #run: dotnet build ${{env.projectCSFB}} --configuration ${{env.buildConfiguration}} --version-suffix ${{needs.version.outputs.suffix}}
 
   #  - name: Generate the NuGet package 🔧
