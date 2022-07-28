@@ -13,16 +13,14 @@ COPY ["Website.ServerLib/Website.ServerLib.csproj", "Website.ServerLib/"]
 COPY ["Website.BlazorServer/Website.BlazorServer.csproj", "Website.BlazorServer/"]
 COPY ["Website.BlazorServer/NuGet.Config", "Website.BlazorServer/"]
 
-RUN dotnet restore "Website.BlazorServer/Website.BlazorServer.csproj"
-
+RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages\
+	dotnet restore --disable-parallel "Website.BlazorServer/Website.BlazorServer.csproj"
 COPY . .
 WORKDIR "/src/Website.BlazorServer"
-RUN dotnet build "Website.BlazorServer.csproj" -c Release -o /app/build
-
-FROM build AS publish
-RUN dotnet publish "Website.BlazorServer.csproj" -c Release -o /app/publish
+RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages\
+	dotnet publish "Website.BlazorServer.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "Website.BlazorServer.dll"]
