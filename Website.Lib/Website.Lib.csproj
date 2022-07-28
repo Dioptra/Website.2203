@@ -30,8 +30,8 @@
 		<IOSImageFiles Include="$(ProjectDir)WebAssets\ios-images\*.*" />
 		<Windows11ImageFiles Include="$(ProjectDir)WebAssets\windows11-images\*.*" />
 
-		<InputStaticAssetsScripts Include="WebAssets\**\*.ts" />
-		<OutputStaticAssetsScripts Include="wwwroot\js\dioptra.js;wwwroot\js\dioptra.min.js" />
+		<InputStaticAssetsScripts Include="$(ProjectDir)WebAssets\**\*.ts" />
+		<OutputStaticAssetsScripts Include="$(ProjectDir)wwwroot\js\dioptra.js;wwwroot\js\dioptra.min.js" />
 		<Content Remove="@(OutputStaticAssetsScripts)" />
 		<Content Remove="C:\Users\SimonZiegler\.nuget\packages\material.blazor\3.0.0-preview.1\contentFiles\any\net6.0\wwwroot\material-components-web.css" />
 		<Content Remove="C:\Users\SimonZiegler\.nuget\packages\material.blazor\3.0.0-preview.1\contentFiles\any\net6.0\wwwroot\material-components-web.min.css" />
@@ -41,8 +41,8 @@
 		<Content Remove="C:\Users\SimonZiegler\.nuget\packages\material.blazor\3.0.0-preview.1\contentFiles\any\net6.0\wwwroot\material.blazor.min.js" />
 		<Content Include="@(OutputStaticAssetsScripts)" />
 
-		<InputStaticAssetsStyles Include="WebAssets\**\*.scss;" />
-		<OutputStaticAssetsStyles Include="wwwroot\css\dioptra.css;wwwroot\css\dioptra.min.css" />
+		<InputStaticAssetsStyles Include="$(ProjectDir)WebAssets\**\*.scss;" />
+		<OutputStaticAssetsStyles Include="$(ProjectDir)wwwroot\css\dioptra.css;wwwroot\css\dioptra.min.css" />
 		<Content Remove="@(OutputStaticAssetsStyles)" />
 		<Content Include="@(OutputStaticAssetsStyles)" />
 	</ItemGroup>
