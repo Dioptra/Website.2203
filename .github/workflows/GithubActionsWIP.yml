@@ -8,12 +8,12 @@ on:
     branches: [ main ]
 
 env:
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-  outputCSFB: ${{github.workspace}}/siteCSFB
+#  buildPlatform: 'Any CPU'
+#  buildConfiguration: 'Release'
+#  outputCSFB: ${{github.workspace}}/siteCSFB
   webassemblyDC: './docker-compose-blazor-webassembly.yml'
   serverDC: './docker-compose-blazor-server.yml'
-  projectCSFB: 'Website.BlazorWebAssembly/Server/Website.BlazorWebAssembly.Server.csproj'
+#  projectCSFB: 'Website.BlazorWebAssembly/Server/Website.BlazorWebAssembly.Server.csproj'
 #  projectTest: 'CompressedStaticFiles.AspNetCore.Test/CompressedStaticFiles.AspNetCore.Test.csproj'
 
 jobs:
@@ -172,7 +172,7 @@ jobs:
     #  if: github.event_name != 'workflow_dispatch'
 
     - name: Docker Compose Blazor WebAssembly 🔧
-      run: docker-compose -f ${{env.webassemblyDC}} up
+      run: docker-compose --verbose --file ${{env.webassemblyDC}} up
       #run: dotnet build ${{env.projectCSFB}} --configuration ${{env.buildConfiguration}} --version-suffix ${{needs.version.outputs.suffix}}
 
   #  - name: Generate the NuGet package 🔧
@@ -199,4 +199,4 @@ jobs:
         persist-credentials: false
 
     - name: Docker Compose Blazor Server 🔧
-      run: docker-compose -f ${{env.serverDC}} up
+      run: docker-compose --verbose --file ${{env.serverDC}} up
