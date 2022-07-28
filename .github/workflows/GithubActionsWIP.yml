@@ -209,4 +209,4 @@ jobs:
 
     - name: Docker Compose Blazor Server 🔧
       #run: docker-compose --verbose --file ${{env.serverDC}} up
-      run: docker build . --file ./Website.Blazor/Dockerfile --tag my-image-name:"a-tag"
+      run: docker build . --file ./Website.BlazorServer/Dockerfile --tag my-image-name:"a-tag"
