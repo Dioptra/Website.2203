@@ -66,6 +66,7 @@
 		<Copy SourceFiles="@(AndroidImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/android-images" />
 		<Copy SourceFiles="@(IOSImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/ios-images" />
 		<Copy SourceFiles="@(Windows11ImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/windows11-images" />
+		<Message Text="WWWRootFileCopy done" Importance="high"/>
 	</Target>
 
 	<Target Name="CheckIfNpmExists" Inputs="@(InputStaticAssetsScripts);@(InputStaticAssetsStyles)" Outputs="@(OutputStaticAssetsScripts);@(OutputStaticAssetsStyles)" BeforeTargets="PreBuildEvent">
