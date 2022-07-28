@@ -206,4 +206,4 @@ jobs:
 
     - name: Docker Compose Blazor Server 🔧
       #run: docker-compose --verbose --file ${{env.serverDC}} up
-      run: docker build . --file ./Website.Blazor/Dockerfile --tag my-image-name:$(ciSuffix)
+      run: docker build . --file ./Website.Blazor/Dockerfile --tag my-image-name:${{env.ciSuffix}}
