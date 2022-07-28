@@ -13,12 +13,10 @@ COPY ["Website.ServerLib/Website.ServerLib.csproj", "Website.ServerLib/"]
 COPY ["Website.BlazorServer/Website.BlazorServer.csproj", "Website.BlazorServer/"]
 COPY ["Website.BlazorServer/NuGet.Config", "Website.BlazorServer/"]
 
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages\
-	dotnet restore --disable-parallel "Website.BlazorServer/Website.BlazorServer.csproj"
+RUN dotnet restore --disable-parallel "Website.BlazorServer/Website.BlazorServer.csproj"
 COPY . .
 WORKDIR "/src/Website.BlazorServer"
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages\
-	dotnet publish "Website.BlazorServer.csproj" -c Release -o /app/publish
+RUN dotnet publish "Website.BlazorServer.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
