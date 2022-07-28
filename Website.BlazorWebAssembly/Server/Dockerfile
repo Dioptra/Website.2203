@@ -11,7 +11,6 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NOWARNINGS="yes"
 RUN apt-get update
 RUN apt-get install --no-install-recommends --yes apt-utils python3 nodejs npm
-#RUN apt-get install --no-install-recommends --yes python3
 RUN dotnet --info
 RUN dotnet workload install wasm-tools
 

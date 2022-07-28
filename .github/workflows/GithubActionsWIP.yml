@@ -209,5 +209,5 @@ jobs:
       run: pwd && ls -alt
 
     - name: Docker Compose Blazor Server 🔧
-      #run: docker-compose --verbose --file ${{env.serverDC}} up
-      run: docker build . --file ./Website.BlazorServer/Dockerfile --tag my-image-name:"a-tag"
+      run: docker-compose --verbose --file ${{env.serverDC}} up
+      #run: docker build . --file ./Website.BlazorServer/Dockerfile --tag my-image-name:"a-tag"
