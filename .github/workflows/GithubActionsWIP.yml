@@ -192,7 +192,7 @@ jobs:
     name: Build Blazor Server docker container
     needs: [info, version]
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     if: github.event_name != 'workflow_dispatch'
 
     steps:
