@@ -8,6 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Website.Lib/Website.Lib.csproj", "Website.Lib/"]
+COPY ["Website.ServerLib/Website.ServerLib.csproj", "Website.ServerLib/"]
 
 COPY ["Website.BlazorServer/Website.BlazorServer.csproj", "Website.BlazorServer/"]
 COPY ["Website.BlazorServer/NuGet.Config", "Website.BlazorServer/"]
