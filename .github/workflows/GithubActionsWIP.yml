@@ -12,6 +12,7 @@ env:
   buildConfiguration: 'Release'
   outputCSFB: ${{github.workspace}}/siteCSFB
   webassemblyDC: './docker-compose-blazor-webassembly.yml'
+  serverDC: './docker-compose-blazor-server.yml'
   projectCSFB: 'Website.BlazorWebAssembly/Server/Website.BlazorWebAssembly.Server.csproj'
 #  projectTest: 'CompressedStaticFiles.AspNetCore.Test/CompressedStaticFiles.AspNetCore.Test.csproj'
 
@@ -148,8 +149,8 @@ jobs:
 # Build nuget package
 # This is hard-skipped when we only want to perform a comparison (github.event_name != 'workflow_dispatch')
 ############################################################################################################
-  build-package:
-    name: Build docker container
+  build-blazor-webassembly:
+    name: Build Blazor WebAssembly docker container
     #needs: [info, test, version]
     needs: [info, version]
 
@@ -170,11 +171,7 @@ jobs:
     #    include-prerelease: true
     #  if: github.event_name != 'workflow_dispatch'
 
-    - name: View directory
-      shell: bash
-      run: ls -alt
-
-    - name: Docker Compose Blazor Webassembly 🔧
+    - name: Docker Compose Blazor WebAssembly 🔧
       run: docker-compose -f ${{env.webassemblyDC}} up
       #run: dotnet build ${{env.projectCSFB}} --configuration ${{env.buildConfiguration}} --version-suffix ${{needs.version.outputs.suffix}}
 
@@ -183,3 +180,23 @@ jobs:
 
   #  - name: Display CompressedStaticFiles.AspNetCore package output Ꙫ
   #    run: dir ${{env.outputCSFB}}
+      
+############################################################################################################
+# Build blazor server container
+# This is hard-skipped when we only want to perform a comparison (github.event_name != 'workflow_dispatch')
+############################################################################################################
+  build-blazor-server:
+    name: Build Blazor Server docker container
+    needs: [info, version]
+
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch'
+
+    steps:
+    - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+
+    - name: Docker Compose Blazor Server 🔧
+      run: docker-compose -f ${{env.serverDC}} up
