@@ -90,6 +90,12 @@ jobs:
       run: echo GitHub indicates that this is a tag creation with ${{steps.get_tag.outputs.tag}}
       if: github.event_name != 'workflow_dispatch' && contains(github.ref, 'refs/tag')
 
+    - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+
+
 ############################################################################################################
 # Store the version information
 ############################################################################################################
@@ -218,16 +224,11 @@ jobs:
 # This is hard-skipped when we only want to perform a comparison (github.event_name != 'workflow_dispatch')
 ############################################################################################################
   build-ds-ui:
-    name: Build ICEBG docker containers
+    name: Build Website.BlazorServer docker container
     needs: [info, version]
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
-      uses: actions/checkout@v2
-      with:
-        persist-credentials: false
-
     - name: looksee
       run: pwd && ls -alt
 
