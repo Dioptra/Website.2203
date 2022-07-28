@@ -7,6 +7,15 @@ on:
   pull_request:
     branches: [ main ]
 
+
+env:
+  blazorServerDockerFile: './Website.BlazorServer/Dockerfile'
+  blazorServerAppName: 'website-2203-blazor-server'
+  blazorWebAssemblyDockerFile: './Website.BlazorWebAssembly/Server/Dockerfile'
+  blazorWebAssemblyAppName: 'website-2203-blazor-webassembly'
+  registryName: 'dioptraregistry'
+  registryLocation: 'uk south'
+
 jobs:
 
 ############################################################################################################
@@ -51,7 +60,7 @@ jobs:
 # Build blazor server container
 # This is hard-skipped when we only want to perform a comparison (github.event_name != 'workflow_dispatch')
 ############################################################################################################
-  build-ds-ui:
+  build-blazor-server:
     name: Build Website.BlazorServer docker container
     needs: [version]
     runs-on: ubuntu-latest
@@ -74,7 +83,7 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build . --file ./Website.BlazorServer/Dockerfile --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ needs.version.outputs.suffix }}
+        docker build . --file ${{ blazorServerDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ needs.version.outputs.suffix }}
         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ needs.version.outputs.suffix }}
 
     - name: 'Deploy to Azure Container Instances'
@@ -82,9 +91,52 @@ jobs:
       with:
         resource-group: ${{ secrets.RESOURCE_GROUP }}
         dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
-        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ needs.version.outputs.suffix }}
+        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ blazorServerAppName }}:${{ needs.version.outputs.suffix }}
         registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registry-username: ${{ secrets.REGISTRY_USERNAME }}
         registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        name: dioptraregistry
-        location: 'uk south'
+        name: ${{ registryName }}
+        location: ${{ registryLocation }}      
+      
+
+############################################################################################################
+# Build blazor webassembly container
+# This is hard-skipped when we only want to perform a comparison (github.event_name != 'workflow_dispatch')
+############################################################################################################
+  build-blazor-webassembly:
+    name: Build Website.BlazorWebAssembly docker container
+    needs: [version]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+    - name: 'Build and push images'
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    - run: |
+        docker build . --file ${{ blazorWebAssemblyDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ needs.version.outputs.suffix }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ needs.version.outputs.suffix }}
+
+    - name: 'Deploy to Azure Container Instances'
+      uses: 'azure/aci-deploy@v1'
+      with:
+        resource-group: ${{ secrets.RESOURCE_GROUP }}
+        dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
+        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }}
+        registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        name: ${{ registryName }}
+        location: ${{ registryLocation }}
