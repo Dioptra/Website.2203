@@ -7,6 +7,8 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
+ENV DEBIAN_FRONTEND noninteractive
+ENV DEBCONF_NOWARNINGS="yes"
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 RUN apt-get install --no-install-recommends --yes python3
 RUN dotnet --info
