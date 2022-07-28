@@ -24,6 +24,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Message Text="ProjectDir: $(ProjectDir)" Importance="high"/>
+		<Message Text="PublishDir: $(PublishDir)" Importance="high"/>
 		<ImageFiles Include="$(ProjectDir)WebAssets\Images\*.*" />
 		<PWAFiles Include="$(ProjectDir)WebAssets\PWA\*.*" />
 		<AndroidImageFiles Include="$(ProjectDir)WebAssets\android-images\*.*" />
