@@ -213,36 +213,51 @@ jobs:
   #    run: docker build . --file ./Website.BlazorServer/Dockerfile --tag my-image-name:"a-tag"
 
 
-  build-and-deploy:
+############################################################################################################
+# Build blazor server container
+# This is hard-skipped when we only want to perform a comparison (github.event_name != 'workflow_dispatch')
+############################################################################################################
+  build-ds-ui:
+    name: Build ICEBG docker containers
+    needs: [info, version]
     runs-on: ubuntu-latest
+
     steps:
-    # checkout the repo
-    - name: 'Checkout GitHub Action'
-      uses: actions/checkout@master
-          
+    - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+
+    - name: looksee
+      run: pwd && ls -alt
+
+#- name: Docker build 🔧
+#  run: docker build . --file ./ICEBG.Web.DataSevices/Dockerfile --tag ICEBG.Web.DS:${{needs.version.outputs.suffix}}
+#  run: docker build . --file ./ICEBG.Web.UserInterface/Dockerfile --tag ICEBG.Web.UI:${{needs.version.outputs.suffix}}
+
     - name: 'Login via Azure CLI'
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         
-    - uses: azure/docker-login@v1
+    - name: 'Build and push images'
+      uses: azure/docker-login@v1
       with:
-        login-server: contoso.azurecr.io
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build . --file ./Website.BlazorServer/Dockerfile --tag contoso.azurecr.io/nodejssampleapp:${{ github.sha }}
-        docker push contoso.azurecr.io/nodejssampleapp:${{ github.sha }}
+        docker build . --file ./Website.BlazorServer/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}
 
     - name: 'Deploy to Azure Container Instances'
       uses: 'azure/aci-deploy@v1'
       with:
-        resource-group: ContainerInstancesRG
-        dns-name-label: url-for-container
-        image: contoso.azurecr.io/nodejssampleapp:${{ github.sha }}
-        cpu: 1   #Optional
-        memory: 0.1   #Optional
+        resource-group: ${{ secrets.RESOURCE_GROUP }}
+        dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
+        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}
+        registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registry-username: ${{ secrets.REGISTRY_USERNAME }}
         registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        name: contoso-container
+        name: dioptraregistry
         location: 'uksouth'
