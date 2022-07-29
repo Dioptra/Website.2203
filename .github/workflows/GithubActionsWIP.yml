@@ -62,7 +62,6 @@ jobs:
 ############################################################################################################
   build-blazor-server:
     name: Build Website.BlazorServer docker container
-    needs: [version]
     runs-on: ubuntu-latest
 
     steps:
@@ -82,7 +81,6 @@ jobs:
 ############################################################################################################
   build-blazor-webassembly:
     name: Build Website.BlazorWebAssembly docker container
-    needs: [version]
     runs-on: ubuntu-latest
 
     steps:
