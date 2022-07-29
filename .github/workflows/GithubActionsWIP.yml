@@ -58,7 +58,6 @@ jobs:
         persist-credentials: false
 
     - name: 'Build docker container'
-      uses: azure/docker-login@v1
       run: |
         docker build . --file ${{ env.blazorServerDockerFile }} --build-arg build-time=${{ needs.version.outputs.buildTime }} --build-arg version="1.2.3"
       
@@ -80,7 +79,6 @@ jobs:
         persist-credentials: false
 
     - name: 'Build docker container'
-      uses: azure/docker-login@v1
       run: |
         docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --build-arg build-time=${{ needs.version.outputs.buildTime }} --build-arg version="1.2.3"
         
