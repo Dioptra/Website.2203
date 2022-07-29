@@ -8,10 +8,10 @@ on:
     branches: [ main ]
 
 
-#env:
-#  blazorServerDockerFile: './Website.BlazorServer/Dockerfile'
+env:
+  blazorServerDockerFile: './Website.BlazorServer/Dockerfile'
 #  blazorServerAppName: 'website-2203-blazor-server'
-#  blazorWebAssemblyDockerFile: './Website.BlazorWebAssembly/Server/Dockerfile'
+  blazorWebAssemblyDockerFile: './Website.BlazorWebAssembly/Server/Dockerfile'
 #  blazorWebAssemblyAppName: 'website-2203-blazor-webassembly'
 #  registryName: 'dioptraregistry'
 #  registryLocation: 'uk south'
@@ -40,19 +40,19 @@ jobs:
 ############################################################################################################
 # Store the version information
 ############################################################################################################
-  version:
-    name: Set version suffix
-    runs-on: ubuntu-latest
+  #version:
+  #  name: Set version suffix
+  #  runs-on: ubuntu-latest
 
-    steps:
-    - id: get
-      run: |
-        echo "::set-output name=suffix::$(date +'%Y-%m-%d--%H-%M-%S')"
-    - id: show
-      run: |
-        echo "${{ steps.get.outputs.suffix }}"
-    outputs:
-      suffix: ${{ steps.get.outputs.suffix }}
+  #  steps:
+  #  - id: get
+  #    run: |
+  #      echo "::set-output name=suffix::$(date +'%Y-%m-%d--%H-%M-%S')"
+  #  - id: show
+  #    run: |
+  #      echo "${{ steps.get.outputs.suffix }}"
+  #  outputs:
+  #    suffix: ${{ steps.get.outputs.suffix }}
       
       
 
@@ -73,7 +73,7 @@ jobs:
 
     - name: 'Build docker container'
       run: |
-        docker build . --file ${{ env.blazorServerDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }}
+        docker build . --file ${{ env.blazorServerDockerFile }}
       
 
 ############################################################################################################
@@ -93,4 +93,4 @@ jobs:
 
     - name: 'Build docker container'
       run: |
-        docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }}
+        docker build . --file ${{ env.blazorWebAssemblyDockerFile }}
