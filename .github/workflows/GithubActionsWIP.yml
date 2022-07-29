@@ -94,3 +94,4 @@ jobs:
     - name: 'Build docker container'
       run: |
         docker build . --file ${{ env.blazorWebAssemblyDockerFile }}
+        
