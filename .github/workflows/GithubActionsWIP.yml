@@ -59,7 +59,7 @@ jobs:
 
     - name: 'Build docker container'
       run: |
-        docker build . --file ${{ env.blazorServerDockerFile }}
+        docker build . --file ${{ env.blazorServerDockerFile }} --build-arg BUILD_TIME=${{ needs.version.outputs.buildTime }} --build-arg VERSION="0.0.0"
       
 
 ############################################################################################################
@@ -79,5 +79,5 @@ jobs:
 
     - name: 'Build docker container'
       run: |
-        docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --build-arg BUILD_TIME=${{ needs.version.outputs.buildTime }} --build-arg VERISON="0.0.0"
+        docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --build-arg BUILD_TIME=${{ needs.version.outputs.buildTime }} --build-arg VERSION="0.0.0"
         
