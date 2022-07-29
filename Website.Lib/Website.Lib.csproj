@@ -55,8 +55,6 @@
 	</ItemGroup>
 
 	<Target Name="WWWRootFileCopy" BeforeTargets="PreBuildEvent">
-		<Message Text="ProjectDir: $(ProjectDir)" Importance="high"/>
-		<Message Text="PublishDir: $(PublishDir)" Importance="high"/>
 		<Copy SourceFiles="@(ImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/images" />
 		<Copy SourceFiles="@(PWAFiles)" DestinationFolder="$(ProjectDir)wwwroot/pwa" />
 		<Copy SourceFiles="@(AndroidImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/android-images" />
@@ -84,8 +82,8 @@
 		<Message Text="**********************************************************************************" />
 	</Target>
 
-	<!--<Target Name="BuildScripts" Inputs="@(InputStaticAssetsScripts)" Outputs="@(OutputStaticAssetsScripts)" BeforeTargets="PreBuildEvent" AfterTargets="CheckIfNpmExists" Condition=" '$(NpmReturnCode)' == '0' ">-->
-	<Target Name="BuildScripts" BeforeTargets="PreBuildEvent" >
+	<Target Name="BuildScripts" Inputs="@(InputStaticAssetsScripts)" Outputs="@(OutputStaticAssetsScripts)" BeforeTargets="PreBuildEvent" AfterTargets="CheckIfNpmExists" Condition=" '$(NpmReturnCode)' == '0' ">
+	<!--<Target Name="BuildScripts" BeforeTargets="PreBuildEvent" >-->
 		<RemoveDir Directories="$(ProjectDir)wwwroot/js" />
 
 		<Message Importance="high" Text="***** npm install" />
@@ -107,8 +105,8 @@
 		<Delete Files="@(FilesToDelete)" />
 	</Target>
 
-	<!--<Target Name="BuildStyles" Inputs="@(InputStaticAssetsStyles)" Outputs="@(OutputStaticAssetsStyles)" BeforeTargets="PreBuildEvent" AfterTargets="CheckIfNpmExists" Condition=" '$(NpmReturnCode)' == '0' ">-->
-	<Target Name="BuildStyles" BeforeTargets="PreBuildEvent" >
+	<Target Name="BuildStyles" Inputs="@(InputStaticAssetsStyles)" Outputs="@(OutputStaticAssetsStyles)" BeforeTargets="PreBuildEvent" AfterTargets="CheckIfNpmExists" Condition=" '$(NpmReturnCode)' == '0' ">
+	<!--<Target Name="BuildStyles" BeforeTargets="PreBuildEvent" >-->
 		<RemoveDir Directories="$(ProjectDir)wwwroot/css" />
 
 		<Message Importance="high" Text="***** npm install" />
