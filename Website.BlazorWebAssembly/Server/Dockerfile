@@ -8,7 +8,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 ARG version
-ENV VERSION $version
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NOWARNINGS="yes"
@@ -28,7 +27,7 @@ COPY ["Website.ServerLib/Website.ServerLib.csproj", "Website.ServerLib/"]
 RUN dotnet restore "Website.BlazorWebAssembly/Server/Website.BlazorWebAssembly.Server.csproj"
 COPY . .
 WORKDIR "/src/Website.BlazorWebAssembly/Server"
-RUN dotnet publish "Website.BlazorWebAssembly.Server.csproj" -c Release -o /app/publish -p:Version=$VERSION
+RUN dotnet publish "Website.BlazorWebAssembly.Server.csproj" -c Release -o /app/publish -p:Version=$version
 
 FROM base AS final
 WORKDIR /app
