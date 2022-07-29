@@ -58,9 +58,15 @@ jobs:
         persist-credentials: false
 
     - name: 'Build docker container'
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
       run: |
         docker build . --file ${{ env.blazorServerDockerFile }} --build-arg build-time=${{ needs.version.outputs.buildTime }} --build-arg version="1.2.3"
       
+
 
 ############################################################################################################
 # Build blazor webassembly container
@@ -78,6 +84,11 @@ jobs:
         persist-credentials: false
 
     - name: 'Build docker container'
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
       run: |
         docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --build-arg build-time=${{ needs.version.outputs.buildTime }} --build-arg version="1.2.3"
         
