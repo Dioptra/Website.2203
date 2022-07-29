@@ -86,7 +86,7 @@ jobs:
   #      username: ${{ secrets.REGISTRY_USERNAME }}
   #      password: ${{ secrets.REGISTRY_PASSWORD }}
   #  - run: |
-  #      docker build . --file ${{ env.blazorServerDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }} --build-arg BUILD_TIME=${{ needs.version.outputs.buildTime }} --build-arg VERSION=${{ needs.version.outputs.version }}
+  #      docker build . --file ${{ env.blazorServerDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }} --build-arg build-time=${{ needs.version.outputs.buildTime }} --build-arg version=${{ needs.version.outputs.version }}
   #      docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }}
 
   #  - name: 'Deploy to Azure Container Instances'
@@ -130,7 +130,7 @@ jobs:
   #      username: ${{ secrets.REGISTRY_USERNAME }}
   #      password: ${{ secrets.REGISTRY_PASSWORD }}
   #  - run: |
-  #      docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }} --build-arg BUILD_TIME=${{ needs.version.outputs.buildTime }} --build-arg VERSION=${{ needs.version.outputs.version }}
+  #      docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }} --build-arg build-time=${{ needs.version.outputs.buildTime }} --build-arg version=${{ needs.version.outputs.version }}
   #      docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }}
 
   #  - name: 'Deploy to Azure Container Instances'
