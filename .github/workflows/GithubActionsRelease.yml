@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - '*' # Push events to matching *, i.e. 1.0, 20.15.10
-    branches:
-      - experimental-release-workflow
 
 
 
@@ -55,7 +53,6 @@ jobs:
 
 ############################################################################################################
 # Build blazor server container
-# This is hard-skipped when we only want to perform a comparison (github.event_name != 'workflow_dispatch')
 ############################################################################################################
   build-blazor-server:
     name: Build Website.BlazorServer docker container
@@ -99,7 +96,6 @@ jobs:
 
 ############################################################################################################
 # Build blazor webassembly container
-# This is hard-skipped when we only want to perform a comparison (github.event_name != 'workflow_dispatch')
 ############################################################################################################
   build-blazor-webassembly:
     name: Build Website.BlazorWebAssembly docker container

@@ -38,7 +38,6 @@ jobs:
 
 ############################################################################################################
 # Build blazor server container
-# This is hard-skipped when we only want to perform a comparison (github.event_name != 'workflow_dispatch')
 ############################################################################################################
   build-blazor-server:
     name: Build Website.BlazorServer docker container
@@ -59,7 +58,6 @@ jobs:
 
 ############################################################################################################
 # Build blazor webassembly container
-# This is hard-skipped when we only want to perform a comparison (github.event_name != 'workflow_dispatch')
 ############################################################################################################
   build-blazor-webassembly:
     name: Build Website.BlazorWebAssembly docker container
