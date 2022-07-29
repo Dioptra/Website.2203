@@ -7,6 +7,11 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
+ARG version
+ARG build-time
+ENV VERSION $version
+ENV BUILD_TIME $build-time
+
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NOWARNINGS="yes"
 RUN apt-get update

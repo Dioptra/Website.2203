@@ -7,6 +7,11 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
+ARG version
+ARG build-time
+ENV VERSION $version
+ENV BUILD_TIME $build-time
+
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NOWARNINGS="yes"
 RUN apt-get update
@@ -22,7 +27,7 @@ COPY ["Website.ServerLib/Website.ServerLib.csproj", "Website.ServerLib/"]
 RUN dotnet restore --disable-parallel "Website.BlazorServer/Website.BlazorServer.csproj"
 COPY . .
 WORKDIR "/src/Website.BlazorServer"
-RUN dotnet publish "Website.BlazorServer.csproj" -c Release -o /app/publish -p:Version="1.2.3"
+RUN dotnet publish "Website.BlazorServer.csproj" -c Release -o /app/publish -p:Version=$VERSION
 
 FROM base AS final
 WORKDIR /app
