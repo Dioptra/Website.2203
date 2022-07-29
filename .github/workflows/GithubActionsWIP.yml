@@ -27,18 +27,12 @@ jobs:
     steps:
     - id: get
       run: |
-        echo "::set-output name=buildTime::$(date +'%Y-%m-%d--%H-%M-%S')"
-        echo "::set-output name=version::${GITHUB_REF/refs\/tags\//}"
-        #echo "::set-output name=suffix::${{ steps.get.outputs.buildTime }}--${{ steps.get.outputs.version }}"
+        echo "::set-output name=suffix::$(date +'%Y-%m-%d--%H-%M-%S')--WIP"
     - id: show
       run: |
-        echo "Build Time: ${{ steps.get.outputs.buildTime }}"
-        echo "Version:    ${{ steps.get.outputs.version }}"
-        #echo "Suffix:     ${{ steps.get.outputs.suffix }}"
+        echo "Suffix:     ${{ steps.get.outputs.suffix }}"
     outputs:
-      buildTime: ${{ steps.get.outputs.buildTime }}
-      version: ${{ steps.get.outputs.version }}
-      suffix: ${{ steps.get.outputs.buildTime }}--${{ steps.get.outputs.version }}
+      suffix: ${{ steps.get.outputs.suffix }}
       
       
 
@@ -59,7 +53,7 @@ jobs:
 
     - name: 'Build docker container'
       run: |
-        docker build . --file ${{ env.blazorServerDockerFile }} --build-arg build-time=${{ needs.version.outputs.buildTime }} --build-arg version="1.2.3"
+        docker build . --file ${{ env.blazorServerDockerFile }} --build-arg version=${{ needs.version.outputs.suffix }}
       
 
 
@@ -80,5 +74,5 @@ jobs:
 
     - name: 'Build docker container'
       run: |
-        docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --build-arg build-time=${{ needs.version.outputs.buildTime }} --build-arg version="1.2.3"
+        docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --build-arg version=${{ needs.version.outputs.suffix }}
         
