@@ -34,5 +34,5 @@ RUN dotnet publish "Website.BlazorWebAssembly.Server.csproj" -c Release -o /app/
 
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "Website.BlazorWebAssembly.Server.dll"]

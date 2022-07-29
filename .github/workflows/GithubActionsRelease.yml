@@ -46,16 +46,16 @@ jobs:
       run: |
         echo "::set-output name=buildTime::$(date +'%Y-%m-%d--%H-%M-%S')"
         echo "::set-output name=version::${GITHUB_REF/refs\/tags\//}"
-        echo "::set-output name=suffix::$(date +'%Y-%m-%d--%H-%M-%S')--${GITHUB_REF/refs\/tags\//}"
+        #echo "::set-output name=suffix::${{ steps.get.outputs.buildTime }}--${{ steps.get.outputs.version }}"
     - id: show
       run: |
         echo "Build Time: ${{ steps.get.outputs.buildTime }}"
         echo "Version:    ${{ steps.get.outputs.version }}"
-        echo "Suffix:     ${{ steps.get.outputs.suffix }}"
+        #echo "Suffix:     ${{ steps.get.outputs.suffix }}"
     outputs:
       buildTime: ${{ steps.get.outputs.buildTime }}
       version: ${{ steps.get.outputs.version }}
-      suffix: ${{ steps.get.outputs.suffix }}
+      suffix: ${{ steps.get.outputs.buildTime }}--${{ steps.get.outputs.version }}
       
       
 
