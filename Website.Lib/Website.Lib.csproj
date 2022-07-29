@@ -66,26 +66,6 @@
 		<None Include="tsconfig.json" />
 	</ItemGroup>
 
-	<!--<UsingTask TaskName="SetEnvironmentVariableTask" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
-
-		<ParameterGroup>
-			<Name ParameterType="System.String" Required="true" Output="False" />
-			<Value ParameterType="System.String" Required="true" Output="False" />
-		</ParameterGroup>
-
-		<Task>
-			<Using Namespace="System" />
-			<Code Type="Fragment" Language="cs">
-				<![CDATA[Environment.SetEnvironmentVariable(Name, Value);]]>
-			</Code>
-		</Task>
-
-	</UsingTask>
-
-	<Target Name="SetEnvironmentVariables" BeforeTargets="PreBuildEvent">
-		<SetEnvironmentVariable Name="BUILD_TIME" Value="$(BuildTime)" />
-	</Target>-->
-
 	<Target Name="WWWRootFileCopy" BeforeTargets="PreBuildEvent">
 		<Copy SourceFiles="@(ImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/images" />
 		<Copy SourceFiles="@(PWAFiles)" DestinationFolder="$(ProjectDir)wwwroot/pwa" />
