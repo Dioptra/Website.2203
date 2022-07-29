@@ -60,7 +60,6 @@
 		<Copy SourceFiles="@(AndroidImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/android-images" />
 		<Copy SourceFiles="@(IOSImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/ios-images" />
 		<Copy SourceFiles="@(Windows11ImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/windows11-images" />
-		<Message Text="WWWRootFileCopy done" Importance="high"/>
 	</Target>
 
 	<Target Name="CheckIfNpmExists" Inputs="@(InputStaticAssetsScripts);@(InputStaticAssetsStyles)" Outputs="@(OutputStaticAssetsScripts);@(OutputStaticAssetsStyles)" BeforeTargets="PreBuildEvent" AfterTargets="WWWRootFileCopy">
@@ -83,7 +82,6 @@
 	</Target>
 
 	<Target Name="BuildScripts" Inputs="@(InputStaticAssetsScripts)" Outputs="@(OutputStaticAssetsScripts)" BeforeTargets="PreBuildEvent" AfterTargets="CheckIfNpmExists" Condition=" '$(NpmReturnCode)' == '0' ">
-	<!--<Target Name="BuildScripts" BeforeTargets="PreBuildEvent" >-->
 		<RemoveDir Directories="$(ProjectDir)wwwroot/js" />
 
 		<Message Importance="high" Text="***** npm install" />
@@ -106,7 +104,6 @@
 	</Target>
 
 	<Target Name="BuildStyles" Inputs="@(InputStaticAssetsStyles)" Outputs="@(OutputStaticAssetsStyles)" BeforeTargets="PreBuildEvent" AfterTargets="CheckIfNpmExists" Condition=" '$(NpmReturnCode)' == '0' ">
-	<!--<Target Name="BuildStyles" BeforeTargets="PreBuildEvent" >-->
 		<RemoveDir Directories="$(ProjectDir)wwwroot/css" />
 
 		<Message Importance="high" Text="***** npm install" />

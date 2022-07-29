@@ -13,11 +13,11 @@ RUN apt-get update
 RUN apt-get install --no-install-recommends --yes apt-utils npm
 
 WORKDIR /src
-COPY ["Website.Lib/Website.Lib.csproj", "Website.Lib/"]
-COPY ["Website.ServerLib/Website.ServerLib.csproj", "Website.ServerLib/"]
-
 COPY ["Website.BlazorServer/Website.BlazorServer.csproj", "Website.BlazorServer/"]
 COPY ["Website.BlazorServer/NuGet.Config", "Website.BlazorServer/"]
+
+COPY ["Website.Lib/Website.Lib.csproj", "Website.Lib/"]
+COPY ["Website.ServerLib/Website.ServerLib.csproj", "Website.ServerLib/"]
 
 RUN dotnet restore --disable-parallel "Website.BlazorServer/Website.BlazorServer.csproj"
 COPY . .
