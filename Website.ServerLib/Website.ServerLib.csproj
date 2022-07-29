@@ -4,15 +4,6 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Company>Dioptra Limited</Company>
-		<BuildTime></BuildTime>
-		<RepositoryUrl>https://github.com/Dioptra/Website.2203</RepositoryUrl>
-		<PackageLicenseExpression>Commercial</PackageLicenseExpression>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageReleaseNotes></PackageReleaseNotes>
-		<NeutralLanguage>en</NeutralLanguage>
-		<Copyright>© Dioptra Limited. All rights reserved.</Copyright>
-		<Product>Dioptra Website</Product>
 	</PropertyGroup>
 
 	<ItemGroup>

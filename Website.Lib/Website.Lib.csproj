@@ -2,8 +2,19 @@
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
-		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Company>Dioptra Limited</Company>
+		<Version>0.0.0</Version>
+		<BuildTime>2022-01-01--13-00-00</BuildTime>
+		<RepositoryUrl>https://github.com/Dioptra/Website.2203</RepositoryUrl>
+		<PackageLicenseExpression>Commercial</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReleaseNotes></PackageReleaseNotes>
+		<NeutralLanguage>en</NeutralLanguage>
+		<Copyright>© Dioptra Limited. All rights reserved.</Copyright>
+		<Product>Dioptra Website</Product>
+		<PackageTags>2022-01-01--13-00-00</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -21,6 +32,7 @@
 		<PackageReference Include="GoogleAnalytics.Blazor" Version="1.0.0-preview.3" />
 		<PackageReference Include="libphonenumber-csharp" Version="8.12.52" />
 		<PackageReference Include="Material.Blazor" Version="3.0.0-preview.9" />
+		<PackageReference Include="Microsoft.Build" Version="17.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -53,6 +65,26 @@
 	<ItemGroup>
 		<None Include="tsconfig.json" />
 	</ItemGroup>
+
+	<!--<UsingTask TaskName="SetEnvironmentVariableTask" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+
+		<ParameterGroup>
+			<Name ParameterType="System.String" Required="true" Output="False" />
+			<Value ParameterType="System.String" Required="true" Output="False" />
+		</ParameterGroup>
+
+		<Task>
+			<Using Namespace="System" />
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[Environment.SetEnvironmentVariable(Name, Value);]]>
+			</Code>
+		</Task>
+
+	</UsingTask>
+
+	<Target Name="SetEnvironmentVariables" BeforeTargets="PreBuildEvent">
+		<SetEnvironmentVariable Name="BUILD_TIME" Value="$(BuildTime)" />
+	</Target>-->
 
 	<Target Name="WWWRootFileCopy" BeforeTargets="PreBuildEvent">
 		<Copy SourceFiles="@(ImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/images" />
