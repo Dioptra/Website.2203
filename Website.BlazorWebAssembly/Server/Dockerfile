@@ -25,7 +25,7 @@ COPY ["Website.ServerLib/Website.ServerLib.csproj", "Website.ServerLib/"]
 RUN dotnet restore "Website.BlazorWebAssembly/Server/Website.BlazorWebAssembly.Server.csproj"
 COPY . .
 WORKDIR "/src/Website.BlazorWebAssembly/Server"
-RUN dotnet publish "Website.BlazorWebAssembly.Server.csproj" -c Release -o /app/publish -p:Version=${VERSION}
+RUN dotnet publish "Website.BlazorWebAssembly.Server.csproj" -c Release -o /app/publish -p:Version=$VERSION
 
 FROM base AS final
 WORKDIR /app

@@ -22,7 +22,7 @@ COPY ["Website.ServerLib/Website.ServerLib.csproj", "Website.ServerLib/"]
 RUN dotnet restore --disable-parallel "Website.BlazorServer/Website.BlazorServer.csproj"
 COPY . .
 WORKDIR "/src/Website.BlazorServer"
-RUN dotnet publish "Website.BlazorServer.csproj" -c Release -o /app/publish -p:Version=${VERSION}
+RUN dotnet publish "Website.BlazorServer.csproj" -c Release -o /app/publish -p:Version=$VERSION
 
 FROM base AS final
 WORKDIR /app
