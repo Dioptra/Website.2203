@@ -47,7 +47,7 @@ jobs:
       run: |
         echo "Suffix:     ${{ steps.get.outputs.suffix }}"
     outputs:
-      suffix: ${{ steps.get.outputs.suffix }}--${{ steps.get.outputs.version }}
+      suffix: ${{ steps.get.outputs.suffix }}
       
       
 

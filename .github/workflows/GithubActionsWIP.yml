@@ -27,7 +27,7 @@ jobs:
     steps:
     - id: get
       run: |
-        echo "::set-output name=suffix::$(date +'%Y-%m-%d--%H-%M-%S')--WIP"
+        echo "::set-output name=suffix::$(date +'%Y-%m-%d--%H-%M-%S')--0.0.0"
     - id: show
       run: |
         echo "Suffix:     ${{ steps.get.outputs.suffix }}"
