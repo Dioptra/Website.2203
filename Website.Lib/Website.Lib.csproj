@@ -65,20 +65,11 @@
 	</ItemGroup>
 
 	<Target Name="WWWRootFileCopy" BeforeTargets="PreBuildEvent">
-		<!--<MakeDir Directories="$(ProjectDir)wwwroot/images" />-->
-
 		<Copy SourceFiles="@(ImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/images" />
 		<Copy SourceFiles="@(PWAFiles)" DestinationFolder="$(ProjectDir)wwwroot/pwa" />
 		<Copy SourceFiles="@(AndroidImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/android-images" />
 		<Copy SourceFiles="@(IOSImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/ios-images" />
 		<Copy SourceFiles="@(Windows11ImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/windows11-images" />
-
-		<!--<Message Importance="high" Text="cp $(ProjectDir)WebAssets/Images/*.* $(ProjectDir)wwwroot/images" />
-		<Exec Command="cp $(ProjectDir)WebAssets/Images/*.* $(ProjectDir)wwwroot/images" ContinueOnError="true" StandardOutputImportance="high" StandardErrorImportance="high" LogStandardErrorAsError="false" IgnoreExitCode="true" />-->
-		<Message Importance="high" Text="ls -altR $(ProjectDir)WebAssets/Images" />
-		<Exec Command="ls -altR $(ProjectDir)WebAssets/Images" ContinueOnError="true" StandardOutputImportance="high" StandardErrorImportance="high" LogStandardErrorAsError="false" IgnoreExitCode="true" />
-		<Message Importance="high" Text="ls -altR $(ProjectDir)wwwroot/images" />
-		<Exec Command="ls -altR $(ProjectDir)wwwroot/images" ContinueOnError="true" StandardOutputImportance="high" StandardErrorImportance="high" LogStandardErrorAsError="false" IgnoreExitCode="true" />
 	</Target>
 
 	<!--<Target Name="CheckIfNpmExists" Inputs="@(InputStaticAssetsScripts);@(InputStaticAssetsStyles)" Outputs="@(OutputStaticAssetsScripts);@(OutputStaticAssetsStyles)" BeforeTargets="PreBuildEvent" AfterTargets="WWWRootFileCopy">-->
@@ -190,6 +181,20 @@
 
 		<!--Rename/move the compressed files back to to the correct place/names as they have "hashed" names at this stage.-->
 		<Move SourceFiles="%(MyCompressedFiles.FullPath)" DestinationFiles="%(MyCompressedFiles.OriginalItemSpec)%(MyCompressedFiles.Extension)" />
+
+	</Target>
+
+	<Target Name="Tests" AfterTargets="CustomGZipAndBrotliCompression">
+
+		<Message Importance="High" Text="===========================================================================" />
+		<Message Importance="High" Text="===========================================================================" />
+		<Message Importance="High" Text="===========================================================================" />
+		<Message Importance="High" Text="====== List contents of wwwroot ===========================================" />
+		<Message Importance="High" Text="" />
+		<Exec Command="ls -altR $(ProjectDir)wwwroot" ContinueOnError="true" StandardOutputImportance="high" StandardErrorImportance="high" LogStandardErrorAsError="false" IgnoreExitCode="true" />
+		<Message Importance="High" Text="===========================================================================" />
+		<Message Importance="High" Text="===========================================================================" />
+		<Message Importance="High" Text="===========================================================================" />
 
 	</Target>
 
