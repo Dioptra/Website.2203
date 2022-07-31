@@ -65,6 +65,8 @@
 	</ItemGroup>
 
 	<Target Name="WWWRootFileCopy" BeforeTargets="PreBuildEvent">
+		<MakeDir Directories="$(ProjectDir)wwwroot/images" />
+		
 		<Copy SourceFiles="@(ImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/images" />
 		<Copy SourceFiles="@(PWAFiles)" DestinationFolder="$(ProjectDir)wwwroot/pwa" />
 		<Copy SourceFiles="@(AndroidImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/android-images" />
