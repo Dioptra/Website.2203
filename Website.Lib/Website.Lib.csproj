@@ -43,7 +43,6 @@
 		<Content Remove="@(OutputImages)" />
 		<Content Include="@(OutputImages)" />
 
-
 		<InputStaticAssetsScripts Include="$(ProjectDir)WebAssets\**\*.ts" />
 		<OutputStaticAssetsScripts Include="$(ProjectDir)wwwroot\js\dioptra.js;wwwroot\js\dioptra.min.js" />
 		<Content Remove="@(OutputStaticAssetsScripts)" />
@@ -187,6 +186,11 @@
 	</Target>
 
 	<Target Name="Tests" AfterTargets="CustomGZipAndBrotliCompression">
+
+		<ItemGroup>
+			<Content Remove="@(OutputImages)" />
+			<Content Include="@(OutputImages)" />
+		</ItemGroup>
 
 		<Message Importance="High" Text="===========================================================================" />
 		<Message Importance="High" Text="===========================================================================" />
