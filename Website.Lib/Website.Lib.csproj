@@ -66,7 +66,10 @@
 
 	<Target Name="WWWRootFileCopy" BeforeTargets="PreBuildEvent">
 		<MakeDir Directories="$(ProjectDir)wwwroot/images" />
-		
+
+		<Message Importance="high" Text="cp $(ProjectDir)WebAssets/Images/*.* $(ProjectDir)wwwroot/images" />
+		<Exec Command="cp $(ProjectDir)WebAssets/Images/*.* $(ProjectDir)wwwroot/images" ContinueOnError="true" StandardOutputImportance="high" StandardErrorImportance="high" LogStandardErrorAsError="false" IgnoreExitCode="true" />
+
 		<Copy SourceFiles="@(ImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/images" />
 		<Copy SourceFiles="@(PWAFiles)" DestinationFolder="$(ProjectDir)wwwroot/pwa" />
 		<Copy SourceFiles="@(AndroidImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/android-images" />
