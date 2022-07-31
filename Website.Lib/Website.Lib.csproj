@@ -69,6 +69,10 @@
 
 		<Message Importance="high" Text="cp $(ProjectDir)WebAssets/Images/*.* $(ProjectDir)wwwroot/images" />
 		<Exec Command="cp $(ProjectDir)WebAssets/Images/*.* $(ProjectDir)wwwroot/images" ContinueOnError="true" StandardOutputImportance="high" StandardErrorImportance="high" LogStandardErrorAsError="false" IgnoreExitCode="true" />
+		<Message Importance="high" Text="ls -altR $(ProjectDir)WebAssets/Images" />
+		<Exec Command="ls -altR $(ProjectDir)WebAssets/Images" ContinueOnError="true" StandardOutputImportance="high" StandardErrorImportance="high" LogStandardErrorAsError="false" IgnoreExitCode="true" />
+		<Message Importance="high" Text="ls -altR $(ProjectDir)wwwroot/images" />
+		<Exec Command="ls -altR $(ProjectDir)wwwroot/images" ContinueOnError="true" StandardOutputImportance="high" StandardErrorImportance="high" LogStandardErrorAsError="false" IgnoreExitCode="true" />
 
 		<Copy SourceFiles="@(ImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/images" />
 		<Copy SourceFiles="@(PWAFiles)" DestinationFolder="$(ProjectDir)wwwroot/pwa" />
