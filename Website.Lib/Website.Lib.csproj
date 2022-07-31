@@ -34,14 +34,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ImageFiles Include="$(ProjectDir)WebAssets\Images\*.*" />
-		<PWAFiles Include="$(ProjectDir)WebAssets\PWA\*.*" />
-		<AndroidImageFiles Include="$(ProjectDir)WebAssets\android-images\*.*" />
-		<IOSImageFiles Include="$(ProjectDir)WebAssets\ios-images\*.*" />
-		<Windows11ImageFiles Include="$(ProjectDir)WebAssets\windows11-images\*.*" />
-	</ItemGroup>
+		<InputImageFiles Include="$(ProjectDir)WebAssets\Images\*.*" />
+		<InputPWAFiles Include="$(ProjectDir)WebAssets\PWA\*.*" />
+		<InputAndroidInputImageFiles Include="$(ProjectDir)WebAssets\android-images\*.*" />
+		<InputIOSInputImageFiles Include="$(ProjectDir)WebAssets\ios-images\*.*" />
+		<InputWindows11InputImageFiles Include="$(ProjectDir)WebAssets\windows11-images\*.*" />
+		<OutputImages Include="$(ProjectDir)wwwroot\**\*.*" />
+		<Content Remove="@(OutputImages)" />
+		<Content Include="@(OutputImages)" />
 
-	<ItemGroup>
+
 		<InputStaticAssetsScripts Include="$(ProjectDir)WebAssets\**\*.ts" />
 		<OutputStaticAssetsScripts Include="$(ProjectDir)wwwroot\js\dioptra.js;wwwroot\js\dioptra.min.js" />
 		<Content Remove="@(OutputStaticAssetsScripts)" />
@@ -65,11 +67,11 @@
 	</ItemGroup>
 
 	<Target Name="WWWRootFileCopy" BeforeTargets="PreBuildEvent">
-		<Copy SourceFiles="@(ImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/images" />
-		<Copy SourceFiles="@(PWAFiles)" DestinationFolder="$(ProjectDir)wwwroot/pwa" />
-		<Copy SourceFiles="@(AndroidImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/android-images" />
-		<Copy SourceFiles="@(IOSImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/ios-images" />
-		<Copy SourceFiles="@(Windows11ImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/windows11-images" />
+		<Copy SourceFiles="@(InputImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/images" />
+		<Copy SourceFiles="@(InputPWAFiles)" DestinationFolder="$(ProjectDir)wwwroot/pwa" />
+		<Copy SourceFiles="@(InputAndroidInputImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/android-images" />
+		<Copy SourceFiles="@(InputIOSInputImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/ios-images" />
+		<Copy SourceFiles="@(InputWindows11InputImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/windows11-images" />
 	</Target>
 
 	<!--<Target Name="CheckIfNpmExists" Inputs="@(InputStaticAssetsScripts);@(InputStaticAssetsStyles)" Outputs="@(OutputStaticAssetsScripts);@(OutputStaticAssetsStyles)" BeforeTargets="PreBuildEvent" AfterTargets="WWWRootFileCopy">-->
