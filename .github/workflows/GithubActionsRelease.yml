@@ -126,6 +126,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Echo tag name
+      run: |
+        echo "Tag:        ${{ needs.version.outputs.tag }}"
+        echo "Suffix:     ${{ needs.version.outputs.suffix }}"
+
     - name: Create Release
       uses: actions/create-release@v1
       env:
@@ -135,3 +140,4 @@ jobs:
         release_name: Release ${{ needs.version.outputs.tag }}
         draft: false
         prerelease: false
+
