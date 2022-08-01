@@ -66,11 +66,11 @@
 	</ItemGroup>
 
 	<Target Name="WWWRootFileCopy" BeforeTargets="PreBuildEvent">
-		<Copy SourceFiles="@(InputImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/images" />
+		<!--<Copy SourceFiles="@(InputImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/images" />
 		<Copy SourceFiles="@(InputPWAFiles)" DestinationFolder="$(ProjectDir)wwwroot/pwa" />
 		<Copy SourceFiles="@(InputAndroidInputImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/android-images" />
 		<Copy SourceFiles="@(InputIOSInputImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/ios-images" />
-		<Copy SourceFiles="@(InputWindows11InputImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/windows11-images" />
+		<Copy SourceFiles="@(InputWindows11InputImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/windows11-images" />-->
 	</Target>
 
 	<!--<Target Name="CheckIfNpmExists" Inputs="@(InputStaticAssetsScripts);@(InputStaticAssetsStyles)" Outputs="@(OutputStaticAssetsScripts);@(OutputStaticAssetsStyles)" BeforeTargets="PreBuildEvent" AfterTargets="WWWRootFileCopy">-->
@@ -186,11 +186,6 @@
 	</Target>
 
 	<Target Name="Tests" AfterTargets="CustomGZipAndBrotliCompression">
-
-		<ItemGroup>
-			<Content Remove="@(OutputImages)" />
-			<Content Include="@(OutputImages)" />
-		</ItemGroup>
 
 		<Message Importance="High" Text="===========================================================================" />
 		<Message Importance="High" Text="===========================================================================" />
