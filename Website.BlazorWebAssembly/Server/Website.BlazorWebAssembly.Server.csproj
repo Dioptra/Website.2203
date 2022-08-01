@@ -93,7 +93,7 @@
 	</Target>
 
 	<!-- Remove comments to list wwwroot contents to diagnose content inclusion in GitHub Actions -->
-	<!--<Target Name="Tests" AfterTargets="CustomGZipAndBrotliCompression">
+	<Target Name="Tests" AfterTargets="CustomGZipAndBrotliCompression">
 
 		<Message Importance="High" Text="===========================================================================" />
 		<Message Importance="High" Text="===========================================================================" />
@@ -105,6 +105,6 @@
 		<Message Importance="High" Text="===========================================================================" />
 		<Message Importance="High" Text="===========================================================================" />
 
-	</Target>-->
+	</Target>
 
 </Project>
