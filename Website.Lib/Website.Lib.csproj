@@ -52,6 +52,9 @@
 		<OutputStaticAssetsStyles Include="$(ProjectDir)wwwroot\css\dioptra.css;wwwroot\css\dioptra.min.css" />
 		<Content Remove="@(OutputStaticAssetsStyles)" />
 		<Content Include="@(OutputStaticAssetsStyles)" />
+		
+		<!--<StaticImages Include="$(ProjectDir)wwwroot\android-images\*.*;$(ProjectDir)wwwroot\images\*.*;$(ProjectDir)wwwroot\ios-images\*.*;$(ProjectDir)wwwroot\pwa\*.*;$(ProjectDir)wwwroot\windows-11images\*.*" />
+		<Content Include="@(StaticImages)" />-->
 	</ItemGroup>
 
 	<ItemGroup>
