@@ -9,6 +9,7 @@ on:
 
 
 
+
 env:
   blazorServerDockerFile: './Website.BlazorServer/Dockerfile'
   blazorWebAssemblyDockerFile: './Website.BlazorWebAssembly/Server/Dockerfile'
