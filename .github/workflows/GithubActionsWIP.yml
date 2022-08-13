@@ -59,14 +59,11 @@ jobs:
     steps:
     - id: get
       run: |
-        #echo "::set-output name=tag::WIP"
         echo "::set-output name=suffix::$(date +'%Y-%m-%d--%H-%M-%S')--WIP"
     - id: show
       run: |
-        #echo "Tag:        ${{ steps.get.outputs.tag }}"
         echo "Suffix:     ${{ steps.get.outputs.suffix }}"
     outputs:
-      #tag: ${{ steps.get.outputs.tag }}
       suffix: ${{ steps.get.outputs.suffix }}
       
       
