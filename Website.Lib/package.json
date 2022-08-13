@@ -22,7 +22,7 @@
     "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-typescript": "^7.15.0",
-    "babel-loader": "^8.2.2",
+    "babel-loader": "^8.2.5",
     "fork-ts-checker-webpack-plugin": "6.3.2",
     "material-components-web": "14.0.0",
     "regexp": "1.0.0",
