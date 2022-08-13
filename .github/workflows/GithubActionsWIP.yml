@@ -54,7 +54,6 @@ jobs:
 ############################################################################################################
   version:
     name: Set version suffix
-    needs: [is-on-dioptra]
     runs-on: ubuntu-latest
 
     steps:
