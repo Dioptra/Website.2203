@@ -84,7 +84,7 @@ jobs:
 ############################################################################################################
 # Build blazor webassembly on forks
 ############################################################################################################
-  build-blazor-server-fork:
+  build-blazor-webassembly-fork:
     name: Build BlazorServer for forks
     needs: [skip-deployment]
     runs-on: ubuntu-latest
