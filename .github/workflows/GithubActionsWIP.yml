@@ -33,11 +33,6 @@ jobs:
     - name: Nothing to see here
       run: echo ""
 
-
-
-############################################################################################################
-# These jobs are used to gate actions. By creating these jobs we don't need to proliferate the repo checks
-############################################################################################################
   skip-deployment:
     name: Skip deployment because not running on Dioptra/Website.2203 or user is dependabot?
     runs-on: ubuntu-latest
@@ -45,7 +40,6 @@ jobs:
     steps:
     - name: Nothing to see here
       run: echo ""
-
 
 
 ############################################################################################################
@@ -65,7 +59,6 @@ jobs:
     outputs:
       suffix: ${{ steps.get.outputs.suffix }}
       
-      
 
 ############################################################################################################
 # Build blazor server container on forks
@@ -84,8 +77,7 @@ jobs:
     - name: 'Build docker container'
       run: |
         docker build . --file ${{ env.blazorServerDockerFile }}
-      
-
+   
 
 ############################################################################################################
 # Build blazor webassembly container on forks
@@ -105,7 +97,6 @@ jobs:
       run: |
         docker build . --file ${{ env.blazorWebAssemblyDockerFile }}
         
-
 
 ############################################################################################################
 # Build blazor server container on Dioptra
@@ -135,7 +126,6 @@ jobs:
     - run: |
         docker build . --file ${{ env.blazorServerDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }} --build-arg version=${{ needs.version.outputs.suffix }}
         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }}
-   
         
 
 ############################################################################################################
