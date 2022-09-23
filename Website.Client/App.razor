@@ -1,4 +1,4 @@
-﻿<MBAnchor />
+﻿@namespace Website.Client
 
 <Router AppAssembly="@typeof(App).Assembly" AdditionalAssemblies="new[] { typeof(MainLayout).Assembly }">
     <Found Context="routeData">
@@ -12,5 +12,7 @@
         </LayoutView>
     </NotFound>
 </Router>
+
+<MBAnchor />
 
 <GBAnchor />
