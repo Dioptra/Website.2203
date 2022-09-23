@@ -11,9 +11,8 @@ on:
 
 
 env:
-  blazorServerDockerFile: './Website.BlazorServer/Dockerfile'
+  project: 'Website.Server/Website.Server.csproj'
   blazorServerAppName: 'website-2203-blazor-server-wip'
-  blazorWebAssemblyDockerFile: './Website.BlazorWebAssembly/Server/Dockerfile'
   blazorWebAssemblyAppName: 'website-2203-blazor-webassembly-wip'
   registryName: 'dioptraregistry'
   registryLocation: 'uk south'
@@ -61,62 +60,66 @@ jobs:
       
 
 ############################################################################################################
-# Build blazor server container on forks
+# Build blazor server on forks
 ############################################################################################################
   build-blazor-server-fork:
-    name: Build BlazorServer docker container for forks
+    name: Build BlazorServer for forks
     needs: [skip-deployment]
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         persist-credentials: false
 
-    - name: 'Build docker container'
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v2
+
+    - name: 'Build SSB'
       run: |
-        docker build . --file ${{ env.blazorServerDockerFile }}
+        dotnet build  ${{env.project}} --configuration Release_Server
    
 
 ############################################################################################################
-# Build blazor webassembly container on forks
+# Build blazor webassembly on forks
 ############################################################################################################
-  build-blazor-webassembly-fork:
-    name: Build BlazorWebAssembly docker container for forks
+  build-blazor-server-fork:
+    name: Build BlazorServer for forks
     needs: [skip-deployment]
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         persist-credentials: false
 
-    - name: 'Build docker container'
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v2
+
+    - name: 'Build CSB'
       run: |
-        docker build . --file ${{ env.blazorWebAssemblyDockerFile }}
+        dotnet  ${{env.project}} --configuration Release_WebAssembly
         
 
 ############################################################################################################
 # Build blazor server container on Dioptra
 ############################################################################################################
-  build-blazor-server-dioptra:
-    name: Build BlazorServer docker container
+  build-dioptra-website-SSB:
+    name: Build SSB docker container
     needs: [version, perform-deployment]
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         persist-credentials: false
 
-    - name: 'Login via Azure CLI'
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v2
+
     - name: 'Build and push docker container'
       uses: azure/docker-login@v1
       with:
@@ -124,29 +127,28 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build . --file ${{ env.blazorServerDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }} --build-arg version=${{ needs.version.outputs.suffix }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }}
+        dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_Server -p:PublishProfile=DefaultContainer -p:Version=${{ needs.version.outputs.suffix }} -p:ContainerImageName=${{env.website-2203-blazor-server-wip}}
+        docker tag ${{env.website-2203-blazor-server-wip}}:${{ needs.version.outputs.suffix }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.website-2203-blazor-server-wip}}:${{ needs.version.outputs.suffix }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.website-2203-blazor-server-wip}}:${{ needs.version.outputs.suffix }}
         
 
 ############################################################################################################
 # Build blazor webassembly container on Dioptra
 ############################################################################################################
-  build-blazor-webassembly-dioptra:
-    name: Build BlazorWebAssembly docker container
+  build-dioptra-website-CSB:
+    name: Build CSB docker container
     needs: [version, perform-deployment]
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         persist-credentials: false
 
-    - name: 'Login via Azure CLI'
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v2
+
     - name: 'Build and push docker container'
       uses: azure/docker-login@v1
       with:
@@ -154,5 +156,6 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }} --build-arg version=${{ needs.version.outputs.suffix }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }}
+        dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_Server -p:PublishProfile=DefaultContainer -p:Version=${{ needs.version.outputs.suffix }} -p:ContainerImageName=${{env.website-2203-blazor-webassembly-wip}}
+        docker tag ${{env.website-2203-blazor-webassembly-wip}}:${{ needs.version.outputs.suffix }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.website-2203-blazor-webassembly-wip}}:${{ needs.version.outputs.suffix }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.website-2203-blazor-webassembly-wip}}:${{ needs.version.outputs.suffix }}
