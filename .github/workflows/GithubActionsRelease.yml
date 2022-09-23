@@ -12,8 +12,8 @@ env:
   blazorWebAssemblyAppName: 'website-2203-blazor-webassembly'
   registryName: 'dioptraregistry'
   registryLocation: 'uk south'
-  #blazorServerDockerFile: './Website.Server/Dockerfile-Server'
-  #blazorWebAssemblyDockerFile: './Website.Server/Dockerfile-WebAssembly'
+  blazorServerDockerFile: './Website.Server/Dockerfile-Server'
+  blazorWebAssemblyDockerFile: './Website.Server/Dockerfile-WebAssembly'
 
 
 
