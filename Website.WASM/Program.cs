@@ -14,6 +14,7 @@ using Serilog.Events;
 using Serilog.Extensions.Logging;
 
 using Website.Client;
+using Website.Client.ServiceClients;
 
 namespace Website.WASM;
 public class Program
@@ -24,14 +25,9 @@ public class Program
 
         builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-        builder.Services.AddMBServices(options =>
-        {
-            options.LoggingServiceConfiguration = Utilities.GetDefaultLoggingServiceConfiguration();
-            options.ToastServiceConfiguration = Utilities.GetDefaultToastServiceConfiguration();
-            options.SnackbarServiceConfiguration = Utilities.GetDefaultSnackbarServiceConfiguration();
-        });
+        ServiceClientHelper.Inject(builder.Services);
 
-        builder.Services.AddTransient<INotificationService, NotificationService>();
+        builder.Services.AddTransient<INotificationServiceClient, NotificationServiceClient>();
 
         builder.Services.Configure<CookiePolicyOptions>(options =>
         {

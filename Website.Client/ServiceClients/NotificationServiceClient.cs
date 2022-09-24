@@ -1,15 +1,13 @@
 ﻿using System.Net.Http.Json;
 
-using Website.Client;
+namespace Website.Client.ServiceClients;
 
-namespace Website.WASM;
-
-public class NotificationService : INotificationService
+public class NotificationServiceClient : INotificationServiceClient
 {
     private readonly HttpClient _httpClient;
 
 
-    public NotificationService(HttpClient httpClient)
+    public NotificationServiceClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }

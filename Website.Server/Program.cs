@@ -17,6 +17,7 @@ using Serilog;
 using Serilog.Events;
 
 using Website.Client;
+using Website.Client.ServiceClients;
 using Website.Server;
 using Website.Server.Middleware;
 using Website.Server.Services;
@@ -65,18 +66,11 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
 
-builder.Services.AddHttpClient();
-
 #endif
 
-builder.Services.AddTransient<INotificationService, Website.Server.Services.NotificationService>();
+builder.Services.AddScoped<HttpClient>();
 
-builder.Services.AddMBServices(options =>
-{
-    options.LoggingServiceConfiguration = Utilities.GetDefaultLoggingServiceConfiguration();
-    options.ToastServiceConfiguration = Utilities.GetDefaultToastServiceConfiguration();
-    options.SnackbarServiceConfiguration = Utilities.GetDefaultSnackbarServiceConfiguration();
-});
+ServiceClientHelper.Inject(builder.Services);
 
 builder.Services.AddHsts(options =>
 {

@@ -1,8 +1,8 @@
-﻿namespace Website.Client;
+﻿namespace Website.Client.ServiceClients;
 
 using System.Threading.Tasks;
 
-public interface INotificationService
+public interface INotificationServiceClient
 {
     Task SendNotification(ContactMessage message);
     Task SendNotification(RecruitmentEnquiry message);

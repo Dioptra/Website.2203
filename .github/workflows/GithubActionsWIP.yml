@@ -130,7 +130,7 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
     #- run: |
-    #    dotnet publish ${{env.project}} --os linux --arch x64 --sc --configuration Release_Server -p:PublishProfile=DefaultContainer -p:Version=${{ needs.version.outputs.suffix }} -p:ContainerImageName=${{env.blazorServerAppName}}
+    #    dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_Server -p:PublishProfile=DefaultContainer -p:Version=${{ needs.version.outputs.suffix }} -p:ContainerImageName=${{env.blazorServerAppName}}
     #    docker tag ${{env.blazorServerAppName}}:${{ needs.version.outputs.suffix }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorServerAppName}}:${{ needs.version.outputs.suffix }}
     #    docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorServerAppName}}:${{ needs.version.outputs.suffix }}
         
@@ -164,7 +164,7 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
     #- run: |
-    #    dotnet publish ${{env.project}} --os linux --arch x64 --sc --configuration Release_WebAssembly -p:PublishProfile=DefaultContainer -p:Version=${{ needs.version.outputs.suffix }} -p:ContainerImageName=${{env.blazorServerAppName}}
+    #    dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_WebAssembly -p:PublishProfile=DefaultContainer -p:Version=${{ needs.version.outputs.suffix }} -p:ContainerImageName=${{env.blazorServerAppName}}
     #    docker tag ${{env.blazorServerAppName}}:${{ needs.version.outputs.suffix }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorServerAppName}}:${{ needs.version.outputs.suffix }}
     #    docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorServerAppName}}:${{ needs.version.outputs.suffix }}
 
