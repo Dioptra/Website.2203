@@ -8,8 +8,6 @@ using CompressedStaticFiles;
 
 using GoogleAnalytics.Blazor;
 
-using Material.Blazor;
-
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.ResponseCompression;
 
