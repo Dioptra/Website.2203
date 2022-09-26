@@ -78,15 +78,15 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
-    - run: |
-        dotnet workload install wasm-tools
-        dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_Server -p:PublishProfile=DefaultContainer -p:Version=${{ needs.version.outputs.suffix }} -p:ContainerImageName=${{env.blazorServerAppName}}
-        docker tag ${{env.blazorServerAppName}}:${{ needs.version.outputs.suffix }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorServerAppName}}:${{ needs.version.outputs.suffix }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorServerAppName}}:${{ needs.version.outputs.suffix }}
-
     #- run: |
-    #    docker build . --file ${{ env.blazorServerDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }} --build-arg version=${{ needs.version.outputs.suffix }}
-    #    docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }}
+    #    dotnet workload install wasm-tools
+    #    dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_Server -p:PublishProfile=DefaultContainer -p:Version=${{ needs.version.outputs.suffix }} -p:ContainerImageName=${{env.blazorServerAppName}}
+    #    docker tag ${{env.blazorServerAppName}}:${{ needs.version.outputs.suffix }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorServerAppName}}:${{ needs.version.outputs.suffix }}
+    #    docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorServerAppName}}:${{ needs.version.outputs.suffix }}
+
+    - run: |
+        docker build . --file ${{ env.blazorServerDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }} --build-arg version=${{ needs.version.outputs.suffix }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }}
         
 
 ############################################################################################################
@@ -113,15 +113,15 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
-    - run: |
-        dotnet workload install wasm-tools
-        dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_Server -p:PublishProfile=DefaultContainer -p:Version=${{ needs.version.outputs.suffix }} -p:ContainerImageName=${{env.blazorWebAssemblyAppName}}
-        docker tag ${{env.blazorWebAssemblyAppName}}:${{ needs.version.outputs.suffix }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorWebAssemblyAppName}}:${{ needs.version.outputs.suffix }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorWebAssemblyAppName}}:${{ needs.version.outputs.suffix }}
-
     #- run: |
-    #    docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }} --build-arg version=${{ needs.version.outputs.suffix }}
-    #    docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }}
+    #    dotnet workload install wasm-tools
+    #    dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_Server -p:PublishProfile=DefaultContainer -p:Version=${{ needs.version.outputs.suffix }} -p:ContainerImageName=${{env.blazorWebAssemblyAppName}}
+    #    docker tag ${{env.blazorWebAssemblyAppName}}:${{ needs.version.outputs.suffix }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorWebAssemblyAppName}}:${{ needs.version.outputs.suffix }}
+    #    docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorWebAssemblyAppName}}:${{ needs.version.outputs.suffix }}
+
+    - run: |
+        docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }} --build-arg version=${{ needs.version.outputs.suffix }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }}
 
 
 
