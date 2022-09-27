@@ -1,19 +1,12 @@
-﻿using System.IO.Compression;
-
-using AspNetCoreRateLimit;
-
+﻿using AspNetCoreRateLimit;
 using Blazored.LocalStorage;
-
 using CompressedStaticFiles;
-
 using GoogleAnalytics.Blazor;
-
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.ResponseCompression;
-
 using Serilog;
 using Serilog.Events;
-
+using System.IO.Compression;
 using Website.Client;
 using Website.Client.ServiceClients;
 using Website.Server;
