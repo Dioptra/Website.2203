@@ -187,11 +187,11 @@ app.MapControllers();
 
 #if BLAZOR_SERVER
 app.MapBlazorHub();
-app.MapFallbackToPage("/Host_Server");
 #else
 app.UseBlazorFrameworkFiles();
-app.MapFallbackToPage("/Host_WebAssembly");
 #endif
+
+app.MapFallbackToPage("/Host");
 
 app.MapGet("/sitemap.xml", async context =>
 {
