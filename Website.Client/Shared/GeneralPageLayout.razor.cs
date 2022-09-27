@@ -9,7 +9,7 @@ namespace Website.Client.Shared;
 public partial class GeneralPageLayout : ComponentBase
 {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    [Inject] private INotificationServiceClient TeamsNotificationService { get; set; }
+    [Inject] private INotification Notifier { get; set; }
     [Inject] private NavigationManager NavigationManager { get; set; }
     [Inject] private IJSRuntime JSRuntime { get; set; }
     [Inject] private IGBAnalyticsManager AnalyticsManager { get; set; }
@@ -55,7 +55,7 @@ public partial class GeneralPageLayout : ComponentBase
     private async Task ContactDialogSubmittedAsync()
     {
         await CloseContactDialogAsync();
-        await TeamsNotificationService.SendNotification(ContactMessage);
+        await Notifier.Send(ContactMessage);
     }
 
 

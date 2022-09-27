@@ -51,7 +51,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Website.Client\Website.Client.csproj" />
-	  <ProjectReference Include="..\Website.WASM\Website.WASM.csproj" />
+	  <ProjectReference Include="..\Website.WebAssembly\Website.WebAssembly.csproj" />
 	</ItemGroup>
 
 	<Target Name="BuildHashes" AfterTargets="Publish">

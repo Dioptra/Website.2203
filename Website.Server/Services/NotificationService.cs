@@ -6,7 +6,7 @@ using Website.Client.ServiceClients;
 
 namespace Website.Server.Services;
 
-public class NotificationService : INotificationService
+public class NotificationService : INotification
 {
     private const string _messagingWebhook = "https://blacklandcapital.webhook.office.com/webhookb2/6ccfaed1-7c02-440c-83f0-9265cf35b379@ef73a184-f1db-4f24-b406-e4f8f9633dfa/IncomingWebhook/b89fe29282274986b059a32b41fea397/34ba3a07-c6f6-4e3f-896d-148fb6c1765f";
     private static readonly JsonSerializerOptions _serializerOptions = new()
@@ -23,7 +23,7 @@ public class NotificationService : INotificationService
     }
 
 
-    private async Task SendGenericNotification(IMessage message)
+    private async Task GenericSend(IMessage message)
     {
         try
         {
@@ -46,23 +46,23 @@ public class NotificationService : INotificationService
         }
     }
 
-    public Task SendNotification(ContactMessage message)
+    public Task Send(ContactMessage message)
     {
-        return SendGenericNotification(message);
+        return GenericSend(message);
     }
 
-    public Task SendNotification(RecruitmentEnquiry message)
+    public Task Send(RecruitmentEnquiry message)
     {
-        return SendGenericNotification(message);
+        return GenericSend(message);
     }
 
-    public Task SendNotification(RealEstateInvestorEnquiry message)
+    public Task Send(RealEstateInvestorEnquiry message)
     {
-        return SendGenericNotification(message);
+        return GenericSend(message);
     }
 
-    public Task SendNotification(VentureCapitalEnquiry message)
+    public Task Send(VentureCapitalEnquiry message)
     {
-        return SendGenericNotification(message);
+        return GenericSend(message);
     }
 }

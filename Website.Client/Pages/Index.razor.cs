@@ -1,5 +1,6 @@
 ﻿using Material.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http;
 
 using Website.Client.Attributes;
 using Website.Client.ServiceClients;
@@ -22,8 +23,9 @@ public partial class Index : ComponentBase
 
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    [Inject] IHttpContextAccessor HttpContextAccessor { get; set; }
     [Inject] private NavigationManager NavigationManager { get; set; }
-    [Inject] private INotificationServiceClient TeamsNotificationService { get; set; }
+    [Inject] private INotification Notifier { get; set; }
 
 
 
@@ -61,7 +63,6 @@ public partial class Index : ComponentBase
         new() { Uri = "_content/Website.Client/images/programmer-320.webp", Caption = "Programmer working at a desk", Width = "320px", Height = "420px" },
     };
 
-
     protected override void OnAfterRender(bool firstRender)
     {
         if (firstRender)
@@ -94,7 +95,7 @@ public partial class Index : ComponentBase
     private async Task DialogSubmittedAsync()
     {
         await Dialog.HideAsync();
-        await TeamsNotificationService.SendNotification(RealEstateInvestorEnquiry);
+        await Notifier.Send(RealEstateInvestorEnquiry);
     }
 }
 

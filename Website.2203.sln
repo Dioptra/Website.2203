@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Website.Client", "Website.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Website.Server", "Website.Server\Website.Server.csproj", "{99DEA7C6-D78A-4668-A089-1391DEF83351}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Website.WASM", "Website.WASM\Website.WASM.csproj", "{2118600B-6152-41BE-BD5C-A617713984C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Website.WebAssembly", "Website.WebAssembly\Website.WebAssembly.csproj", "{2118600B-6152-41BE-BD5C-A617713984C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

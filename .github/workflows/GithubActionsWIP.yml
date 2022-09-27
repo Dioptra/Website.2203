@@ -17,7 +17,7 @@ env:
   registryName: 'dioptraregistry'
   registryLocation: 'uk south'
   blazorServerDockerFile: './Website.Server/Dockerfile-Server'
-  blazorWebAssemblyDockerFile: './Website.Server/Dockerfile-WASM'
+  blazorWebAssemblyDockerFile: './Website.Server/Dockerfile-WebAssembly'
 
 
 

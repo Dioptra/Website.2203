@@ -23,12 +23,6 @@ namespace Website.Client.ServiceClients
                 options.ToastServiceConfiguration = Utilities.GetDefaultToastServiceConfiguration();
                 options.SnackbarServiceConfiguration = Utilities.GetDefaultSnackbarServiceConfiguration();
             });
-
-            //
-            // First party library services
-            //
-            serviceCollection.AddTransient<INotificationServiceClient, NotificationServiceClient>();
-
         }
     }
 }
