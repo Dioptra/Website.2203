@@ -53,7 +53,7 @@ public class ContentSecurityPolicyMiddleware
             "worker-src 'self';";
     //"_content/GoogleAnalytics.Blazor/googleanalytics.blazor.js"
     //"_content/Material.Blazor/material.blazor.min.js"
-    //"_content/Website.Lib/js/dioptra.min.js"
+    //"_content/Website.Client/js/dioptra.min.js"
     //"_framework/blazor.webassembly.js"
 
         context.Response.Headers.Add("X-Frame-Options", "DENY");
