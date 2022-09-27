@@ -23,7 +23,6 @@ public partial class Index : ComponentBase
 
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    [Inject] IHttpContextAccessor HttpContextAccessor { get; set; }
     [Inject] private NavigationManager NavigationManager { get; set; }
     [Inject] private INotification Notifier { get; set; }
 
