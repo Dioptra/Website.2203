@@ -1,12 +1,16 @@
 using Blazored.LocalStorage;
+
 using GoogleAnalytics.Blazor;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http;
+
 using Serilog;
 using Serilog.Events;
 using Serilog.Extensions.Logging;
+
 using Website.Client;
 using Website.Client.ServiceClients;
 using Website.WebAssembly;
