@@ -8,14 +8,14 @@ namespace Website.Client;
 [Sitemap(SitemapAttribute.ChangeFreqType.Monthly, 0.1)]
 public partial class TermsAndConditions : ComponentBase
 {
-    private ElementReference GeneralPageLayoutRef { get; set; } = default!;
+    private GeneralPageLayout GeneralPageLayout { get; set; } = default!;
 
 
     protected override void OnAfterRender(bool firstRender)
     {
         if (firstRender)
         {
-            GeneralPageLayoutRef.ShowHomeButton(true);
+            GeneralPageLayout.ShowHomeButton(true);
         }
     }
 }

@@ -25,7 +25,7 @@ public partial class Index : ComponentBase
 
 
 
-    private ElementReference GeneralPageLayoutRef { get; set; } = default!;
+    private GeneralPageLayout GeneralPageLayout { get; set; } = default!;
     private MBDialog Dialog { get; set; } = default!;
     private RealEstateInvestorEnquiry RealEstateInvestorEnquiry { get; set; } = new();
 
@@ -65,7 +65,7 @@ public partial class Index : ComponentBase
     {
         if (firstRender)
         {
-            GeneralPageLayoutRef.ShowHomeButton(false);
+            GeneralPageLayout.ShowHomeButton(false);
         }
     }
 
