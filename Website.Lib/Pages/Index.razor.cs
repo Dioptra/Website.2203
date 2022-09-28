@@ -9,6 +9,9 @@ namespace Website.Lib;
 [Sitemap(SitemapAttribute.ChangeFreqType.Weekly, 0.8)]
 public partial class Index : ComponentBase
 {
+    [CascadingParameter] private MainLayout MainLayout { get; set; } = default!;
+
+
     private class ImageData
     {
         public string Uri { get; set; } = "";
@@ -25,7 +28,6 @@ public partial class Index : ComponentBase
 
 
 
-    private GeneralPageLayout GeneralPageLayout { get; set; } = default!;
     private MBDialog Dialog { get; set; } = default!;
     private RealEstateInvestorEnquiry RealEstateInvestorEnquiry { get; set; } = new();
 
@@ -65,7 +67,7 @@ public partial class Index : ComponentBase
     {
         if (firstRender)
         {
-            GeneralPageLayout.ShowHomeButton(false);
+            MainLayout.ShowHomeButton(false);
         }
     }
 

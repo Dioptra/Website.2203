@@ -10,11 +10,13 @@ namespace Website.Lib;
 [Sitemap(SitemapAttribute.ChangeFreqType.Weekly, 0.8)]
 public partial class WorkForUs : ComponentBase
 {
+    [CascadingParameter] private MainLayout MainLayout { get; set; } = default!;
+
+
     [Inject] private INotification Notifier { get; set; } = default!;
     [Inject] private IGBAnalyticsManager AnalyticsManager { get; set; } = default!;
 
 
-    private GeneralPageLayout GeneralPageLayout { get; set; } = default!;
     private MBDialog RecruitmentEnquiryDialog { get; set; } = new();
     private RecruitmentEnquiry RecruitmentEnquiry { get; set; } = new();
     private List<MBSelectElement<RecruitmentEnquiry.RoleType>> SelectElements { get; set; } = default!;
@@ -34,7 +36,7 @@ public partial class WorkForUs : ComponentBase
     {
         if (firstRender)
         {
-            GeneralPageLayout.ShowHomeButton(true);
+            MainLayout.ShowHomeButton(true);
         }
     }
 

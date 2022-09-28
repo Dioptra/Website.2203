@@ -8,14 +8,14 @@ namespace Website.Lib;
 [Sitemap(SitemapAttribute.ChangeFreqType.Monthly, 0.1)]
 public partial class TermsAndConditions : ComponentBase
 {
-    private GeneralPageLayout GeneralPageLayout { get; set; } = default!;
+    [CascadingParameter] private MainLayout MainLayout { get; set; } = default!;
 
 
     protected override void OnAfterRender(bool firstRender)
     {
         if (firstRender)
         {
-            GeneralPageLayout.ShowHomeButton(true);
+            MainLayout.ShowHomeButton(true);
         }
     }
 }
