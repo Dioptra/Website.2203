@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Website.Server.Middleware;
+namespace Website.Server;
 
 
 /// <summary>

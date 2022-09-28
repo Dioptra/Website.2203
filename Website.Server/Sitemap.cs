@@ -1,21 +1,27 @@
-﻿using System.Reflection;
-
-using Microsoft.AspNetCore.Components;
-
-using Website.Client;
-using Website.Client.Attributes;
+﻿using Microsoft.AspNetCore.Components;
+using System.Reflection;
+using Website.Lib;
 
 namespace Website.Server;
+
+
+/// <summary>
+/// Generates a sitemap.
+/// </summary>
 public class Sitemap
 {
+    /// <summary>
+    /// Generates the sitemap for the given context.
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static async Task Generate(HttpContext context)
     {
         await context.Response.WriteAsync("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
         await context.Response.WriteAsync("<urlset xmlns=\"https://www.sitemaps.org/schemas/sitemap/0.9\">\n");
 
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-        var pages = Assembly.GetAssembly(typeof(Utilities)).ExportedTypes.Where(p => p.IsSubclassOf(typeof(ComponentBase)));
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+        var pages = Assembly.GetAssembly(typeof(Utilities))!.ExportedTypes.Where(p => p.IsSubclassOf(typeof(ComponentBase)));
 
         foreach (var page in pages)
         {
@@ -35,7 +41,7 @@ public class Sitemap
                 }
                 else
                 {
-                    throw new ArgumentNullException($"{page.GetType().Name} with route {routeAttribute.Template} is missing an mandatory {typeof(SitemapAttribute).Name}");
+                    throw new ArgumentNullException($"{page.GetType().Name} with route {routeAttribute.Template} is missing a mandatory {typeof(SitemapAttribute).Name}");
                 }
             }
         }

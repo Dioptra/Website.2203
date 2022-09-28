@@ -50,7 +50,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Website.Client\Website.Client.csproj" />
+	  <ProjectReference Include="..\Website.Lib\Website.Lib.csproj" />
 	  <ProjectReference Include="..\Website.WebAssembly\Website.WebAssembly.csproj" />
 	</ItemGroup>
 

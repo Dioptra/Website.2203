@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
-namespace Website.Controllers;
+namespace Website.Server;
 
 /// <summary>
 /// And endpoint for CSP reporting.
@@ -11,6 +11,11 @@ namespace Website.Controllers;
 [ApiController]
 public class CspReportingController : Controller
 {
+    /// <summary>
+    /// Receives CSP reports.
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [HttpPost("UriReport")]
     [AllowAnonymous]
     public async Task<IActionResult> UriReport([FromForm] string request)

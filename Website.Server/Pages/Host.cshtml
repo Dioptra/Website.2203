@@ -1,13 +1,12 @@
 ﻿@page "/Host"
 @using Microsoft.AspNetCore.Components.Web
-@using Website.Client
-@using Website.Server.Services
+@using Website.Lib
 @namespace Website.Server.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @inject ContentSecurityPolicyService CSPService
 
 @{
-    RenderMode RenderMode = Helpers.IsBlazorServer ? RenderMode.ServerPrerendered : RenderMode.WebAssemblyPrerendered;
+    RenderMode RenderMode = PlatformDetermination.IsBlazorServer ? RenderMode.ServerPrerendered : RenderMode.WebAssemblyPrerendered;
 }
 
 <!DOCTYPE html>
@@ -24,16 +23,16 @@
     <link rel="stylesheet" href="https://use.typekit.net/zjb3qsk.css">
 
     <link rel="stylesheet" type="text/css" href="_content/Material.Blazor/material.blazor.min.css" integrity="@CSPService.GetFileHashString("material.blazor.min.css")" />
-    <link rel="stylesheet" type="text/css" id="app-theme" href="_content/Website.Client/css/dioptra.min.css" integrity="@CSPService.GetFileHashString("dioptra.min.css")" />
+    <link rel="stylesheet" type="text/css" id="app-theme" href="_content/Website.Lib/css/dioptra.min.css" integrity="@CSPService.GetFileHashString("dioptra.min.css")" />
 
-    <link rel="icon" type="image/png" href="_content/Website.Client/pwa/favicon-16x16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="_content/Website.Client/pwa/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="_content/Website.Client/pwa/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="_content/Website.Lib/pwa/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="_content/Website.Lib/pwa/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="_content/Website.Lib/pwa/favicon-96x96.png" sizes="96x96">
 
-    <link rel="apple-touch-icon" sizes="512x512" href="_content/Website.Client/ios-images/512.png" />
-    <link rel="apple-touch-icon" sizes="192x192" href="_content/Website.Client/ios-images/192.png" />
+    <link rel="apple-touch-icon" sizes="512x512" href="_content/Website.Lib/ios-images/512.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="_content/Website.Lib/ios-images/192.png" />
 
-@if (Helpers.IsBlazorServer)
+@if (PlatformDetermination.IsBlazorServer)
 {
     <link rel="manifest" href="manifest.json" />
 }
@@ -76,9 +75,9 @@
 
     <script src="_content/GoogleAnalytics.Blazor/googleanalytics.blazor.js" integrity="@CSPService.GetFileHashString("googleanalytics.blazor.js")"></script>
     <script src="_content/Material.Blazor/material.blazor.min.js" integrity="@CSPService.GetFileHashString("material.blazor.min.js")"></script>
-    <script src="_content/Website.Client/js/dioptra.min.js" integrity="@CSPService.GetFileHashString("dioptra.min.js")"></script>
+    <script src="_content/Website.Lib/js/dioptra.min.js" integrity="@CSPService.GetFileHashString("dioptra.min.js")"></script>
 
-    @if (Helpers.IsBlazorServer)
+    @if (PlatformDetermination.IsBlazorServer)
     {
         <script src="_framework/blazor.server.js" nonce="@CSPService.GetValues(HttpContext).NonceValue"></script>
     }
