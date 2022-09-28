@@ -54,7 +54,7 @@ builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
 #endif
 
 // Needed for prerendering on WebAssembly as well as general use
-builder.Services.AddTransient<INotification, NotificationService>();
+builder.Services.AddTransient<INotification, ServerNotificationService>();
 
 builder.Services.AddMBServices();
 

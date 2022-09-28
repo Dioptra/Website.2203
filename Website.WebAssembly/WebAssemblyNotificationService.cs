@@ -1,15 +1,18 @@
-﻿using Website.Lib;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
+using Website.Lib;
 
 namespace Website.WebAssembly;
 
 
-public class NotificationClient : INotification
+/// <summary>
+/// Implements <see cref="INotification"/> for the Blazor WebAssembly project, posting messages to a controller on the server.
+/// </summary>
+public class WebAssemblyNotificationService : INotification
 {
     private readonly HttpClient _httpClient;
 
 
-    public NotificationClient(HttpClient httpClient)
+    public WebAssemblyNotificationService(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }
@@ -20,15 +23,18 @@ public class NotificationClient : INotification
         await _httpClient.PostAsJsonAsync("Notification/PostContactMessage", message);
     }
 
+
     public async Task Send(RecruitmentEnquiry message)
     {
         await _httpClient.PostAsJsonAsync("Notification/PostRecruitmentEnquiry", message);
     }
 
+
     public async Task Send(RealEstateInvestorEnquiry message)
     {
         await _httpClient.PostAsJsonAsync("Notification/PostRealEstateInvestorEnquiry", message);
     }
+
 
     public async Task Send(VentureCapitalEnquiry message)
     {
