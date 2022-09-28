@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Reflection;
-using Website.Client;
+using Website.Lib;
 
 namespace Website.Server;
 

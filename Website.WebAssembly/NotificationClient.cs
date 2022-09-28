@@ -1,4 +1,4 @@
-﻿using Website.Client;
+﻿using Website.Lib;
 using System.Net.Http.Json;
 
 namespace Website.WebAssembly;

@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Serilog;
 using Serilog.Events;
 
-using Website.Client;
+using Website.Lib;
 using Website.Server;
 using Website.Server.Middleware;
 using Website.Server.Services;
