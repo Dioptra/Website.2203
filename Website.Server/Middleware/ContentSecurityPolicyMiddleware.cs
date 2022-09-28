@@ -1,8 +1,6 @@
 ﻿using Serilog;
 
-using Website.Server.Services;
-
-namespace Website.Server.Middleware;
+namespace Website.Server;
 
 
 /// <summary>

@@ -1,23 +1,15 @@
-﻿using System.IO.Compression;
-
-using AspNetCoreRateLimit;
-
+﻿using AspNetCoreRateLimit;
 using Blazored.LocalStorage;
-
 using CompressedStaticFiles;
-
 using GoogleAnalytics.Blazor;
 using Material.Blazor;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.ResponseCompression;
-
 using Serilog;
 using Serilog.Events;
-
+using System.IO.Compression;
 using Website.Lib;
 using Website.Server;
-using Website.Server.Middleware;
-using Website.Server.Services;
 
 const string _customTemplate = "{Timestamp: HH:mm:ss.fff}\t[{Level:u3}]\t{Message}{NewLine}{Exception}";
 const string _loggingWebhook = "https://blacklandcapital.webhook.office.com/webhookb2/6ccfaed1-7c02-440c-83f0-9265cf35b379@ef73a184-f1db-4f24-b406-e4f8f9633dfa/IncomingWebhook/18bed2df0852449aa5d92541255caade/34ba3a07-c6f6-4e3f-896d-148fb6c1765f";

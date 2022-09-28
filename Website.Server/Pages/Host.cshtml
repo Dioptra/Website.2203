@@ -1,13 +1,12 @@
 ﻿@page "/Host"
 @using Microsoft.AspNetCore.Components.Web
 @using Website.Lib
-@using Website.Server.Services
 @namespace Website.Server.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @inject ContentSecurityPolicyService CSPService
 
 @{
-    RenderMode RenderMode = Helpers.IsBlazorServer ? RenderMode.ServerPrerendered : RenderMode.WebAssemblyPrerendered;
+    RenderMode RenderMode = PlatformDetermination.IsBlazorServer ? RenderMode.ServerPrerendered : RenderMode.WebAssemblyPrerendered;
 }
 
 <!DOCTYPE html>
@@ -33,7 +32,7 @@
     <link rel="apple-touch-icon" sizes="512x512" href="_content/Website.Lib/ios-images/512.png" />
     <link rel="apple-touch-icon" sizes="192x192" href="_content/Website.Lib/ios-images/192.png" />
 
-@if (Helpers.IsBlazorServer)
+@if (PlatformDetermination.IsBlazorServer)
 {
     <link rel="manifest" href="manifest.json" />
 }
@@ -78,7 +77,7 @@
     <script src="_content/Material.Blazor/material.blazor.min.js" integrity="@CSPService.GetFileHashString("material.blazor.min.js")"></script>
     <script src="_content/Website.Lib/js/dioptra.min.js" integrity="@CSPService.GetFileHashString("dioptra.min.js")"></script>
 
-    @if (Helpers.IsBlazorServer)
+    @if (PlatformDetermination.IsBlazorServer)
     {
         <script src="_framework/blazor.server.js" nonce="@CSPService.GetValues(HttpContext).NonceValue"></script>
     }

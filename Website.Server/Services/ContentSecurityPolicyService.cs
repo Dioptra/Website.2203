@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 
-namespace Website.Server.Services;
+namespace Website.Server;
 
 /// <summary>
 /// Produces a nonce and manages static asset SHA hashes

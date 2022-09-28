@@ -16,13 +16,6 @@ public partial class MainLayout : LayoutComponentBase
     [Inject] private IGBAnalyticsManager AnalyticsManager { get; set; } = default!;
 
 
-    /// <summary>
-    /// Optional color CSS class.
-    /// </summary>
-    [Parameter] public string ColorClass { get; set; } = "dw-yellow";
-    [Parameter] public RenderFragment ChildContent { get; set; } = default!;
-
-
     private MBDialog ContactDialog { get; set; } = new();
     private bool HomeButtonExited { get; set; } = true;
     private ContactMessage ContactMessage { get; set; } = new();
@@ -45,6 +38,7 @@ public partial class MainLayout : LayoutComponentBase
 
         await ContactDialog.ShowAsync();
     }
+
 
     private async Task CloseContactDialogAsync()
     {

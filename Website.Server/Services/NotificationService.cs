@@ -4,6 +4,10 @@ using Website.Lib;
 
 namespace Website.Server;
 
+
+/// <summary>
+/// Implements <see cref="INotification"/> for the Blazor Server/WASM hosting project.
+/// </summary>
 public class NotificationService : INotification
 {
     private const string _messagingWebhook = "https://blacklandcapital.webhook.office.com/webhookb2/6ccfaed1-7c02-440c-83f0-9265cf35b379@ef73a184-f1db-4f24-b406-e4f8f9633dfa/IncomingWebhook/b89fe29282274986b059a32b41fea397/34ba3a07-c6f6-4e3f-896d-148fb6c1765f";
@@ -44,21 +48,29 @@ public class NotificationService : INotification
         }
     }
 
+
+    /// <inheritdoc/>
     public Task Send(ContactMessage message)
     {
         return GenericSend(message);
     }
 
+
+    /// <inheritdoc/>
     public Task Send(RecruitmentEnquiry message)
     {
         return GenericSend(message);
     }
 
+
+    /// <inheritdoc/>
     public Task Send(RealEstateInvestorEnquiry message)
     {
         return GenericSend(message);
     }
 
+
+    /// <inheritdoc/>
     public Task Send(VentureCapitalEnquiry message)
     {
         return GenericSend(message);

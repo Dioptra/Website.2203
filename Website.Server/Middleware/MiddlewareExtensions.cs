@@ -1,4 +1,4 @@
-﻿namespace Website.Server.Middleware;
+﻿namespace Website.Server;
 
 /// <summary>
 /// Middleware extensions
