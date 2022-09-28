@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Website.Client;
-using Website.Client.ServiceClients;
 
 namespace Website.Server.Controllers;
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace Website.Client.Shared;
+namespace Website.Client;
 
 /// <summary>
 /// Displays an SVG Dioptra logo

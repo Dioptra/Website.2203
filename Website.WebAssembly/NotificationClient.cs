@@ -1,9 +1,8 @@
-﻿using System.Net.Http.Json;
-
-using Website.Client;
-using Website.Client.ServiceClients;
+﻿using Website.Client;
+using System.Net.Http.Json;
 
 namespace Website.WebAssembly;
+
 
 public class NotificationClient : INotification
 {

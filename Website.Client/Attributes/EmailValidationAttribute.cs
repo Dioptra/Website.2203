@@ -3,7 +3,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Website.Client.Attributes;
+namespace Website.Client;
+
+
+/// <summary>
+/// Validates correct email address formation.
+/// </summary>
 public class EmailValidationAttribute : ValidationAttribute
 {
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)

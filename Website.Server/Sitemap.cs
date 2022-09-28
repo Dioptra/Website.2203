@@ -1,11 +1,9 @@
-﻿using System.Reflection;
-
-using Microsoft.AspNetCore.Components;
-
+﻿using Microsoft.AspNetCore.Components;
+using System.Reflection;
 using Website.Client;
-using Website.Client.Attributes;
 
 namespace Website.Server;
+
 public class Sitemap
 {
     public static async Task Generate(HttpContext context)

@@ -1,30 +1,25 @@
 ﻿using GoogleAnalytics.Blazor;
-
 using Material.Blazor;
-
 using Microsoft.AspNetCore.Components;
 
-using Website.Client.Attributes;
-using Website.Client.ServiceClients;
-using Website.Client.Shared;
+namespace Website.Client;
 
-namespace Website.Client.Pages;
-
+/// <summary>
+/// The "Work for us" website page.
+/// </summary>
 [Sitemap(SitemapAttribute.ChangeFreqType.Weekly, 0.8)]
 public partial class WorkForUs : ComponentBase
 {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    [Inject] private INotification Notifier { get; set; }
-    [Inject] private IGBAnalyticsManager AnalyticsManager { get; set; }
+    [Inject] private INotification Notifier { get; set; } = default!;
+    [Inject] private IGBAnalyticsManager AnalyticsManager { get; set; } = default!;
 
 
-    private GeneralPageLayout GeneralPageLayout { get; set; }
+    private GeneralPageLayout GeneralPageLayout { get; set; } = default!;
     private MBDialog RecruitmentEnquiryDialog { get; set; } = new();
     private RecruitmentEnquiry RecruitmentEnquiry { get; set; } = new();
-    private List<MBSelectElement<RecruitmentEnquiry.RoleType>> SelectElements { get; set; }
+    private List<MBSelectElement<RecruitmentEnquiry.RoleType>> SelectElements { get; set; } = default!;
     private string HiringDialogTitle { get; set; } = "";
     private bool ShowProspectiveRole { get; set; } = false;
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
 
     protected override void OnInitialized()

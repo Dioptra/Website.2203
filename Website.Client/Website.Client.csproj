@@ -33,7 +33,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<AssemblyAttribute Include="Website.Client.Attributes.BuildDateAttribute">
+		<AssemblyAttribute Include="Website.Client.BuildDateAttribute">
 			<_Parameter1>$([System.DateTime]::UtcNow.ToString("yyyy-MM-dd"))</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>

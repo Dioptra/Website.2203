@@ -1,10 +1,8 @@
 ﻿using System.Text;
 using System.Text.Json;
-
 using Website.Client;
-using Website.Client.ServiceClients;
 
-namespace Website.Server.Services;
+namespace Website.Server;
 
 public class NotificationService : INotification
 {

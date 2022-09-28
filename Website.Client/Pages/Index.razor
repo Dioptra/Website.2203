@@ -1,5 +1,7 @@
 ﻿@page "/"
 
+@namespace Website.Client
+
 @inherits ComponentBase
 
 
@@ -23,7 +25,7 @@
     }*@
 </HeadAndMetaContent>
 
-<GeneralPageLayout @ref="@GeneralPageLayout" ColorClass="dw-yellow" >
+<GeneralPageLayout @ref="@GeneralPageLayoutRef" ColorClass="dw-yellow" >
     <div class="dw-section-condensed dw-hero">
         <div class="dw-max-width-content">
             <div class="mdc-layout-grid">

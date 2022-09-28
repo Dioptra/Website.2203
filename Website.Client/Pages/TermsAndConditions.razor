@@ -1,6 +1,8 @@
 ﻿@page "/terms-and-conditions"
 
-@inherits ComponentBase;
+@namespace Website.Client
+
+@inherits ComponentBase
 
 
 <HeadAndMetaContent PageTitle="Terms & Conditions"
@@ -10,7 +12,7 @@
 </HeadAndMetaContent>
 
 
-<GeneralPageLayout @ref="@GeneralPageLayout" ColorClass="dw-yellow" >
+<GeneralPageLayout @ref="@GeneralPageLayoutRef" ColorClass="dw-yellow" >
     <div class="dw-section-regular">
         <div class="dw-max-width-content">
             <div class="mdc-layout-grid">

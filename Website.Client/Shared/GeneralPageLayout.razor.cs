@@ -2,23 +2,25 @@
 using Material.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using Website.Client.ServiceClients;
 
-namespace Website.Client.Shared;
+namespace Website.Client;
 
-public partial class GeneralPageLayout : ComponentBase
+/// <summary>
+/// Base class for website pages, setting up required injected services and managing the home button, header and footer, and the cookie consent banner.
+/// </summary>
+public abstract partial class GeneralPageLayout : ComponentBase
 {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    [Inject] private INotification Notifier { get; set; }
-    [Inject] private NavigationManager NavigationManager { get; set; }
-    [Inject] private IJSRuntime JSRuntime { get; set; }
-    [Inject] private IGBAnalyticsManager AnalyticsManager { get; set; }
+    [Inject] private INotification Notifier { get; set; } = default!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+    [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
+    [Inject] private IGBAnalyticsManager AnalyticsManager { get; set; } = default!;
 
 
-
-    [Parameter] public string ColorClass { get; set; }
-    [Parameter] public RenderFragment ChildContent { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    /// <summary>
+    /// Optional color CSS class.
+    /// </summary>
+    [Parameter] public string ColorClass { get; set; } = "";
+    [Parameter] public RenderFragment ChildContent { get; set; } = default!;
 
 
     private MBDialog ContactDialog { get; set; } = new();

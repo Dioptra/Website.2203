@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
-using Website.Client.Attributes;
-
 namespace Website.Client;
 public class RecruitmentEnquiry : IMessage
 {

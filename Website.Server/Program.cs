@@ -7,7 +7,7 @@ using Blazored.LocalStorage;
 using CompressedStaticFiles;
 
 using GoogleAnalytics.Blazor;
-
+using Material.Blazor;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.ResponseCompression;
 
@@ -15,7 +15,6 @@ using Serilog;
 using Serilog.Events;
 
 using Website.Client;
-using Website.Client.ServiceClients;
 using Website.Server;
 using Website.Server.Middleware;
 using Website.Server.Services;
@@ -65,7 +64,7 @@ builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
 // Needed for prerendering on WebAssembly as well as general use
 builder.Services.AddTransient<INotification, NotificationService>();
 
-ServiceClientHelper.Inject(builder.Services);
+builder.Services.AddMBServices();
 
 builder.Services.AddHsts(options =>
 {

@@ -1,13 +1,11 @@
 ﻿using Material.Blazor;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http;
 
-using Website.Client.Attributes;
-using Website.Client.ServiceClients;
-using Website.Client.Shared;
+namespace Website.Client;
 
-namespace Website.Client.Pages;
-
+/// <summary>
+/// The website's index page
+/// </summary>
 [Sitemap(SitemapAttribute.ChangeFreqType.Weekly, 0.8)]
 public partial class Index : ComponentBase
 {
@@ -22,16 +20,14 @@ public partial class Index : ComponentBase
     }
 
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    [Inject] private NavigationManager NavigationManager { get; set; }
-    [Inject] private INotification Notifier { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+    [Inject] private INotification Notifier { get; set; } = default!;
 
 
 
-    private GeneralPageLayout GeneralPageLayout { get; set; }
-    private MBDialog Dialog { get; set; }
+    private ElementReference GeneralPageLayoutRef { get; set; } = default!;
+    private MBDialog Dialog { get; set; } = default!;
     private RealEstateInvestorEnquiry RealEstateInvestorEnquiry { get; set; } = new();
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
 
 
@@ -48,12 +44,14 @@ public partial class Index : ComponentBase
         new() { Uri = "_content/Website.Client/images/09-march-edit-budget-schedule.webp", Caption = "Editting cost budget schedules" },
     };
 
+
     private static readonly ImageData[] SkylineImages = new ImageData[]
     {
         new() { Uri = "_content/Website.Client/images/new-york-640.webp", Caption = "New York skyline", Width = "640px", Height = "420px" },
         new() { Uri = "_content/Website.Client/images/new-york-420.webp", Caption = "New York skyline", Width = "420px", Height = "420px" },
         new() { Uri = "_content/Website.Client/images/new-york-320.webp", Caption = "New York skyline", Width = "320px", Height = "420px" },
     };
+
 
     private static readonly ImageData[] ProgrammerImages = new ImageData[]
     {
@@ -62,11 +60,12 @@ public partial class Index : ComponentBase
         new() { Uri = "_content/Website.Client/images/programmer-320.webp", Caption = "Programmer working at a desk", Width = "320px", Height = "420px" },
     };
 
+
     protected override void OnAfterRender(bool firstRender)
     {
         if (firstRender)
         {
-            GeneralPageLayout.ShowHomeButton(false);
+            GeneralPageLayoutRef.ShowHomeButton(false);
         }
     }
 

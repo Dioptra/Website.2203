@@ -1,7 +1,7 @@
 using Blazored.LocalStorage;
 
 using GoogleAnalytics.Blazor;
-
+using Material.Blazor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.CookiePolicy;
@@ -12,7 +12,6 @@ using Serilog.Events;
 using Serilog.Extensions.Logging;
 
 using Website.Client;
-using Website.Client.ServiceClients;
 using Website.WebAssembly;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -21,7 +20,7 @@ builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(build
 
 builder.Services.AddSingleton<INotification, NotificationClient>();
 
-ServiceClientHelper.Inject(builder.Services);
+builder.Services.AddMBServices();
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
