@@ -78,7 +78,8 @@ public partial class Index : ComponentBase
 
 #if BLAZOR_SERVER
         var context = HttpContextAccessor.HttpContext;
-        BaseAddressClass.BaseAddress = context.Request.Host.ToUriComponent() + "/";
+        var rawBase = context.Request.Host.ToUriComponent() + "/";
+        BaseAddressClass.BaseAddress = rawBase.Replace("localhost", "http://127.0.0.1");
 #endif
     }
 
