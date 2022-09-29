@@ -108,8 +108,8 @@ jobs:
 ############################################################################################################
 # Build blazor server container on Dioptra
 ############################################################################################################
-  build-dioptra-website-SSB:
-    name: Build SSB docker container
+  build-blazor-server:
+    name: Build blazor server
     needs: [version, perform-deployment]
     runs-on: ubuntu-latest
 
@@ -143,8 +143,8 @@ jobs:
 ############################################################################################################
 # Build blazor webassembly container on Dioptra
 ############################################################################################################
-  build-dioptra-website-CSB:
-    name: Build CSB docker container
+  build-blazor-webassembly:
+    name: Build blazor webassembly
     needs: [version, perform-deployment]
     runs-on: ubuntu-latest
 
@@ -171,6 +171,6 @@ jobs:
     #    docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorServerAppName}}:${{ needs.version.outputs.suffix }}
 
     - run: |
-        docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }} --build-arg version=${{ needs.version.outputs.suffix }}
+        docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ needs.version.outputs.suffix }} --build-arg version=${{ needs.version.outputs.suffix }}
         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ needs.version.outputs.suffix }}
 
