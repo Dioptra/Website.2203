@@ -12,13 +12,13 @@ using Serilog.Events;
 using Serilog.Extensions.Logging;
 
 using Website.Lib;
-using Website.WebAssembly;
+using Website.Lib.ServiceClients;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-builder.Services.AddSingleton<INotification, WebAssemblyNotificationService>();
+builder.Services.AddSingleton<INotification, NotificationClient>();
 
 builder.Services.AddMBServices();
 

@@ -1,15 +1,24 @@
-﻿using Blazored.LocalStorage;
+﻿using System.IO.Compression;
+using System.Threading.RateLimiting;
+
+using Blazored.LocalStorage;
+
 using CompressedStaticFiles;
+
 using GoogleAnalytics.Blazor;
+
 using HttpSecurity.AspNet;
+
 using Material.Blazor;
+
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.ResponseCompression;
+
 using Serilog;
 using Serilog.Events;
-using System.IO.Compression;
-using System.Threading.RateLimiting;
+
 using Website.Lib;
+using Website.Lib.ServiceClients;
 using Website.Server;
 
 const string _customTemplate = "{Timestamp: HH:mm:ss.fff}\t[{Level:u3}]\t{Message}{NewLine}{Exception}";
@@ -105,8 +114,10 @@ builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
 
 #endif
 
-// Needed for prerendering on WebAssembly as well as general use
-builder.Services.AddTransient<INotification, ServerNotificationService>();
+// These two services are needed for prerendering on a WebAssembly hosted client
+// as well as for use on Server hosted
+builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(BaseAddressClass.BaseAddress) });
+builder.Services.AddTransient<INotification, NotificationClient>();
 
 builder.Services.AddMBServices();
 

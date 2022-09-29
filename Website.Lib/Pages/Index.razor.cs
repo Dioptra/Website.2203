@@ -1,7 +1,15 @@
-﻿using Material.Blazor;
+using Material.Blazor;
 using Microsoft.AspNetCore.Components;
+#if BLAZOR_SERVER
+using Microsoft.AspNetCore.Http;
+#endif
 
 namespace Website.Lib;
+
+public static class BaseAddressClass
+{
+    public static string BaseAddress { get; set; } = "localhost:12345";
+}
 
 /// <summary>
 /// The website's index page
@@ -25,8 +33,9 @@ public partial class Index : ComponentBase
 
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
     [Inject] private INotification Notifier { get; set; } = default!;
-
-
+#if BLAZOR_SERVER
+    [Inject] private IHttpContextAccessor HttpContextAccessor { get; set; }
+#endif
 
     private MBDialog Dialog { get; set; } = default!;
     private RealEstateInvestorEnquiry RealEstateInvestorEnquiry { get; set; } = new();
@@ -61,6 +70,17 @@ public partial class Index : ComponentBase
         new() { Uri = "_content/Website.Lib/images/programmer-420.webp", Caption = "Programmer working at a desk", Width = "420px", Height = "420px" },
         new() { Uri = "_content/Website.Lib/images/programmer-320.webp", Caption = "Programmer working at a desk", Width = "320px", Height = "420px" },
     };
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+#if BLAZOR_SERVER
+        var context = HttpContextAccessor.HttpContext;
+        BaseAddressClass.BaseAddress = context.Request.Host.ToUriComponent() + "/";
+#endif
+    }
 
 
     protected override void OnAfterRender(bool firstRender)

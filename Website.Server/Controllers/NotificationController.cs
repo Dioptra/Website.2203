@@ -1,3 +1,6 @@
+using System.Text.Json;
+using System.Text;
+
 using Microsoft.AspNetCore.Mvc;
 using Website.Lib;
 
@@ -11,12 +14,43 @@ namespace Website.Server;
 [Route("api/[controller]")]
 public class NotificationController : ControllerBase
 {
-    public readonly INotification _notificationService;
+    private static readonly string _messagingWebhook = Environment.GetEnvironmentVariable("MESSAGING_WEBHOOK") ?? "https://nonexistent.nothing";
 
-
-    public NotificationController(INotification notificationService)
+    private static readonly JsonSerializerOptions _serializerOptions = new()
     {
-        _notificationService = notificationService;
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        WriteIndented = false
+    };
+
+    private readonly ILogger<NotificationController> _logger;
+
+    public NotificationController(ILogger<NotificationController> logger)
+    {
+        _logger = logger;
+    }
+
+
+    private async Task GenericSend(IMessage message)
+    {
+        try
+        {
+            var client = new HttpClient();
+
+            var json = message.GetMessageCardJson(_serializerOptions);
+
+            var response = await client.PostAsync(_messagingWebhook, new StringContent(json, Encoding.UTF8, "application/json")).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new NotSupportedException($"Received failed result {response.StatusCode} when posting events to Microsoft Teams.");
+            }
+
+            _logger.LogInformation($"Sent message to Teams using {_messagingWebhook}; received this response: {response.StatusCode}", message, response.StatusCode);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to send contact message to Teams", message);
+        }
     }
 
 
@@ -28,7 +62,7 @@ public class NotificationController : ControllerBase
     [HttpPost("PostContactMessage")]
     public async Task PostContactMessage([FromBody] ContactMessage contactMessage)
     {
-        await _notificationService.Send(contactMessage).ConfigureAwait(false);
+        await GenericSend(contactMessage).ConfigureAwait(false);
     }
 
 
@@ -40,7 +74,7 @@ public class NotificationController : ControllerBase
     [HttpPost("PostRealEstateInvestorEnquiry")]
     public async Task PostRealEstateInvestorEnquiry([FromBody] RealEstateInvestorEnquiry realEstateInvestorEnquiry)
     {
-        await _notificationService.Send(realEstateInvestorEnquiry).ConfigureAwait(false);
+        await GenericSend(realEstateInvestorEnquiry).ConfigureAwait(false);
     }
 
 
@@ -52,7 +86,7 @@ public class NotificationController : ControllerBase
     [HttpPost("PostRecruitmentEnquiry")]
     public async Task PostRecruitmentEnquiry([FromBody] RecruitmentEnquiry recruitmentEnquiry)
     {
-        await _notificationService.Send(recruitmentEnquiry).ConfigureAwait(false);
+        await GenericSend(recruitmentEnquiry).ConfigureAwait(false);
     }
 
 
@@ -64,6 +98,6 @@ public class NotificationController : ControllerBase
     [HttpPost("PostVentureCapitalEnquiry")]
     public async Task PostVentureCapitalEnquiry([FromBody] VentureCapitalEnquiry ventureCapitalEnquiry)
     {
-        await _notificationService.Send(ventureCapitalEnquiry).ConfigureAwait(false);
+        await GenericSend(ventureCapitalEnquiry).ConfigureAwait(false);
     }
 }
