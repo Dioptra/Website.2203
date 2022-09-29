@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using Material.Blazor;
+using System.Net.Http.Json;
 using Website.Lib;
 
 namespace Website.WebAssembly;
@@ -10,34 +11,45 @@ namespace Website.WebAssembly;
 public class WebAssemblyNotificationService : INotification
 {
     private readonly HttpClient _httpClient;
+    private readonly IMBToastService _mBToastService;
 
 
-    public WebAssemblyNotificationService(HttpClient httpClient)
+    public WebAssemblyNotificationService(HttpClient httpClient, IMBToastService mBToastService)
     {
         _httpClient = httpClient;
+        _mBToastService = mBToastService;
     }
 
 
     public async Task Send(ContactMessage message)
     {
-        await _httpClient.PostAsJsonAsync("Notification/PostContactMessage", message);
+        NotifyError(await _httpClient.PostAsJsonAsync("api/Notification/PostContactMessage", message).ConfigureAwait(false));
     }
 
 
     public async Task Send(RecruitmentEnquiry message)
     {
-        await _httpClient.PostAsJsonAsync("Notification/PostRecruitmentEnquiry", message);
+        NotifyError(await _httpClient.PostAsJsonAsync("api/Notification/PostRecruitmentEnquiry", message).ConfigureAwait(false));
     }
 
 
     public async Task Send(RealEstateInvestorEnquiry message)
     {
-        await _httpClient.PostAsJsonAsync("Notification/PostRealEstateInvestorEnquiry", message);
+        NotifyError(await _httpClient.PostAsJsonAsync("api/Notification/PostRealEstateInvestorEnquiry", message).ConfigureAwait(false));
     }
 
 
     public async Task Send(VentureCapitalEnquiry message)
     {
-        await _httpClient.PostAsJsonAsync("Notification/PostVentureCapitalEnquiry", message);
+        NotifyError(await _httpClient.PostAsJsonAsync("api/Notification/PostVentureCapitalEnquiry", message).ConfigureAwait(false));
+    }
+
+
+    private void NotifyError(HttpResponseMessage response)
+    {
+        if (!response.IsSuccessStatusCode)
+        {
+            _mBToastService.ShowToast(MBToastLevel.Error, "Message failed to send, try again in a few seconds.");
+        }
     }
 }

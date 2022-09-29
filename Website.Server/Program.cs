@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Serilog;
 using Serilog.Events;
 using System.IO.Compression;
+using System.Threading.RateLimiting;
 using Website.Lib;
 using Website.Server;
 
@@ -205,7 +206,28 @@ app.UseCompressedStaticFiles();
 
 app.UseRouting();
 
-app.UseClientRateLimiting();
+//app.UseClientRateLimiting();
+
+app.UseRateLimiter(new()
+{
+    GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+    {
+        if (!context.Request.Path.StartsWithSegments("/api"))
+        {
+            return RateLimitPartition.GetNoLimiter("NoLimit");
+        }
+
+        return RateLimitPartition.GetFixedWindowLimiter("GeneralLimit",
+            _ => new FixedWindowRateLimiterOptions()
+            {
+                Window = TimeSpan.FromSeconds(100),
+                PermitLimit = 1,
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 0,
+            });
+    }),
+    RejectionStatusCode = 429,
+});
 
 app.MapControllers();
 

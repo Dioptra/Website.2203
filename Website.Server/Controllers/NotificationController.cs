@@ -8,7 +8,7 @@ namespace Website.Server;
 /// Receives notifications from the Blazor WebAssembly client app. Applies messages received to <see cref="ServerNotificationService"/>
 /// </summary>
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class NotificationController : ControllerBase
 {
     public readonly INotification _notificationService;
