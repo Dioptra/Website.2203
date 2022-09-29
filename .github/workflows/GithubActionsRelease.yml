@@ -57,8 +57,8 @@ jobs:
 ############################################################################################################
 # Build blazor server container on Dioptra
 ############################################################################################################
-  build-dioptra-website-SSB:
-    name: Build SSB docker container
+  build-blazor-server:
+    name: Build BlazorServer
     needs: [version, perform-deployment]
     runs-on: ubuntu-latest
 
@@ -92,8 +92,8 @@ jobs:
 ############################################################################################################
 # Build blazor webassembly container on Dioptra
 ############################################################################################################
-  build-dioptra-website-CSB:
-    name: Build CSB docker container
+  build-blazor-webassembly:
+    name: Build BlazorWASM
     needs: [version, perform-deployment]
     runs-on: ubuntu-latest
 
