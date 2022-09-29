@@ -1,5 +1,4 @@
-﻿using AspNetCoreRateLimit;
-using Blazored.LocalStorage;
+﻿using Blazored.LocalStorage;
 using CompressedStaticFiles;
 using GoogleAnalytics.Blazor;
 using HttpSecurity.AspNet;
@@ -131,17 +130,6 @@ builder.Services.AddOptions();
 // needed to store rate limit counters and ip rules
 builder.Services.AddMemoryCache();
 
-//load general configuration from appsettings.json
-builder.Services.Configure<ClientRateLimitOptions>(builder.Configuration.GetSection("ClientRateLimiting"));
-
-//load client rules from appsettings.json
-builder.Services.Configure<ClientRateLimitPolicies>(builder.Configuration.GetSection("ClientRateLimitPolicies"));
-
-builder.Services.AddInMemoryRateLimiting();
-
-// configuration (resolvers, counter key builders)
-builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
-
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddBlazoredLocalStorage();
@@ -206,8 +194,7 @@ app.UseCompressedStaticFiles();
 
 app.UseRouting();
 
-//app.UseClientRateLimiting();
-
+// Limit api calls to 10 in a second to prevent external denial of service.
 app.UseRateLimiter(new()
 {
     GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
@@ -220,10 +207,10 @@ app.UseRateLimiter(new()
         return RateLimitPartition.GetFixedWindowLimiter("GeneralLimit",
             _ => new FixedWindowRateLimiterOptions()
             {
-                Window = TimeSpan.FromSeconds(100),
+                Window = TimeSpan.FromSeconds(1),
                 PermitLimit = 1,
                 QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-                QueueLimit = 0,
+                QueueLimit = 10,
             });
     }),
     RejectionStatusCode = 429,

@@ -29,7 +29,6 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_Server|Any CPU = Debug_Server|Any CPU
 		Debug_WebAssembly|Any CPU = Debug_WebAssembly|Any CPU
-		Re3lease_WebAssembly|Any CPU = Re3lease_WebAssembly|Any CPU
 		Release_Server|Any CPU = Release_Server|Any CPU
 		Release_WebAssembly|Any CPU = Release_WebAssembly|Any CPU
 	EndGlobalSection
@@ -38,8 +37,6 @@ Global
 		{99DEA7C6-D78A-4668-A089-1391DEF83351}.Debug_Server|Any CPU.Build.0 = Debug_Server|Any CPU
 		{99DEA7C6-D78A-4668-A089-1391DEF83351}.Debug_WebAssembly|Any CPU.ActiveCfg = Debug_WebAssembly|Any CPU
 		{99DEA7C6-D78A-4668-A089-1391DEF83351}.Debug_WebAssembly|Any CPU.Build.0 = Debug_WebAssembly|Any CPU
-		{99DEA7C6-D78A-4668-A089-1391DEF83351}.Re3lease_WebAssembly|Any CPU.ActiveCfg = Re3lease_WebAssembly|Any CPU
-		{99DEA7C6-D78A-4668-A089-1391DEF83351}.Re3lease_WebAssembly|Any CPU.Build.0 = Re3lease_WebAssembly|Any CPU
 		{99DEA7C6-D78A-4668-A089-1391DEF83351}.Release_Server|Any CPU.ActiveCfg = Release_Server|Any CPU
 		{99DEA7C6-D78A-4668-A089-1391DEF83351}.Release_Server|Any CPU.Build.0 = Release_Server|Any CPU
 		{99DEA7C6-D78A-4668-A089-1391DEF83351}.Release_WebAssembly|Any CPU.ActiveCfg = Release_WebAssembly|Any CPU
@@ -48,8 +45,6 @@ Global
 		{2118600B-6152-41BE-BD5C-A617713984C5}.Debug_Server|Any CPU.Build.0 = Debug_Server|Any CPU
 		{2118600B-6152-41BE-BD5C-A617713984C5}.Debug_WebAssembly|Any CPU.ActiveCfg = Debug_WebAssembly|Any CPU
 		{2118600B-6152-41BE-BD5C-A617713984C5}.Debug_WebAssembly|Any CPU.Build.0 = Debug_WebAssembly|Any CPU
-		{2118600B-6152-41BE-BD5C-A617713984C5}.Re3lease_WebAssembly|Any CPU.ActiveCfg = Re3lease_WebAssembly|Any CPU
-		{2118600B-6152-41BE-BD5C-A617713984C5}.Re3lease_WebAssembly|Any CPU.Build.0 = Re3lease_WebAssembly|Any CPU
 		{2118600B-6152-41BE-BD5C-A617713984C5}.Release_Server|Any CPU.ActiveCfg = Release_Server|Any CPU
 		{2118600B-6152-41BE-BD5C-A617713984C5}.Release_Server|Any CPU.Build.0 = Release_Server|Any CPU
 		{2118600B-6152-41BE-BD5C-A617713984C5}.Release_WebAssembly|Any CPU.ActiveCfg = Release_WebAssembly|Any CPU
@@ -58,8 +53,6 @@ Global
 		{71A1BDB3-3029-4080-968A-6544C6D4F08E}.Debug_Server|Any CPU.Build.0 = Debug_Server|Any CPU
 		{71A1BDB3-3029-4080-968A-6544C6D4F08E}.Debug_WebAssembly|Any CPU.ActiveCfg = Debug_WebAssembly|Any CPU
 		{71A1BDB3-3029-4080-968A-6544C6D4F08E}.Debug_WebAssembly|Any CPU.Build.0 = Debug_WebAssembly|Any CPU
-		{71A1BDB3-3029-4080-968A-6544C6D4F08E}.Re3lease_WebAssembly|Any CPU.ActiveCfg = Re3lease_WebAssembly|Any CPU
-		{71A1BDB3-3029-4080-968A-6544C6D4F08E}.Re3lease_WebAssembly|Any CPU.Build.0 = Re3lease_WebAssembly|Any CPU
 		{71A1BDB3-3029-4080-968A-6544C6D4F08E}.Release_Server|Any CPU.ActiveCfg = Release_Server|Any CPU
 		{71A1BDB3-3029-4080-968A-6544C6D4F08E}.Release_Server|Any CPU.Build.0 = Release_Server|Any CPU
 		{71A1BDB3-3029-4080-968A-6544C6D4F08E}.Release_WebAssembly|Any CPU.ActiveCfg = Release_WebAssembly|Any CPU
