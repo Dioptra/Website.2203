@@ -1,7 +1,7 @@
+#if BLAZOR_WEBASSEMBLY // Remove controller from Blazor Server where it isn't needed and is therefore an unnecessary attack vector
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using System.Text;
-
-using Microsoft.AspNetCore.Mvc;
 using Website.Lib;
 
 namespace Website.Server;
@@ -101,3 +101,4 @@ public class NotificationController : ControllerBase
         await GenericSend(ventureCapitalEnquiry).ConfigureAwait(false);
     }
 }
+#endif
