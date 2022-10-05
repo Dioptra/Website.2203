@@ -11,6 +11,8 @@ using Website.WebAssembly;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
+builder.RootComponents.Add<App>("#app");
+
 builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 builder.Services.AddScoped<INotification, WebAssemblyNotificationService>();
