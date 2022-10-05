@@ -1,5 +1,4 @@
-﻿using GoogleAnalytics.Blazor;
-using Material.Blazor;
+﻿using Material.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -13,7 +12,6 @@ public partial class MainLayout : LayoutComponentBase
     [Inject] private INotification Notifier { get; set; } = default!;
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
     [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
-    [Inject] private IGBAnalyticsManager AnalyticsManager { get; set; } = default!;
 
 
     private MBDialog ContactDialog { get; set; } = new();
@@ -34,16 +32,12 @@ public partial class MainLayout : LayoutComponentBase
     {
         ContactMessage = new();
 
-        await AnalyticsManager.TrackEvent("Open Contact Dialog");
-
         await ContactDialog.ShowAsync();
     }
 
 
     private async Task CloseContactDialogAsync()
     {
-        await AnalyticsManager.TrackEvent("Close Contact Dialog");
-
         await ContactDialog.HideAsync();
     }
 

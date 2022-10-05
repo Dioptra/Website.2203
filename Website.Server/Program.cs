@@ -1,6 +1,5 @@
 ﻿using Blazored.LocalStorage;
 using CompressedStaticFiles;
-using GoogleAnalytics.Blazor;
 using HttpSecurity.AspNet;
 using Material.Blazor;
 using Microsoft.AspNetCore.CookiePolicy;
@@ -139,16 +138,6 @@ builder.Services.AddMemoryCache();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddBlazoredLocalStorage();
-
-builder.Services.AddGBService(options =>
-{
-    options.TrackingId = "G-V061TDSPDR";
-    options.GlobalEventParams = new Dictionary<string, object>()
-    {
-        { Utilities.EventCategory, Utilities.DialogActions },
-        { Utilities.NonInteraction, true },
-    };
-});
 
 // Pentest fix
 builder.WebHost.ConfigureKestrel(serverOptions =>

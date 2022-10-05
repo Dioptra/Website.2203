@@ -1,6 +1,5 @@
 using Blazored.LocalStorage;
 
-using GoogleAnalytics.Blazor;
 using Material.Blazor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -46,15 +45,5 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Logging.AddProvider(new SerilogLoggerProvider());
-
-builder.Services.AddGBService(options =>
-{
-    options.TrackingId = "G-V061TDSPDR";
-    options.GlobalEventParams = new Dictionary<string, object>()
-    {
-        { Utilities.EventCategory, Utilities.DialogActions },
-        { Utilities.NonInteraction, true },
-    };
-});
 
 await builder.Build().RunAsync();
