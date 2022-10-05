@@ -1,8 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using Material.Blazor;
 using Microsoft.AspNetCore.CookiePolicy;
-using Microsoft.AspNetCore.ResponseCompression;
-using System.IO.Compression;
 using Website.Lib;
 using Website.Server;
 
@@ -49,12 +47,6 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddBlazoredLocalStorage();
 
-// Pentest fix
-//builder.WebHost.ConfigureKestrel(serverOptions =>
-//{
-//    serverOptions.AddServerHeader = false;
-//});
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -65,36 +57,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// Potentially omit to avoid CRIME and BREACH attacks - https://docs.microsoft.com/en-us/aspnet/core/performance/response-compression?view=aspnetcore-6.0#compression-with-https
-//app.UseResponseCompression();
-
 app.UseCookiePolicy();
 
 app.UseHttpsRedirection();
 
 app.UseRouting();
-
-// Limit api calls to 10 in a second to prevent external denial of service.
-//app.UseRateLimiter(new()
-//{
-//    GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
-//    {
-//        if (!context.Request.Path.StartsWithSegments("/api"))
-//        {
-//            return RateLimitPartition.GetNoLimiter("NoLimit");
-//        }
-
-//        return RateLimitPartition.GetFixedWindowLimiter("GeneralLimit",
-//            _ => new FixedWindowRateLimiterOptions()
-//            {
-//                Window = TimeSpan.FromSeconds(1),
-//                PermitLimit = 1,
-//                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-//                QueueLimit = 10,
-//            });
-//    }),
-//    RejectionStatusCode = 429,
-//});
 
 app.MapControllers();
 
@@ -107,10 +74,5 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.MapFallbackToPage("/Host");
-
-app.MapGet("/sitemap.xml", async context =>
-{
-    await Sitemap.Generate(context);
-});
 
 app.Run();
