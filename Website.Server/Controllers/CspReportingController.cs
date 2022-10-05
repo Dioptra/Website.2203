@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 
 namespace Website.Server;
 
@@ -21,7 +20,6 @@ public class CspReportingController : Controller
     public async Task<IActionResult> UriReport([FromForm] string request)
     {
         await Task.CompletedTask;
-        Log.Warning("CSP violation: " + request);
         return Ok();
     }
 }

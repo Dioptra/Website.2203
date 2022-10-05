@@ -4,15 +4,10 @@ using HttpSecurity.AspNet;
 using Material.Blazor;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.ResponseCompression;
-using Serilog;
-using Serilog.Events;
 using System.IO.Compression;
 using System.Threading.RateLimiting;
 using Website.Lib;
 using Website.Server;
-
-const string _customTemplate = "{Timestamp: HH:mm:ss.fff}\t[{Level:u3}]\t{Message}{NewLine}{Exception}";
-string _loggingWebhook = Environment.GetEnvironmentVariable("LOGGING_WEBHOOK") ?? "https://nonexistent.nothing";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -98,8 +93,6 @@ builder.Services.AddHttpsSecurityHeaders(options =>
 
 builder.Services.AddResponseCaching();
 
-builder.Host.UseSerilog();
-
 // Add services to the container.
 builder.Services.AddRazorPages();
 
@@ -149,23 +142,6 @@ builder.Services.AddCompressedStaticFiles();
 
 var app = builder.Build();
 
-Log.Logger = new LoggerConfiguration()
-#if DEBUG
-    .MinimumLevel.Debug()
-#else
-    .MinimumLevel.Information()
-#endif
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-    .MinimumLevel.Override("System", LogEventLevel.Warning)
-    .MinimumLevel.Override("GoogleAnalytics.Blazor", LogEventLevel.Debug)
-    .Enrich.FromLogContext()
-    .WriteTo.Conditional(evt => builder.Environment.IsDevelopment(), wt => wt.Async(a => a.Console(outputTemplate: _customTemplate, restrictedToMinimumLevel: LogEventLevel.Debug)))
-    .WriteTo.Conditional(evt => !builder.Environment.IsDevelopment(), wt => wt.Async(a => a.Console(outputTemplate: _customTemplate, restrictedToMinimumLevel: LogEventLevel.Information)))
-    .WriteTo.Conditional(evt => !app.Environment.IsDevelopment(), wt => wt.Async(a => a.MicrosoftTeams(outputTemplate: _customTemplate, webHookUri: _loggingWebhook, titleTemplate: "Dioptra Website", restrictedToMinimumLevel: LogEventLevel.Warning)))
-    .WriteTo.Conditional(evt => app.Environment.IsDevelopment(), wt => wt.Async(a => a.File(outputTemplate: _customTemplate, path: Environment.GetEnvironmentVariable("LOCALAPPDATA") + "\\Dioptra Website\\blazor-server-app.log", restrictedToMinimumLevel: LogEventLevel.Debug, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 7)))
-    .CreateLogger();
-
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -178,8 +154,6 @@ if (!app.Environment.IsDevelopment())
 app.UseResponseCompression();
 
 app.UseCookiePolicy();
-
-app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
