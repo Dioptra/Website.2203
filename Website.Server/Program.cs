@@ -3,35 +3,10 @@ using Material.Blazor;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.ResponseCompression;
 using System.IO.Compression;
-using System.Threading.RateLimiting;
 using Website.Lib;
 using Website.Server;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
-#region Potentially omit to avoid CRIME and BREACH attacks
-//builder.Services.AddResponseCompression(options =>
-//{
-//    options.EnableForHttps = true;
-//    options.Providers.Add<BrotliCompressionProvider>();
-//    options.Providers.Add<GzipCompressionProvider>();
-//});
-
-//// Performance test (performed in debug mode locally):
-//// NoCompression - material.blazor.min.css takes circa 10 to 20 ms to download, 270 Kb - page load 95 to 210 ms - 3.2 MB transfered
-//// Fastest - material.blazor.min.css takes circa 12 to 28 ms to download, 34.7 Kb - page load 250 to 270 ms - 2.2 MB transfered
-//// SmallestSize & Optimal - material.blazor.min.css takes circa 500 to 800 ms to download, 16.2 Kb - page load 900 to 1100 ms (unacceptably slow) - 2.1 MB transfered
-//builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
-//{
-//    options.Level = CompressionLevel.Fastest;
-//});
-
-//builder.Services.Configure<GzipCompressionProviderOptions>(options =>
-//{
-//    options.Level = CompressionLevel.SmallestSize;
-//});
-#endregion
 
 builder.Services.AddResponseCaching();
 
@@ -75,10 +50,10 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddBlazoredLocalStorage();
 
 // Pentest fix
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    serverOptions.AddServerHeader = false;
-});
+//builder.WebHost.ConfigureKestrel(serverOptions =>
+//{
+//    serverOptions.AddServerHeader = false;
+//});
 
 var app = builder.Build();
 
@@ -100,26 +75,26 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 // Limit api calls to 10 in a second to prevent external denial of service.
-app.UseRateLimiter(new()
-{
-    GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
-    {
-        if (!context.Request.Path.StartsWithSegments("/api"))
-        {
-            return RateLimitPartition.GetNoLimiter("NoLimit");
-        }
+//app.UseRateLimiter(new()
+//{
+//    GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+//    {
+//        if (!context.Request.Path.StartsWithSegments("/api"))
+//        {
+//            return RateLimitPartition.GetNoLimiter("NoLimit");
+//        }
 
-        return RateLimitPartition.GetFixedWindowLimiter("GeneralLimit",
-            _ => new FixedWindowRateLimiterOptions()
-            {
-                Window = TimeSpan.FromSeconds(1),
-                PermitLimit = 1,
-                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-                QueueLimit = 10,
-            });
-    }),
-    RejectionStatusCode = 429,
-});
+//        return RateLimitPartition.GetFixedWindowLimiter("GeneralLimit",
+//            _ => new FixedWindowRateLimiterOptions()
+//            {
+//                Window = TimeSpan.FromSeconds(1),
+//                PermitLimit = 1,
+//                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+//                QueueLimit = 10,
+//            });
+//    }),
+//    RejectionStatusCode = 429,
+//});
 
 app.MapControllers();
 
