@@ -46,22 +46,7 @@
 	  <ProjectReference Include="..\Website.WebAssembly\Website.WebAssembly.csproj" />
 	</ItemGroup>
 
-	<!--<Target Name="BuildHashes" AfterTargets="Publish">
-		<ItemGroup>
-			<FilesToHash Include="$(PublishDir)wwwroot\**\*.js;$(PublishDir)wwwroot\**\*.css;$(PublishDir)wwwroot\**\*.json" />
-			<HashFileOutput Include="$(PublishDir)hashes.csv" />
-		</ItemGroup>
-
-		<GetFileHash Files="@(FilesToHash)" Algorithm="SHA256" HashEncoding="base64">
-			<Output TaskParameter="Items" ItemName="FilesWithHashes" />
-		</GetFileHash>
-
-		<Message Importance="High" Text="@(FilesWithHashes->'%(Identity): %(FileHash)')" />
-
-		<WriteLinesToFile File="@(HashFileOutput)" Lines="@(FilesWithHashes->'%(Identity),%(FileHash)')" Overwrite="true" Encoding="Unicode" />
-	</Target>
-
-	<PropertyGroup>
+	<!--<PropertyGroup>
 		--><!--Paths to tools, tasks, and extensions are calculated relative to the BlazorWebAssemblySdkDirectoryRoot.
 			But there does not seem to be a property for that, so after much trial and error, using the property 
 			ILLinkTasksAssembly seems most reliable as it contains the same value whether the build is run from VS 
