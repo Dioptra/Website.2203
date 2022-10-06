@@ -37,19 +37,4 @@
 	  <ProjectReference Include="..\Website.WebAssembly\Website.WebAssembly.csproj" />
 	</ItemGroup>
 
-	<!-- Remove comments to list wwwroot contents to diagnose content inclusion in GitHub Actions -->
-	<!--<Target Name="Tests" AfterTargets="CustomGZipAndBrotliCompression">
-
-		<Message Importance="High" Text="===========================================================================" />
-		<Message Importance="High" Text="===========================================================================" />
-		<Message Importance="High" Text="===========================================================================" />
-		<Message Importance="High" Text="====== List contents of wwwroot ===========================================" />
-		<Message Importance="High" Text="" />
-		<Exec Command="ls -altR $(PublishDir)/wwwroot" ContinueOnError="true" StandardOutputImportance="high" StandardErrorImportance="high" LogStandardErrorAsError="false" IgnoreExitCode="true" />
-		<Message Importance="High" Text="===========================================================================" />
-		<Message Importance="High" Text="===========================================================================" />
-		<Message Importance="High" Text="===========================================================================" />
-
-	</Target>-->
-
 </Project>
