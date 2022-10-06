@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build-theme": "sass --update --no-color --unicode --style=expanded --load-path=node_modules --no-source-map WebAssets/Styles/Theme.scss wwwroot/css/dioptra.css",
-    "build-min-theme": "sass --update --no-color --unicode --style=compressed --load-path=node_modules --no-source-map WebAssets/Styles/Theme.scss wwwroot/css/dioptra.min.css",
+    "build-min-theme": "sass --update --no-color --unicode --style=compressed --load-path=node_modules --no-source-map WebAssets/Styles/Theme.scss wwwroot/css/dioptra.min.css"
   },
   "keywords": [],
   "author": "Dioptra",
@@ -14,6 +14,6 @@
     "material-components-web": "14.0.0",
     "regexp": "1.0.0",
     "sass": "1.39.2",
-    "source-map-loader": "4.0.0",
+    "source-map-loader": "4.0.0"
   }
 }
