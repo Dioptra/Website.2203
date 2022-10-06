@@ -9,36 +9,11 @@ namespace Website.Lib;
 /// </summary>
 public partial class MainLayout : LayoutComponentBase
 {
-    [Inject] private INotification Notifier { get; set; } = default!;
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
     [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
 
 
-    private MBDialog ContactDialog { get; set; } = new();
     private bool HomeButtonExited { get; set; } = true;
-    private ContactMessage ContactMessage { get; set; } = new();
-
-
-
-    private async Task OpenContactDialogAsync()
-    {
-        ContactMessage = new();
-
-        await ContactDialog.ShowAsync();
-    }
-
-
-    private async Task CloseContactDialogAsync()
-    {
-        await ContactDialog.HideAsync();
-    }
-
-
-    private async Task ContactDialogSubmittedAsync()
-    {
-        await CloseContactDialogAsync();
-        await Notifier.Send(ContactMessage);
-    }
 
 
     private async Task HomeClick()

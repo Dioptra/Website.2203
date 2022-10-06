@@ -6,7 +6,6 @@ namespace Website.Lib;
 /// <summary>
 /// The website's index page
 /// </summary>
-[Sitemap(SitemapAttribute.ChangeFreqType.Weekly, 0.8)]
 public partial class Index : ComponentBase
 {
     [CascadingParameter] private MainLayout MainLayout { get; set; } = default!;
@@ -24,13 +23,6 @@ public partial class Index : ComponentBase
 
 
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
-    [Inject] private INotification Notifier { get; set; } = default!;
-
-
-
-    private MBDialog Dialog { get; set; } = default!;
-    private RealEstateInvestorEnquiry RealEstateInvestorEnquiry { get; set; } = new();
-
 
 
     private static readonly ImageData[] CarouselImages = new ImageData[]
@@ -69,33 +61,6 @@ public partial class Index : ComponentBase
         {
             MainLayout.ShowHomeButton(false);
         }
-    }
-
-
-    private void WorkForUsClick()
-    {
-        NavigationManager.NavigateTo("/work-for-us");
-    }
-
-
-    private async Task OpenDialogAsync()
-    {
-        RealEstateInvestorEnquiry = new();
-
-        await Dialog.ShowAsync();
-    }
-
-
-    private async Task CloseDialogAsync()
-    {
-        await Dialog.HideAsync();
-    }
-
-
-    private async Task DialogSubmittedAsync()
-    {
-        await Dialog.HideAsync();
-        await Notifier.Send(RealEstateInvestorEnquiry);
     }
 }
 

@@ -48,11 +48,6 @@
                                 <span style="min-width: 80px; margin-right: 36px;"><DioptraLogo Height="80" /></span>
                             </div>
 
-                            <div class="mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-3-phone dw-footer-element dw-footer-contact">
-                                <MBFloatingActionButton Type="@MBFloatingActionButtonType.ExtendedLeadingIcon" Icon="send" Label="Contact" @onclick="@OpenContactDialogAsync" />
-                                <p class="mdc-typography--body2"><a href="/terms-and-conditions" rel=" noopener">Terms and Conditions</a></p>
-                            </div>
-
                             <div class="mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-4-phone dw-footer-element dw-footer-address">
                                 <div class="mdc-typography--body2">
                                     <p>© @DateTime.Today.ToString("yyyy") Dioptra Limited</p>
@@ -73,57 +68,3 @@
     </div>
 </CascadingValue>
 
-<CookieConsentBanner ColorClass="dw-yellow" />
-
-<MBDialog class="dw-dialog"
-          EscapeKeyAction=""
-          @ref="@ContactDialog"
-          ScrimClickAction=""
-          Title="Contact Dioptra">
-    <Body>
-        <EditForm Model="@ContactMessage"
-                  OnValidSubmit="@ContactDialogSubmittedAsync">
-
-            <DataAnnotationsValidator />
-
-            <MBTextField @bind-Value="@ContactMessage.Name"
-                         Label="Name"
-                         style="width: 100%; margin-top: 6px;"
-                         TextInputStyle="@MBTextInputStyle.Outlined"
-                         ValidationMessageFor="@(() => ContactMessage.Name)" />
-
-            <MBTextField @bind-Value="@ContactMessage.Email"
-                         Label="Email"
-                         style="width: 100%; margin-top: 6px;"
-                         TextInputStyle="@MBTextInputStyle.Outlined"
-                         ValidationMessageFor="@(() => ContactMessage.Email)" />
-
-            <MBTextField @bind-Value="@ContactMessage.Phone"
-                         Label="Phone Number"
-                         style="width: 100%; margin-top: 6px;"
-                         TextInputStyle="@MBTextInputStyle.Outlined"
-                         ValidationMessageFor="@(() => ContactMessage.Phone)" />
-
-            <MBTextArea @bind-Value="@ContactMessage.Message"
-                        Label="Message"
-                        Rows="5"
-                        style="width: 100%; margin-top: 6px;"
-                        TextInputStyle="@MBTextInputStyle.Outlined"
-                        ValidationMessageFor="@(() => ContactMessage.Message)" />
-
-            <div class="mdc-layout-grid__cell--span-12" style="text-align: right;">
-                <MBButton Label="Send"
-                          ButtonStyle="@MBButtonStyle.ContainedUnelevated"
-                          style="margin: 0.75em 0.25em 0.25em 0.25em;"
-                          type="submit" />
-
-                <MBButton Label="Cancel"
-                          ButtonStyle="@MBButtonStyle.Outlined"
-                          @onclick="@CloseContactDialogAsync"
-                          style="margin: 0.75em 0.25em 0.25em 0.25em;"
-                          type="button" />
-            </div>
-
-        </EditForm>
-    </Body>
-</MBDialog>
