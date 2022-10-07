@@ -4,8 +4,6 @@ using Website.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddResponseCaching();
-
 // Add services to the container.
 builder.Services.AddRazorPages();
 
@@ -26,10 +24,6 @@ builder.Services.AddHsts(options =>
 });
 
 builder.Services.AddOptions();
-// needed to store rate limit counters and ip rules
-builder.Services.AddMemoryCache();
-
-builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -44,8 +38,6 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
-
-app.MapControllers();
 
 #if BLAZOR_SERVER
 app.MapBlazorHub();
