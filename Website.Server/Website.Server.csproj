@@ -34,7 +34,7 @@
 		<PackageReference Include="HttpSecurity.AspNet" Version="1.0.0-preview.4" />
 		<PackageReference Include="Microsoft.AspNetCore.Components" Version="7.0.0-rc.1.22427.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.0-rc.1.22427.2" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.0-rc.1.22427.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.0-rc.2.22476.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
 		<PackageReference Include="Microsoft.AspNetCore.RateLimiting" Version="7.0.0-rc.1.22427.2" />
