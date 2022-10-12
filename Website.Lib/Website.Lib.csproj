@@ -43,7 +43,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Material.Blazor" Version="3.0.1" />
+		<PackageReference Include="Material.Blazor" Version="3.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
