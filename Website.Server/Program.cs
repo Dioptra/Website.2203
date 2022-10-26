@@ -1,5 +1,5 @@
 ﻿using Blazored.LocalStorage;
-using CompressedStaticFiles;
+using CompressedStaticFiles.AspNet;
 using GoogleAnalytics.Blazor;
 using HttpSecurity.AspNet;
 using Material.Blazor;
