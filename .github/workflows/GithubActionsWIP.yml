@@ -131,7 +131,7 @@ jobs:
 ############################################################################################################
   build-blazor-webassembly:
     name: Build BlazorWASM
-    needs: [version, perform-deployment]
+    needs: [perform-deployment]
     runs-on: ubuntu-latest
 
     steps:
