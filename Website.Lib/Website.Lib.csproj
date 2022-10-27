@@ -163,7 +163,7 @@
 
 		<!-- First, we strip the property value back to the root SDKs level and then down into the WebAssembly SDK -->
 		<_SDKRoot>$(ILLinkTasksAssembly.Substring(0,$(ILLinkTasksAssembly.LastIndexOf('Microsoft.NET.ILLink.Tasks'))))</_SDKRoot>
-		<BlazorWebAssemblySdkDirectoryRoot>$(_SDKRoot)\Microsoft.NET.Sdk.BlazorWebAssembly\</BlazorWebAssemblySdkDirectoryRoot>
+		<BlazorWebAssemblySdkDirectoryRoot>$(_SDKRoot)Microsoft.NET.Sdk.BlazorWebAssembly\</BlazorWebAssemblySdkDirectoryRoot>
 
 		<!-- The next two lines are derived from examples posted by the .NET Foundation. -->
 		<_BlazorWebAssemblySdkTasksAssembly>$(BlazorWebAssemblySdkDirectoryRoot)tools\net472\Microsoft.NET.Sdk.BlazorWebAssembly.Tasks.dll</_BlazorWebAssemblySdkTasksAssembly>
