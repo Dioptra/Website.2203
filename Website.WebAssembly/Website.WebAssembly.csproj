@@ -31,5 +31,9 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Website.Lib\Website.Lib.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\" />
+	</ItemGroup>
 	
 </Project>
