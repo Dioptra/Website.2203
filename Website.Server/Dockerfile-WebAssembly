@@ -19,6 +19,8 @@ RUN apt-get install --no-install-recommends --yes apt-utils python3 npm
 RUN dotnet --info
 RUN dotnet workload install wasm-tools
 
+RUN node --version
+RUN npm --version
 ENV NODE_VERSION=19.0.1
 RUN apt install -y curl
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
