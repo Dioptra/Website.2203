@@ -151,10 +151,12 @@ app.UseRateLimiter(new()
 {
     GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
     {
-        if (!context.Request.Path.StartsWithSegments("/api"))
-        {
-            return RateLimitPartition.GetNoLimiter("NoLimit");
-        }
+        // I thnik this is a mistake - The API should be rate limited - ms
+        //
+        //if (!context.Request.Path.StartsWithSegments("/api"))
+        //{
+        //    return RateLimitPartition.GetNoLimiter("NoLimit");
+        //}
 
         return RateLimitPartition.GetFixedWindowLimiter("GeneralLimit",
             _ => new FixedWindowRateLimiterOptions()
