@@ -193,4 +193,4 @@ app.MapGet("/sitemap.xml", async context =>
     await Sitemap.Generate(context);
 });
 
-app.Run();
+await app.RunAsync();
