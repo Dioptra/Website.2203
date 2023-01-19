@@ -33,28 +33,6 @@ jobs:
 
 
 ############################################################################################################
-# Store the version information
-############################################################################################################
-  version:
-    name: Set version suffix
-    runs-on: ubuntu-latest
-
-    steps:
-    - id: get
-      run: |
-        echo "::set-output name=tag::${GITHUB_REF/refs\/tags\//}"
-        echo "::set-output name=suffix::$(date +'%Y-%m-%d--%H-%M-%S')--${GITHUB_REF/refs\/tags\//}"
-    - id: show
-      run: |
-        echo "Tag:        ${{ steps.get.outputs.tag }}"
-        echo "Suffix:     ${{ steps.get.outputs.suffix }}"
-    outputs:
-      tag: ${{ steps.get.outputs.tag }}
-      suffix: ${{ steps.get.outputs.suffix }}
-      
-      
-
-############################################################################################################
 # Build blazor server container on Dioptra
 ############################################################################################################
   build-blazor-server:

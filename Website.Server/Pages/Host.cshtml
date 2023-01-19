@@ -35,10 +35,13 @@
 
 @if (PlatformDetermination.IsBlazorServer)
 {
+    <component type="typeof(HeadOutlet)" render-mode="@RenderMode" />
+}
+else
+{
     <link rel="manifest" href="manifest.json" />
 }
 
-    <component type="typeof(HeadOutlet)" render-mode="@RenderMode" />
 </head>
 <body class="mdc-typography">
     <component type="typeof(App)" render-mode="@RenderMode" />
