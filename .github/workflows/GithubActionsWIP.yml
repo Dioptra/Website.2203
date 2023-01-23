@@ -44,6 +44,21 @@ jobs:
 
 
 ############################################################################################################
+# Set unified suffix for the two deployed applications
+############################################################################################################
+  set-suffix:
+    name: Create the date based suffix
+    needs: [perform-deployment]
+    runs-on: ubuntu-latest
+    outputs:
+      outputSuffix: ${{ steps.setSuffix.outputs.GlobalSuffix }}
+
+    steps:
+    - id: setSuffix
+      run: echo "GlobalSuffix=$(date +'%Y-%m-%d--%H-%M-%S')--WIP" >> $GITHUB_OUTPUT
+      shell: bash
+
+############################################################################################################
 # Build blazor server on forks
 ############################################################################################################
   build-blazor-server-fork:
@@ -92,12 +107,12 @@ jobs:
 ############################################################################################################
   build-blazor-server:
     name: Build BlazorServer
-    needs: [perform-deployment]
+    needs: [set-suffix]
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set suffix as env variable
-      run: echo "suffix=$(date +'%Y-%m-%d--%H-%M-%S')--WIP" >> $GITHUB_ENV
+    - name: Retrieve the global suffix
+      run: echo "suffix=${{needs.set-suffix.outputs.outputSuffix}}" >> $GITHUB_ENV
       shell: bash
 
     - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
@@ -131,12 +146,12 @@ jobs:
 ############################################################################################################
   build-blazor-webassembly:
     name: Build BlazorWASM
-    needs: [perform-deployment]
+    needs: [set-suffix]
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set suffix as env variable
-      run: echo "suffix=$(date +'%Y-%m-%d--%H-%M-%S')--WIP" >> $GITHUB_ENV
+    - name: Retrieve the global suffix
+      run: echo "suffix=${{needs.set-suffix.outputs.outputSuffix}}" >> $GITHUB_ENV
       shell: bash
 
     - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
