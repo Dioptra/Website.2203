@@ -91,7 +91,7 @@ jobs:
 ############################################################################################################
   build-blazor-webassembly:
     name: Build BlazorWASM
-    needs: [version, is-on-dioptra]
+    needs: [set-suffix, is-on-dioptra]
     runs-on: ubuntu-latest
 
     steps:
@@ -131,7 +131,7 @@ jobs:
 ############################################################################################################
   create-release:
     name: Create release
-    needs: [version, build-blazor-server, build-blazor-webassembly, is-on-dioptra]
+    needs: [set-suffix, build-blazor-server, build-blazor-webassembly, is-on-dioptra]
 
     runs-on: ubuntu-latest
 
