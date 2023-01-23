@@ -55,7 +55,6 @@ public static class OptionsBuilder
             .AddUpgradeInsecureRequests()
             .AddWorkerSrc(o => o.AddSelf());
         })
-        .AddAccessControlAllowOriginAll()
         // ref: <a href="http://stackoverflow.com/questions/49547/making-sure-a-web-page-is-not-cached-across-all-browsers">http://stackoverflow.com/questions/49547/making-sure-a-web-page-is-not-cached-across-all-browsers</a>
         .AddReferrerPolicy(ReferrerPolicyDirective.NoReferrer)
         .AddPermissionsPolicy("accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()")

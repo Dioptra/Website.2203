@@ -33,7 +33,7 @@ jobs:
 
 
 ############################################################################################################
-# Set unified suffix for the two deployed applications
+# Set unified suffix
 ############################################################################################################
   set-suffix:
     name: Create the date based suffix
@@ -139,6 +139,6 @@ jobs:
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
-        name: Release ${{ needs.version.outputs.tag }}
-        tag: ${{ needs.version.outputs.tag }}
+        name: Release ${{ needs.set-suffix.outputs.outputSuffix }}
+        tag: ${{ needs.set-suffix.outputs.outputSuffix }}
 
