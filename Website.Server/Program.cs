@@ -1,14 +1,22 @@
-﻿using Blazored.LocalStorage;
+﻿using System.IO.Compression;
+using System.Threading.RateLimiting;
+
+using Blazored.LocalStorage;
+
 using CompressedStaticFiles.AspNet;
+
 using GoogleAnalytics.Blazor;
+
 using HttpSecurity.AspNet;
+
 using Material.Blazor;
+
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.ResponseCompression;
+
 using Serilog;
 using Serilog.Events;
-using System.IO.Compression;
-using System.Threading.RateLimiting;
+
 using Website.Lib;
 using Website.Server;
 
