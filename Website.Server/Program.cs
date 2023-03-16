@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Serilog;
 using Serilog.Events;
 
-using Website.Lib;
+using Website.Client;
 using Website.Server;
 
 const string _customTemplate = "{Timestamp: HH:mm:ss.fff}\t[{Level:u3}]\t{Message}{NewLine}{Exception}";
