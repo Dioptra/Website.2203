@@ -1,9 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
 		<Company>Dioptra Limited</Company>
 		<Version>2022-01-01--13-00-00--WIP</Version>
 		<RepositoryUrl>https://github.com/Dioptra/Website.2203</RepositoryUrl>
@@ -13,23 +10,6 @@
 		<NeutralLanguage>en</NeutralLanguage>
 		<Copyright>© Dioptra Limited. All rights reserved.</Copyright>
 		<Product>Dioptra Website</Product>
-		<Configurations>Debug_Server;Debug_WebAssembly;Release_Server;Release_WebAssembly;Re3lease_WebAssembly</Configurations>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Server|AnyCPU'">
-		<DefineConstants>Debug;BLAZOR_SERVER</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_WebAssembly|AnyCPU'">
-		<DefineConstants>Debug;BLAZOR_WEBASSEMBLY</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Server|AnyCPU'">
-		<DefineConstants>Release;BLAZOR_SERVER</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_WebAssembly|AnyCPU'">
-		<DefineConstants>Release;BLAZOR_WEBASSEMBLY</DefineConstants>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -50,25 +30,44 @@
 		<PackageReference Include="Microsoft.Build" Version="17.5.0" />
 	</ItemGroup>
 
-	<ItemGroup>
+	<!--<ItemGroup>
+		 Temporary fixes until .net7 when dynamically copied content automatically copies to output 
+
 		<InputImageFiles Include="$(ProjectDir)WebAssets\Images\*.*" />
 		<InputPWAFiles Include="$(ProjectDir)WebAssets\PWA\*.*" />
 		<InputAndroidInputImageFiles Include="$(ProjectDir)WebAssets\android-images\*.*" />
 		<InputIOSInputImageFiles Include="$(ProjectDir)WebAssets\ios-images\*.*" />
 		<InputWindows11InputImageFiles Include="$(ProjectDir)WebAssets\windows11-images\*.*" />
 
+		<OutputImagesAndroid Include="$(ProjectDir)wwwroot\android-images\*.*" />
+		<Content Remove="@(OutputImagesAndroid)" />
+		<Content Include="@(OutputImagesAndroid)" />
+
+		<OutputImages Include="$(ProjectDir)wwwroot\images\*.*" />
+		<Content Remove="@(OutputImages)" />
+		<Content Include="@(OutputImages)" />
+
+		<OutputImagesIos Include="$(ProjectDir)wwwroot\ios-images\*.*" />
+		<Content Remove="@(OutputImagesIos)" />
+		<Content Include="@(OutputImagesIos)" />
+
+		<OutputImagesWindows11 Include="$(ProjectDir)wwwroot\windows11-images\*.*" />
+		<Content Remove="@(OutputImagesWindows11)" />
+		<Content Include="@(OutputImagesWindows11)" />
+	</ItemGroup>-->
+
+	<ItemGroup>
 		<InputStaticAssetsScripts Include="$(ProjectDir)WebAssets\**\*.ts" />
 		<OutputStaticAssetsScripts Include="$(ProjectDir)wwwroot\js\dioptra.js;wwwroot\js\dioptra.min.js" />
 
-		<InputStaticAssetsStyles Include="$(ProjectDir)WebAssets\**\*.scss;" />
-		<OutputStaticAssetsStyles Include="$(ProjectDir)wwwroot\css\dioptra.css;wwwroot\css\dioptra.min.css" />
-		
-		<!-- Temporary fixes until .net7 when dynamically copied content automatically copies to output -->
-		<OutputImages Include="$(ProjectDir)wwwroot\**\*.*" />
-		<Content Remove="@(OutputImages)" />
-		<Content Include="@(OutputImages)" />
 		<Content Remove="@(OutputStaticAssetsScripts)" />
 		<Content Include="@(OutputStaticAssetsScripts)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<InputStaticAssetsStyles Include="$(ProjectDir)WebAssets\**\*.scss;" />
+		<OutputStaticAssetsStyles Include="$(ProjectDir)wwwroot\css\dioptra.css;wwwroot\css\dioptra.min.css" />
+
 		<Content Remove="@(OutputStaticAssetsStyles)" />
 		<Content Include="@(OutputStaticAssetsStyles)" />
 	</ItemGroup>
@@ -85,11 +84,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="wwwroot\js\" />
+		<Folder Include="wwwroot\css\" />
+		<Folder Include="wwwroot\js\" />
 	</ItemGroup>
 
 	<!-- Remove comments once migrated to .net7 and dynamically copied content automatically copies to output -->
 	<Target Name="WWWRootFileCopy" BeforeTargets="PreBuildEvent">
+		<Message Text="***** WWWRootFileCopy" />
 		<!--<Copy SourceFiles="@(InputImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/images" />
 		<Copy SourceFiles="@(InputPWAFiles)" DestinationFolder="$(ProjectDir)wwwroot/pwa" />
 		<Copy SourceFiles="@(InputAndroidInputImageFiles)" DestinationFolder="$(ProjectDir)wwwroot/android-images" />
@@ -98,8 +99,7 @@
 	</Target>
 
 	<Target Name="CheckIfNpmExists" Inputs="@(InputStaticAssetsScripts);@(InputStaticAssetsStyles)" Outputs="@(OutputStaticAssetsScripts);@(OutputStaticAssetsStyles)" BeforeTargets="PreBuildEvent" AfterTargets="WWWRootFileCopy">
-	<!--<Target Name="CheckIfNpmExists" BeforeTargets="PreBuildEvent" AfterTargets="WWWRootFileCopy">-->
-		<Message Text="***** npm install" />
+		<Message Text="***** npm install (check)" />
 		<Exec Command="npm install" ContinueOnError="true" StandardOutputImportance="low" StandardErrorImportance="low" LogStandardErrorAsError="false" IgnoreExitCode="true">
 			<Output TaskParameter="ExitCode" PropertyName="NpmReturnCode" />
 		</Exec>
@@ -118,10 +118,9 @@
 	</Target>
 
 	<Target Name="BuildScripts" Inputs="@(InputStaticAssetsScripts)" Outputs="@(OutputStaticAssetsScripts)" BeforeTargets="PreBuildEvent" AfterTargets="CheckIfNpmExists" Condition=" '$(NpmReturnCode)' == '0' ">
-	<!--<Target Name="BuildScripts" BeforeTargets="PreBuildEvent" AfterTargets="CheckIfNpmExists" Condition=" '$(NpmReturnCode)' == '0' ">-->
 		<RemoveDir Directories="$(ProjectDir)wwwroot/js" />
 
-		<Message Importance="high" Text="***** npm install" />
+		<Message Importance="high" Text="***** npm install (scripts)" />
 		<Exec Command="npm install" />
 
 		<Message Importance="high" Text="***** npm run build-scripts" />
@@ -143,7 +142,7 @@
 	<Target Name="BuildStyles" Inputs="@(InputStaticAssetsStyles)" Outputs="@(OutputStaticAssetsStyles)" BeforeTargets="PreBuildEvent" AfterTargets="CheckIfNpmExists" Condition=" '$(NpmReturnCode)' == '0' ">
 		<RemoveDir Directories="$(ProjectDir)wwwroot/css" />
 
-		<Message Importance="high" Text="***** npm install" />
+		<Message Importance="high" Text="***** npm install (styles)" />
 		<Exec Command="npm install" />
 
 		<Message Importance="high" Text="***** npm run build-theme" />
