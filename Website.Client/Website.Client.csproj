@@ -150,6 +150,7 @@
 	<!--Compression directives (Note that the patterns are relative to wwwroot)-->
 	<PropertyGroup>
 		<CompressionIncludePatterns>$(CompressionIncludePatterns);**/*.css;**/*.js</CompressionIncludePatterns>
+		<!--<BuildCompressionFormats>gzip;brotli</BuildCompressionFormats>-->
 		<BuildCompressionFormats>gzip</BuildCompressionFormats>
 		<PublishCompressionFormats>gzip;brotli</PublishCompressionFormats>
 	</PropertyGroup>
