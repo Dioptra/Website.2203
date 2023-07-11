@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<UserSecretsId>e8d481c6-1573-488e-869a-9f45e93cacac</UserSecretsId>
@@ -16,7 +16,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.0-preview.5.23302.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0-preview.5.23302.2" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0-preview.5.23280.8" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0-preview.5.23280.8" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0-preview.6.23329.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0-preview.5.23280.8" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
 		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
