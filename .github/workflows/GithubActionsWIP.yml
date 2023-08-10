@@ -15,7 +15,6 @@ env:
   blazorServerAppName: 'website-2203-blazor-server-wip'
   blazorWebAssemblyAppName: 'website-2203-blazor-webassembly-wip'
   registryName: 'dioptraregistry'
-  registryLocation: 'uk south'
   blazorServerDockerFile: './Website.Server/Dockerfile-Server'
   blazorWebAssemblyDockerFile: './Website.Server/Dockerfile-WebAssembly'
 
@@ -146,15 +145,9 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
-    #- run: |
-    #    dotnet workload install wasm-tools
-    #    dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_Server -p:PublishProfile=DefaultContainer -p:Version=${{ env.suffix }} -p:ContainerImageName=${{env.blazorServerAppName}}
-    #    docker tag ${{env.blazorServerAppName}}:${{ env.suffix }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorServerAppName}}:${{ env.suffix }}
-    #    docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorServerAppName}}:${{ env.suffix }}
-        
-    - run: |
-        docker build . --file ${{ env.blazorServerDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ env.suffix }} --build-arg version=${{ env.suffix }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorServerAppName }}:${{ env.suffix }}
+    - run: dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_Server -p:PublishProfile=DefaultContainer -p:Version=${{ env.suffix }} -p:ContainerRepository=${{env.blazorServerAppName}} -p:ContainerImageTag=${{ env.suffix }} --self-contained
+
+# -p:ContainerRegistry=${{env.containerRegistry}}
 
 
 ############################################################################################################
@@ -188,13 +181,6 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
-    #- run: |
-    #    dotnet workload install wasm-tools
-    #    dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_WebAssembly -p:PublishProfile=DefaultContainer -p:Version=${{ env.suffix }} -p:ContainerImageName=${{env.blazorServerAppName}}
-    #    docker tag ${{env.blazorServerAppName}}:${{ env.suffix }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorServerAppName}}:${{ env.suffix }}
-    #    docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{env.blazorServerAppName}}:${{ env.suffix }}
+    - run: dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_WebAssembly -p:PublishProfile=DefaultContainer -p:Version=${{ env.suffix }} -p:ContainerRepository=${{env.blazorServerAppName}} -p:ContainerImageTag=${{ env.suffix }} --self-contained
 
-    - run: |
-        docker build . --file ${{ env.blazorWebAssemblyDockerFile }} --tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ env.suffix }} --build-arg version=${{ env.suffix }}
-        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.blazorWebAssemblyAppName }}:${{ env.suffix }}
-
+# -p:ContainerRegistry=${{env.containerRegistry}}
