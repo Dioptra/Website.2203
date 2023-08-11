@@ -11,9 +11,9 @@ on:
 
 
 env:
-  project: 'Website.Server/Website.Server.csproj'
   blazorServerAppName: 'website-2203-blazor-server-wip'
   blazorWebAssemblyAppName: 'website-2203-blazor-webassembly-wip'
+  project: 'Website.Server/Website.Server.csproj'
   registryName: 'dioptraregistry'
 
 
@@ -177,4 +177,4 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
-    - run: dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_WebAssembly -p:PublishProfile=DefaultContainer -p:Version=${{ env.suffix }} -p:ContainerRegistry=${{env.registryname}} -p:ContainerRepository=${{env. -p:ContainerRegistry=${{env.registryname}}}} -p:ContainerImageTag=${{ env.suffix }} --self-contained
+    - run: dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_Server -p:PublishProfile=DefaultContainer -p:Version=${{ env.suffix }} -p:ContainerRegistry=${{env.registryname}} -p:ContainerRepository=${{env.blazorWebAssemblyAppName}} -p:ContainerImageTag=${{ env.suffix }} --self-contained
