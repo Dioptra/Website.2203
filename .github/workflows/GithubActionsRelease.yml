@@ -1,4 +1,4 @@
-﻿name: GithubActionsRelease
+name: GithubActionsRelease
 
 on:
   push:
@@ -61,7 +61,7 @@ jobs:
       shell: bash
 
     - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         persist-credentials: false
 
@@ -103,7 +103,7 @@ jobs:
       shell: bash
 
     - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         persist-credentials: false
 
