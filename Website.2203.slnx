@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="AspireAppHost/AspireAppHost.csproj" />
+  <Project Path="Website.Client/Website.Client.csproj" />
+  <Project Path="Website.Server/Website.Server.csproj" />
+  <Project Path="Website.WebAssembly/Website.WebAssembly.csproj" />
+</Solution>

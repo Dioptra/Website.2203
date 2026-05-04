@@ -11,7 +11,7 @@
       "label": "Clean Solution",
       "command": "dotnet",
       "type": "process",
-      "args": ["clean", "${workspaceFolder}/Website.2203.sln"],
+      "args": ["clean", "${workspaceFolder}/Website.2203.slnx"],
       "problemMatcher": "$msCompile",
       "group": "build",
       "presentation": {
@@ -23,7 +23,7 @@
       "label": "Build Solution",
       "command": "dotnet",
       "type": "process",
-      "args": ["build", "${workspaceFolder}/Website.2203.sln"],
+      "args": ["build", "${workspaceFolder}/Website.2203.slnx"],
       "problemMatcher": "$msCompile",
       "group": {
         "kind": "build",
@@ -38,7 +38,7 @@
       "label": "Rebuild Solution",
       "command": "dotnet",
       "type": "process",
-      "args": ["build", "${workspaceFolder}/Website.2203.sln", "--no-incremental"],
+      "args": ["build", "${workspaceFolder}/Website.2203.slnx", "--no-incremental"],
       "problemMatcher": "$msCompile",
       "group": "build",
       "dependsOn": "Clean Solution",

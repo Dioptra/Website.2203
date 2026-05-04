@@ -9,7 +9,7 @@
 | Item               | Value                                                    |
 | :----------------- | :------------------------------------------------------- |
 | **Framework**      | .NET 10.0 (`net10.0`)                                    |
-| **Build**          | `dotnet build Website.2203.sln`                          |
+| **Build**          | `dotnet build Website.2203.slnx`                         |
 | **Run (Aspire)**   | `cd AspireAppHost && dotnet run`                         |
 | **Frontend build** | `cd Website.Client && npm install && npx webpack`        |
 | **Logging**        | Serilog + `ILogger<T>` injection (not `Console.WriteLine`) |
@@ -54,7 +54,7 @@
 
 | Task              | Command                                      |
 | :---------------- | :------------------------------------------- |
-| Build solution    | `dotnet build Website.2203.sln`              |
+| Build solution    | `dotnet build Website.2203.slnx`             |}
 | Run via Aspire    | `cd AspireAppHost && dotnet run`             |
 | Deno build        | `deno task build`                            |
 | Deno rebuild      | `deno task rebuild`                          |
