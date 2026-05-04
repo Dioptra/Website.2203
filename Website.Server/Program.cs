@@ -166,7 +166,10 @@ else
 }
 
 // Potentially omit to avoid CRIME and BREACH attacks - https://docs.microsoft.com/en-us/aspnet/core/performance/response-compression?view=aspnetcore-6.0#compression-with-https
-app.UseResponseCompression();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseResponseCompression();
+}
 
 app.UseCookiePolicy();
 
@@ -176,7 +179,14 @@ app.UseSerilogRequestLogging();
 
 app.UseHttpSecurityHeaders();
 
-app.UseCompressedStaticFiles();
+if (app.Environment.IsDevelopment())
+{
+    app.UseStaticFiles();
+}
+else
+{
+    app.UseCompressedStaticFiles();
+}
 
 app.UseRouting();
 
