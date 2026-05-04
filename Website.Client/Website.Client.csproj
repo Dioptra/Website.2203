@@ -22,7 +22,7 @@
 		<PackageReference Include="GoogleAnalytics.Blazor" Version="1.0.3" />
 		<PackageReference Include="libphonenumber-csharp" Version="8.13.20" />
 		<PackageReference Include="Material.Blazor" Version="4.0.0" />
-		<PackageReference Include="Microsoft.Build" Version="17.7.0" />
+		<PackageReference Include="Microsoft.Build" Version="17.7.2" />
 	</ItemGroup>
 
 	<!--<ItemGroup>
