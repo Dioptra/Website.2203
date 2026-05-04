@@ -12,12 +12,16 @@
                         <div class="mdc-layout-grid">
                             <div class="mdc-layout-grid__inner dw-header">
                                 <div class="mdc-layout-grid__cell--span-12 dw-header-large dw-hidden-phone-down">
-                                    <span style="min-width: 120px; margin-right: 36px;"><DioptraLogo Height="120" /></span>
+                                    <span style="min-width: 120px; margin-right: 36px;">
+                                        <DioptraLogo Height="120" />
+                                    </span>
                                     <h1 class="dw-title" style="font-weight: 700;">DIOPTRA</h1>
                                 </div>
 
                                 <div class="mdc-layout-grid__cell--span-12 dw-header-small dw-hidden-tablet-up">
-                                    <span style="min-width: 80px; margin-bottom: 6px;"><DioptraLogo Height="80" /></span>
+                                    <span style="min-width: 80px; margin-bottom: 6px;">
+                                        <DioptraLogo Height="80" />
+                                    </span>
                                     <h1 class="dw-title" style="font-weight: 700;">DIOPTRA</h1>
                                 </div>
                             </div>
@@ -44,86 +48,71 @@
                 <div class="dw-max-width-content">
                     <div class="mdc-layout-grid">
                         <div class="mdc-layout-grid__inner">
-                            <div class="mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-1-phone dw-footer-element dw-footer-logo">
-                                <span style="min-width: 80px; margin-right: 36px;"><DioptraLogo Height="80" /></span>
+                            <div
+                                class="mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-1-phone dw-footer-element dw-footer-logo">
+                                <span style="min-width: 80px; margin-right: 36px;">
+                                    <DioptraLogo Height="80" />
+                                </span>
                             </div>
 
-                            <div class="mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-3-phone dw-footer-element dw-footer-contact">
-                                <MBFloatingActionButton Type="@MBFloatingActionButtonType.ExtendedLeadingIcon" Icon="send" Label="Contact" @onclick="@OpenContactDialogAsync" />
-                                <p class="mdc-typography--body2"><a href="/terms-and-conditions" rel=" noopener">Terms and Conditions</a></p>
-                            </div>
+                            <div
+                                class="mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-3-phone dw-footer-element dw-footer-contact">
+                                <MBFloatingActionButton Type="@MBFloatingActionButtonType.ExtendedLeadingIcon"
+                                                        Icon="send" Label="Contact" @onclick="@OpenContactDialogAsync" />
+                                <p class="mdc-typography--body2"><a href="/terms-and-conditions" rel=" noopener">Terms
+                                    and Conditions</a></p>
+                                </div>
 
-                            <div class="mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-4-phone dw-footer-element dw-footer-address">
-                                <div class="mdc-typography--body2">
-                                    <p>© @DateTime.Today.ToString("yyyy") Dioptra Limited</p>
-                                    <p>4 The Courtyard</p>
-                                    <p>Holmstead Farm</p>
-                                    <p>Staplefield Road</p>
-                                    <p>Cuckfield</p>
-                                    <p>West Sussex RH17 5JF</p>
-                                    <p><em>Company Number: 13537855</em></p>
-                                    <p><em>VAT Number: 407546495</em></p>
+                                <div
+                                    class="mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-4-phone dw-footer-element dw-footer-address">
+                                    <div class="mdc-typography--body2">
+                                        <p>© @DateTime.Today.ToString("yyyy") Dioptra Limited</p>
+                                        <p>Preston Park House</p>
+                                        <p>South Road</p>
+                                        <p>Brighton</p>
+                                        <p>East Sussex BN1 6SB</p>
+                                        <p><em>Company Number: 13537855</em></p>
+                                        <p><em>VAT Number: 407546495</em></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </footer>
-    </div>
-</CascadingValue>
+            </footer>
+        </div>
+    </CascadingValue>
 
-<CookieConsentBanner ColorClass="dw-yellow" />
+    <CookieConsentBanner ColorClass="dw-yellow" />
 
-<MBDialog class="dw-dialog"
-          EscapeKeyAction=""
-          @ref="@ContactDialog"
-          ScrimClickAction=""
-          Title="Contact Dioptra">
-    <Body>
-        <EditForm Model="@ContactMessage"
-                  OnValidSubmit="@ContactDialogSubmittedAsync">
+    <MBDialog class="dw-dialog" EscapeKeyAction="" @ref="@ContactDialog" ScrimClickAction="" Title="Contact Dioptra">
 
-            <DataAnnotationsValidator />
+        <Body>
+            <EditForm Model="@ContactMessage" OnValidSubmit="@ContactDialogSubmittedAsync">
 
-            <MBTextField @bind-Value="@ContactMessage.Name"
-                         Label="Name"
-                         style="width: 100%; margin-top: 6px;"
-                         TextInputStyle="@MBTextInputStyle.Outlined"
-                         ValidationMessageFor="@(() => ContactMessage.Name)" />
+                <DataAnnotationsValidator />
 
-            <MBTextField @bind-Value="@ContactMessage.Email"
-                         Label="Email"
-                         style="width: 100%; margin-top: 6px;"
-                         TextInputStyle="@MBTextInputStyle.Outlined"
-                         ValidationMessageFor="@(() => ContactMessage.Email)" />
+                <MBTextField @bind-Value="@ContactMessage.Name" Label="Name" style="width: 100%; margin-top: 6px;"
+                             TextInputStyle="@MBTextInputStyle.Outlined" ValidationMessageFor="@(() => ContactMessage.Name)" />
 
-            <MBTextField @bind-Value="@ContactMessage.Phone"
-                         Label="Phone Number"
-                         style="width: 100%; margin-top: 6px;"
-                         TextInputStyle="@MBTextInputStyle.Outlined"
-                         ValidationMessageFor="@(() => ContactMessage.Phone)" />
+                <MBTextField @bind-Value="@ContactMessage.Email" Label="Email" style="width: 100%; margin-top: 6px;"
+                             TextInputStyle="@MBTextInputStyle.Outlined" ValidationMessageFor="@(() => ContactMessage.Email)" />
 
-            <MBTextArea @bind-Value="@ContactMessage.Message"
-                        Label="Message"
-                        Rows="5"
-                        style="width: 100%; margin-top: 6px;"
-                        TextInputStyle="@MBTextInputStyle.Outlined"
-                        ValidationMessageFor="@(() => ContactMessage.Message)" />
+                <MBTextField @bind-Value="@ContactMessage.Phone" Label="Phone Number" style="width: 100%; margin-top: 6px;"
+                             TextInputStyle="@MBTextInputStyle.Outlined" ValidationMessageFor="@(() => ContactMessage.Phone)" />
 
-            <div class="mdc-layout-grid__cell--span-12" style="text-align: right;">
-                <MBButton Label="Send"
-                          ButtonStyle="@MBButtonStyle.ContainedUnelevated"
-                          style="margin: 0.75em 0.25em 0.25em 0.25em;"
-                          type="submit" />
+                <MBTextArea @bind-Value="@ContactMessage.Message" Label="Message" Rows="5"
+                            style="width: 100%; margin-top: 6px;" TextInputStyle="@MBTextInputStyle.Outlined"
+                            ValidationMessageFor="@(() => ContactMessage.Message)" />
 
-                <MBButton Label="Cancel"
-                          ButtonStyle="@MBButtonStyle.Outlined"
-                          @onclick="@CloseContactDialogAsync"
-                          style="margin: 0.75em 0.25em 0.25em 0.25em;"
-                          type="button" />
-            </div>
+                <div class="mdc-layout-grid__cell--span-12" style="text-align: right;">
+                    <MBButton Label="Send" ButtonStyle="@MBButtonStyle.ContainedUnelevated"
+                              style="margin: 0.75em 0.25em 0.25em 0.25em;" type="submit" />
 
-        </EditForm>
-    </Body>
-</MBDialog>
+                    <MBButton Label="Cancel" ButtonStyle="@MBButtonStyle.Outlined" @onclick="@CloseContactDialogAsync"
+                              style="margin: 0.75em 0.25em 0.25em 0.25em;" type="button" />
+                </div>
+
+            </EditForm>
+        </Body>
+    </MBDialog>
