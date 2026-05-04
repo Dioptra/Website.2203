@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "build": "dotnet build Website.2203.sln",
+    "rebuild": "dotnet clean Website.2203.sln && dotnet build Website.2203.sln --no-incremental",
+    "aspire": "lsof -ti :22169 | xargs kill -9 2>/dev/null; cd AspireAppHost && dotnet run",
+    "kill-aspire": "lsof -ti :22169 | xargs kill -9 2>/dev/null; echo 'aspire killed'"
+  }
+}
