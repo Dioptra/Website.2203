@@ -58,14 +58,11 @@ builder.Services.AddResponseCaching();
 builder.Host.UseSerilog();
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents()
+    .AddInteractiveWebAssemblyComponents();
 
-#if BLAZOR_SERVER
-
-builder.Services.AddServerSideBlazor();
-builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
-
-#endif
+builder.Services.AddControllers();
 
 // Needed for prerendering on WebAssembly as well as general use
 builder.Services.AddTransient<INotification, ServerNotificationService>();
@@ -152,11 +149,7 @@ Log.Logger = new LoggerConfiguration()
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-#if BLAZOR_SERVER
-    app.UseDeveloperExceptionPage();
-#else
     app.UseWebAssemblyDebugging();
-#endif
 }
 else
 {
@@ -190,18 +183,17 @@ else
 
 app.UseRouting();
 
+app.UseAntiforgery();
+
 // Limit api calls to 10 in a second to prevent external denial of service.
 app.UseRateLimiter();
 
 app.MapControllers();
 
-#if BLAZOR_SERVER
-app.MapBlazorHub();
-#else
-app.UseBlazorFrameworkFiles();
-#endif
-
-app.MapFallbackToPage("/Host");
+app.MapRazorComponents<Website.Server.App>()
+    .AddInteractiveServerRenderMode()
+    .AddInteractiveWebAssemblyRenderMode()
+    .AddAdditionalAssemblies(typeof(Website.Client.Routes).Assembly);
 
 app.MapGet("/sitemap.xml", async context =>
 {

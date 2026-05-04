@@ -1,13 +1,7 @@
-﻿@page "/Host"
 @using HttpSecurity.AspNet
-@using Website.Client
-@namespace Website.Server.Pages
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@inject IHttpSecurityService HttpSecurityService
+@namespace Website.Server
 
-@{
-    RenderMode renderMode = PlatformDetermination.IsBlazorServer ? RenderMode.ServerPrerendered : RenderMode.WebAssemblyPrerendered;
-}
+@inject IHttpSecurityService HttpSecurityService
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,18 +26,12 @@
     <link rel="apple-touch-icon" sizes="512x512" href="_content/Website.Client/ios-images/512.png" />
     <link rel="apple-touch-icon" sizes="192x192" href="_content/Website.Client/ios-images/192.png" />
 
-@if (PlatformDetermination.IsBlazorServer)
-{
-        <component type="typeof(Microsoft.AspNetCore.Components.Web.HeadOutlet)" render-mode="@renderMode" />
-}
-else
-{
     <link rel="manifest" href="manifest.json" />
-}
 
+    <HeadOutlet />
 </head>
 <body class="mdc-typography">
-    <component type="typeof(App)" render-mode="@renderMode" />
+    <Routes />
 
     <div id="blazor-error-ui">
         <div id="reload-dialog" class="mdc-dialog">
@@ -79,15 +67,6 @@ else
     <script src="_content/GoogleAnalytics.Blazor/googleanalytics.blazor.js" integrity="@HttpSecurityService.GetFileHashString("googleanalytics.blazor.js")"></script>
     <script src="_content/Material.Blazor/material.blazor.min.js" integrity="@HttpSecurityService.GetFileHashString("material.blazor.min.js")"></script>
     <script src="_content/Website.Client/js/dioptra.min.js" integrity="@HttpSecurityService.GetFileHashString("dioptra.min.js")"></script>
-
-    @if (PlatformDetermination.IsBlazorServer)
-    {
-        <script src="_framework/blazor.server.js" nonce="@HttpSecurityService.GetNonce()"></script>
-    }
-    else
-    {
-        <script src="_framework/blazor.webassembly.js" integrity="@HttpSecurityService.GetFileHashString("blazor.webassembly.js")"></script>
-    }
-
+    <script src="_framework/blazor.web.js" nonce="@HttpSecurityService.GetNonce()"></script>
 </body>
 </html>

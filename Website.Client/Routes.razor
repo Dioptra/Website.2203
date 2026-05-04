@@ -1,8 +1,9 @@
-﻿@namespace Website.Client
+@namespace Website.Client
+@rendermode InteractiveAuto
 
 <MBAnchor />
 
-<Router AppAssembly="@typeof(App).Assembly" AdditionalAssemblies="new[] { typeof(MainLayout).Assembly }">
+<Router AppAssembly="@typeof(Routes).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
