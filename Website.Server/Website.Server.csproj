@@ -11,7 +11,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="CompressedStaticFiles.AspNet" Version="2.1.0" />
-		<PackageReference Include="HttpSecurity.AspNet" Version="1.2.0" />
+		<!--<PackageReference Include="HttpSecurity.AspNet" Version="1.2.0" />-->
+		<ProjectReference Include="../../../../HttpSecurity.AspNet/HttpSecurity.AspNet/HttpSecurity.AspNet.csproj" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.7" />
 		<PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
 		<PackageReference Include="Serilog.Formatting.Compact" Version="3.0.0" />
