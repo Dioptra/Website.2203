@@ -18,7 +18,7 @@ public partial class CookieConsentBanner : ComponentBase
     /// </summary>
     [Parameter] public string ColorClass { get; set; } = "";
 
-    private bool AllowAnalytics { get; set; }
+    private bool AllowAnalytics { get; set; } = true;
 
     private bool ShowBanner { get; set; }
 

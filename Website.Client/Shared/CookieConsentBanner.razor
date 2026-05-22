@@ -5,28 +5,29 @@
 
 @if (ShowBanner)
 {
-    <div class="mdc-layout-grid dw-cookie-alert mdc-elevation--z5 @ColorClass" role="dialog" aria-live="polite" aria-labelledby="cookie-consent-title">
+    <div class="mdc-layout-grid dw-cookie-alert mdc-elevation--z5 @ColorClass" role="dialog" aria-live="polite"
+         aria-labelledby="cookie-consent-title">
         <div class="mdc-layout-grid__inner dw-max-width-content">
-            <div class="mdc-layout-grid__cell--span-12 dw-cookie-alert-content">
-                <p id="cookie-consent-title">We use strictly necessary storage to run this website and optional analytics cookies to understand how it is used.</p>
+            <div class="mdc-layout-grid__cell--span-8 dw-cookie-alert-content">
+                <p id="cookie-consent-title">We use strictly necessary storage to run this website and optional analytics
+                    cookies to understand how it is used.</p>
+                </div>
 
-                <MBCheckbox @bind-Value="AllowAnalytics"
-                            Label="Allow analytics cookies" />
+                <div class="mdc-layout-grid__cell--span-2 dw-cookie-alert-content">
+                    <MBButton ButtonStyle="@MBButtonStyle.ContainedRaised" Label="Accept all" @onclick="AcceptAllAsync" />
+                </div>
 
-                <div class="dw-cookie-alert-actions">
-                    <MBButton ButtonStyle="@MBButtonStyle.Outlined"
-                              Label="Reject non-essential"
-                              @onclick="RejectNonEssentialAsync" />
+                <div class="mdc-layout-grid__cell--span-2 dw-cookie-alert-content">
+                    <div class="dw-cookie-alert-actions" style="display: flex; flex-direction: column; gap: 8px;">
+                        <MBCheckbox style="margin: 0;" @bind-Value="AllowAnalytics" Label="Allow analytics cookies" />
 
-                    <MBButton ButtonStyle="@MBButtonStyle.ContainedRaised"
-                              Label="Save preferences"
-                              @onclick="SavePreferencesAsync" />
+                        <MBButton ButtonStyle="@MBButtonStyle.Outlined" Label="Reject non-essential"
+                                  @onclick="RejectNonEssentialAsync" />
 
-                    <MBButton ButtonStyle="@MBButtonStyle.ContainedRaised"
-                              Label="Accept all"
-                              @onclick="AcceptAllAsync" />
+                        <MBButton ButtonStyle="@MBButtonStyle.Outlined" Label="Save preferences"
+                                  @onclick="SavePreferencesAsync" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-}
+    }
