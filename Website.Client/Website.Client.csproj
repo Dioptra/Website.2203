@@ -159,7 +159,7 @@
 	<PropertyGroup>
 		<CompressionIncludePatterns>$(CompressionIncludePatterns);**/*.css;**/*.js</CompressionIncludePatterns>
 		<!--<BuildCompressionFormats>gzip;brotli</BuildCompressionFormats>-->
-		<BuildCompressionFormats>gzip</BuildCompressionFormats>
+		<BuildCompressionFormats>gzip;brotli</BuildCompressionFormats>
 		<PublishCompressionFormats>gzip;brotli</PublishCompressionFormats>
 	</PropertyGroup>
 

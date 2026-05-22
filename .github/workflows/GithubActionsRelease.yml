@@ -28,7 +28,7 @@ jobs:
   ############################################################################################################
   set-suffix:
     name: Create the date based suffix
-    needs: [perform-deployment]
+    needs: [is-on-dioptra]
     runs-on: ubuntu-latest
     outputs:
       outputSuffix: ${{ steps.setSuffix.outputs.GlobalSuffix }}
@@ -59,8 +59,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "8.x"
-          dotnet-quality: "preview"
+          dotnet-version: "10.0.300"
 
       - name: Authenticate to GitHub Packages
         run: |
@@ -107,8 +106,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "8.x"
-          dotnet-quality: "preview"
+          dotnet-version: "10.0.300"
 
       - name: Authenticate to GitHub Packages
         run: |
