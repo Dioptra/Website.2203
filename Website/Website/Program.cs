@@ -1,10 +1,24 @@
 using Blazored.LocalStorage;
 using GoogleAnalytics.Blazor;
 using Material.Blazor;
+using System.Net;
 using Website.Client;
 using Website.Components;
 
+var startedAtUtc = DateTimeOffset.UtcNow;
+
 var builder = WebApplication.CreateBuilder(args);
+
+const string DefaultOperationalProbeHost = "127.0.0.1";
+const int DefaultOperationalProbePort = 8081;
+
+var operationalProbeHost = builder.Configuration["OperationalProbes:Host"] ?? DefaultOperationalProbeHost;
+var operationalProbePort = int.TryParse(builder.Configuration["OperationalProbes:Port"], out var configuredOperationalProbePort)
+    ? configuredOperationalProbePort
+    : DefaultOperationalProbePort;
+var operationalProbeAddress = IPAddress.TryParse(operationalProbeHost, out var configuredOperationalProbeAddress)
+    ? configuredOperationalProbeAddress
+    : IPAddress.Loopback;
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -26,6 +40,11 @@ builder.Services.AddGBService(options =>
     };
 });
 
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.Listen(operationalProbeAddress, operationalProbePort);
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,9 +59,26 @@ else
     app.UseHsts();
 }
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
-app.UseHttpsRedirection();
+app.UseWhen(context => context.Connection.LocalPort != operationalProbePort, branch =>
+{
+    branch.UseHttpsRedirection();
+});
 
 app.UseAntiforgery();
+
+var operationalProbeGroup = app.MapGroup(string.Empty)
+    .RequireHost($"*:{operationalProbePort}");
+
+operationalProbeGroup.MapGet("/livez", () => Results.Ok());
+operationalProbeGroup.MapGet("/readyz", () => Results.Ok());
+operationalProbeGroup.MapGet("/healthz", () => Results.Json(new
+{
+    status = "healthy",
+    app = "website-2203",
+    version = PackageInformation.Version,
+    startedAtUtc,
+    uptimeSeconds = (long)(DateTimeOffset.UtcNow - startedAtUtc).TotalSeconds,
+}));
 
 app.MapStaticAssets();
 app.MapControllers();
