@@ -7,6 +7,12 @@
     <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <CompressionIncludePatterns>$(CompressionIncludePatterns);**/*.css;**/*.js</CompressionIncludePatterns>
+    <BuildCompressionFormats>gzip</BuildCompressionFormats>
+    <PublishCompressionFormats>gzip</PublishCompressionFormats>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Website.Client\Website.Client.csproj" />
     <ProjectReference Include="..\..\Website.WebAssembly\Website.WebAssembly.csproj" />
