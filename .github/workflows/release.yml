@@ -37,7 +37,7 @@ jobs:
     uses: ./.github/workflows/build-pipeline.yml
     with:
       dated-tag: ${{ needs.build-tags.outputs.dated-tag }}
-      image-name: website-2203
+      image-name: website-2203-blazor-server
       create-github-release: true
       release-tag: ${{ needs.build-tags.outputs.tag }}
     secrets:
