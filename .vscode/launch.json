@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Aspire AppHost",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "/Users/simonziegler/.dotnet/dotnet",
+      "args": ["run", "--project", "${workspaceFolder}/AspireAppHost/AspireAppHost.csproj", "--no-build"],
+      "cwd": "${workspaceFolder}/AspireAppHost",
+      "preLaunchTask": "Build Solution",
+      "env": {
+        "DOTNET_ROOT": "/Users/simonziegler/.dotnet",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  ]
+}

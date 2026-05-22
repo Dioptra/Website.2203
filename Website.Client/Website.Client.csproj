@@ -18,11 +18,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
+		<PackageReference Include="Blazored.LocalStorage" Version="4.4.0" />
 		<PackageReference Include="GoogleAnalytics.Blazor" Version="1.0.3" />
-		<PackageReference Include="libphonenumber-csharp" Version="8.13.20" />
-		<PackageReference Include="Material.Blazor" Version="4.0.0" />
-		<PackageReference Include="Microsoft.Build" Version="17.7.0" />
+		<PackageReference Include="libphonenumber-csharp" Version="9.0.29" />
+		<PackageReference Include="Material.Blazor" Version="5.3.26" />
 	</ItemGroup>
 
 	<!--<ItemGroup>
@@ -56,6 +55,7 @@
 		<OutputStaticAssetsScripts Include="$(ProjectDir)wwwroot\js\dioptra.js;wwwroot\js\dioptra.min.js" />
 
 		<Content Remove="@(OutputStaticAssetsScripts)" />
+		<Content Remove="wwwroot\js\*temp.js" />
 		<Content Include="@(OutputStaticAssetsScripts)" />
 	</ItemGroup>
 
@@ -158,9 +158,8 @@
 	<!--Compression directives (Note that the patterns are relative to wwwroot)-->
 	<PropertyGroup>
 		<CompressionIncludePatterns>$(CompressionIncludePatterns);**/*.css;**/*.js</CompressionIncludePatterns>
-		<!--<BuildCompressionFormats>gzip;brotli</BuildCompressionFormats>-->
 		<BuildCompressionFormats>gzip</BuildCompressionFormats>
-		<PublishCompressionFormats>gzip;brotli</PublishCompressionFormats>
+		<PublishCompressionFormats>gzip</PublishCompressionFormats>
 	</PropertyGroup>
 
 </Project>

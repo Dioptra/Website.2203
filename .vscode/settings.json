@@ -1,0 +1,102 @@
+{
+  "extensions.experimental.affinity": {
+    "GitHub.copilot": 1,
+    "GitHub.copilot-chat": 1
+  },
+  "github.copilot.editor.enableAutoCompletions": true,
+  "chat.agent.maxTurns": 500,
+  "chat.restoreLastPanelSession": true,
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/bin": true,
+    "**/obj": true,
+    "**/.git": true,
+    "**/.artifacts": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bin": true,
+    "**/obj": true,
+    "**/.artifacts": true,
+    "**/wwwroot/js": true
+  },
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.suggestSelection": "first",
+  "editor.suggest.localityBonus": true,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  "editor.parameterHints.enabled": true,
+  "editor.parameterHints.cycle": true,
+  "editor.formatOnSave": true,
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 180
+  },
+  "workbench.tree.indent": 24,
+  "workbench.colorCustomizations": {
+    "tree.indentGuidesStroke": "#00ff00"
+  },
+  "chat.tools.terminal.autoApprove": {
+    "dotnet build": true,
+    "dotnet test": true,
+    "dotnet run": true,
+    "dotnet publish": true,
+    "dotnet clean": true,
+    "dotnet restore": true,
+    "dotnet format": true,
+    "dotnet tool": true,
+    "npm install": true,
+    "npm run": true,
+    "npm ci": true,
+    "npx": true,
+    "docker build": true,
+    "docker compose": true,
+    "docker ps": true,
+    "docker logs": true,
+    "ls": true,
+    "cat": true,
+    "head": true,
+    "tail": true,
+    "wc": true,
+    "grep": true,
+    "find": true,
+    "tree": true,
+    "file": true,
+    "diff": true,
+    "stat": true,
+    "which": true,
+    "type": true,
+    "echo": true,
+    "pwd": true,
+    "realpath": true,
+    "basename": true,
+    "dirname": true,
+    "mkdir": true,
+    "cp": true,
+    "mv": true,
+    "touch": true,
+    "sed": true,
+    "awk": true,
+    "sort": true,
+    "uniq": true,
+    "cut": true,
+    "tr": true,
+    "tee": true,
+    "xargs": true,
+    "git": true
+  },
+  "dotnetAcquisitionExtension.existingDotnetPath": [
+    {
+      "extensionId": "ms-dotnettools.csharp",
+      "path": "/Users/simonziegler/.dotnet/dotnet"
+    }
+  ],
+  "files.associations": {
+    "appsettings*.json": "jsonc"
+  }
+}

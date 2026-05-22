@@ -1,0 +1,45 @@
+name: Build Website WIP workflow
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  check-repo:
+    name: Verify repository
+    runs-on: ubuntu-latest
+    if: github.repository == 'Dioptra/Website.2203' && github.actor != 'dependabot[bot]'
+    steps:
+      - run: echo "Running on Dioptra/Website.2203"
+
+  build-tags:
+    name: Set version tag
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: build
+        run: |
+          echo "dated-tag=$(date +'%Y-%m-%d--%H-%M-%S')--WIP" >> $GITHUB_OUTPUT
+      - id: show
+        run: |
+          echo "Dated Tag:  ${{ steps.build.outputs.dated-tag }}"
+
+    outputs:
+      dated-tag: ${{ steps.build.outputs.dated-tag }}
+
+  build:
+    name: Build and publish
+    needs: [build-tags, check-repo]
+    uses: ./.github/workflows/build-pipeline.yml
+    with:
+      dated-tag: ${{ needs.build-tags.outputs.dated-tag }}
+      image-name: website-2203-wip
+    secrets:
+      REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+      MATERIA_NUGET_AUTH_TOKEN: ${{ secrets.MATERIA_NUGET_AUTH_TOKEN }}

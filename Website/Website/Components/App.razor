@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#FFD230" />
+    <base href="/" />
+    <ResourcePreloader />
+    <link rel="stylesheet" type="text/css" href="_content/Material.Blazor/material.blazor.min.css" />
+    <link rel="stylesheet" type="text/css" id="app-theme" href="_content/Website.Client/css/dioptra.min.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/png" href="_content/Website.Client/pwa/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="_content/Website.Client/pwa/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="_content/Website.Client/pwa/favicon-96x96.png" sizes="96x96" />
+    <link rel="apple-touch-icon" sizes="512x512" href="_content/Website.Client/ios-images/512.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="_content/Website.Client/ios-images/192.png" />
+    <ImportMap />
+    <HeadOutlet @rendermode="InteractiveAuto" />
+</head>
+
+<body class="mdc-typography">
+    <Routes />
+    <script src="_content/GoogleAnalytics.Blazor/googleanalytics.blazor.js"></script>
+    <script src="_content/Material.Blazor/material.blazor.min.js"></script>
+    <script src="_content/Website.Client/js/dioptra.min.js"></script>
+    <script src="@Assets["_framework/blazor.web.js"]"></script>
+    <script>navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });</script>
+</body>
+
+</html>

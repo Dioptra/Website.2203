@@ -17,11 +17,12 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-builder.Services.AddSingleton<INotification, WebAssemblyNotificationService>();
+builder.Services.AddScoped<INotification, WebAssemblyNotificationService>();
 
 builder.Services.AddMBServices();
 
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddCookieConsentSupport();
 
 Log.Logger = new LoggerConfiguration()
 #if DEBUG
@@ -32,7 +33,7 @@ Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
     .MinimumLevel.Override("GoogleAnalytics.Blazor", LogEventLevel.Debug)
     .Enrich.FromLogContext()
-    .WriteTo.Async(a => a.BrowserConsole(outputTemplate: "{Timestamp:HH:mm:ss.fff}\t[{Level:u3}]\t{Message}{NewLine}{Exception}"))
+    .WriteTo.BrowserConsole(outputTemplate: "{Timestamp:HH:mm:ss.fff}\t[{Level:u3}]\t{Message}{NewLine}{Exception}")
     .CreateLogger();
 
 builder.Logging.AddProvider(new SerilogLoggerProvider());

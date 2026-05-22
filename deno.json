@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "build": "dotnet build Website.2203.slnx",
+    "rebuild": "dotnet clean Website.2203.slnx && dotnet build Website.2203.slnx --no-incremental",
+    "aspire": "deno run --allow-env --allow-read --allow-run scripts/aspire.ts",
+    "kill-aspire": "deno run --allow-env --allow-read --allow-run scripts/kill-aspire.ts"
+  }
+}

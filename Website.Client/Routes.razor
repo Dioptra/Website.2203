@@ -1,0 +1,47 @@
+@namespace Website.Client
+@rendermode InteractiveAuto
+@inherits ComponentBase
+
+<MBAnchor />
+
+<Router AppAssembly="@typeof(Routes).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p role="alert">Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+@if (ShowAnalyticsAnchor)
+{
+    @AnalyticsAnchor
+}
+
+@code {
+    [Inject] private ICookieConsentStore CookieConsentStore { get; set; } = default!;
+
+    private RenderFragment AnalyticsAnchor => builder =>
+    {
+        builder.OpenComponent<GBAnchor>(0);
+        builder.CloseComponent();
+    };
+
+    private bool ShowAnalyticsAnchor { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        ShowAnalyticsAnchor = await CookieConsentStore.HasAnalyticsConsentAsync().ConfigureAwait(false);
+
+        await InvokeAsync(StateHasChanged).ConfigureAwait(false);
+    }
+}
