@@ -34,7 +34,7 @@
 
 | Project                 | Purpose                                          | Tech                       |
 | :---------------------- | :----------------------------------------------- | :------------------------- |
-| **Website.Server**      | Main web server hosting both render modes        | ASP.NET Core 10, Serilog   |
+| **Website**             | Main Blazor Web App host                         | ASP.NET Core 10, Serilog   |
 | **Website.Client**      | Shared Blazor components, TypeScript/SCSS assets | Razor, webpack, TypeScript |
 | **Website.WebAssembly** | Blazor WebAssembly client shell                  | Blazor WASM                |
 | **AspireAppHost**       | .NET Aspire orchestration (dev only)             | .NET Aspire                |
@@ -117,12 +117,12 @@ Per `.editorconfig`:
 
 ## Key Files
 
-| File/Directory              | Purpose                                   |
-| :-------------------------- | :---------------------------------------- |
-| `Directory.Build.props`     | Solution-wide MSBuild properties          |
-| `deno.json`                 | Deno task runner (build, rebuild, aspire) |
-| `AspireAppHost/Program.cs`  | .NET Aspire orchestration entry point     |
-| `Website.Server/Program.cs` | ASP.NET Core server entry point           |
-| `Website.Client/`           | Shared Razor components and web assets    |
-| `.vscode/tasks.json`        | VS Code build tasks                       |
-| `.vscode/launch.json`       | VS Code launch configuration (Aspire)     |
+| File/Directory               | Purpose                                   |
+| :--------------------------- | :---------------------------------------- |
+| `Directory.Build.props`      | Solution-wide MSBuild properties          |
+| `deno.json`                  | Deno task runner (build, rebuild, aspire) |
+| `AspireAppHost/Program.cs`   | .NET Aspire orchestration entry point     |
+| `Website/Website/Program.cs` | ASP.NET Core server entry point           |
+| `Website.Client/`            | Shared Razor components and web assets    |
+| `.vscode/tasks.json`         | VS Code build tasks                       |
+| `.vscode/launch.json`        | VS Code launch configuration (Aspire)     |

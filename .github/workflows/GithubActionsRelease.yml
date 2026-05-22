@@ -6,9 +6,8 @@ on:
       - "*" # Push events to matching *, i.e. 1.0, 20.15.10
 
 env:
-  blazorServerAppName: "website-2203-blazor-server"
-  blazorWebAssemblyAppName: "website-2203-blazor-webassembly"
-  project: "Website.Server/Website.Server.csproj"
+  appName: "website-2203-blazor-server"
+  project: "Website/Website/Website.csproj"
   registryName: "dioptraregistry"
 
 jobs:
@@ -39,10 +38,10 @@ jobs:
         shell: bash
 
   ############################################################################################################
-  # Build blazor server container on Dioptra
+  # Build website container on Dioptra
   ############################################################################################################
-  build-blazor-server:
-    name: Build BlazorServer
+  build-website:
+    name: Build Website
     needs: [is-on-dioptra, set-suffix]
     runs-on: ubuntu-latest
 
@@ -83,61 +82,14 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - run: dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_Server -p:PublishProfile=DefaultContainer -p:Version=${{ env.suffix }} -p:ContainerRegistry=${{env.registryname}} -p:ContainerRepository=${{env.blazorServerAppName}} -p:ContainerImageTag=${{ env.suffix }} --self-contained
-
-  ############################################################################################################
-  # Build blazor webassembly container on Dioptra
-  ############################################################################################################
-  build-blazor-webassembly:
-    name: Build BlazorWASM
-    needs: [set-suffix, is-on-dioptra]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Retrieve the global suffix
-        run: echo "suffix=${{needs.set-suffix.outputs.outputSuffix}}" >> $GITHUB_ENV
-        shell: bash
-
-      - name: Checkout repository under $GITHUB_WORKSPACE so the job can access it 🛎️
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: "10.0.300"
-
-      - name: Authenticate to GitHub Packages
-        run: |
-          if dotnet nuget list source | grep -q "github-materia"; then
-            dotnet nuget update source "github-materia" \
-              --username github-actions \
-              --password "${{ secrets.MATERIA_NUGET_AUTH_TOKEN }}" \
-              --store-password-in-clear-text
-          else
-            dotnet nuget add source "https://nuget.pkg.github.com/materia-technologies-inc/index.json" \
-              --name "github-materia" \
-              --username github-actions \
-              --password "${{ secrets.MATERIA_NUGET_AUTH_TOKEN }}" \
-              --store-password-in-clear-text
-          fi
-
-      - name: "Build and push docker container"
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
-
-      - run: dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release_Server -p:PublishProfile=DefaultContainer -p:Version=${{ env.suffix }} -p:ContainerRegistry=${{env.registryname}} -p:ContainerRepository=${{env.blazorWebAssemblyAppName}} -p:ContainerImageTag=${{ env.suffix }} --self-contained
+      - run: dotnet publish ${{env.project}} --os linux --arch x64 --configuration Release -p:PublishProfile=DefaultContainer -p:Version=${{ env.suffix }} -p:ContainerRegistry=${{env.registryname}} -p:ContainerRepository=${{env.appName}} -p:ContainerImageTag=${{ env.suffix }} --self-contained
 
   ############################################################################################################
   # Create release
   ############################################################################################################
   create-release:
     name: Create release
-    needs: [set-suffix, build-blazor-server, build-blazor-webassembly, is-on-dioptra]
+    needs: [set-suffix, build-website, is-on-dioptra]
 
     runs-on: ubuntu-latest
 
