@@ -64,7 +64,7 @@ public static class OptionsBuilder
         .AddCrossOriginOpenerPolicy(CrossOriginOpenerPolicyDirective.SameOrigin, "security-endpoint")
         .AddCrossOriginResourcePolicy(CrossOriginResourcePolicyDirective.SameOrigin)
         .AddOriginAgentCluster()
-        .PinHosts("dioptra.tech", "www.dioptra.tech")
+        .PinHosts(builder.Environment.IsDevelopment() ? ["localhost:5101", "localhost"] : ["dioptra.tech", "www.dioptra.tech"])
         .SetUnknownHostCacheCapacity(8);
     }
 
