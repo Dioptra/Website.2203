@@ -3,11 +3,13 @@ import { MDCDialog } from '@material/dialog';
 
 navigator.serviceWorker.register('service-worker.js');
 
-document.getElementById('reload-button')!.addEventListener("click", function () {
-    (function () {
+const reloadButton = document.getElementById('reload-button');
+
+if (reloadButton) {
+    reloadButton.addEventListener("click", function () {
         location.reload();
-    }).call(document.getElementById('reload-button'));
-});
+    });
+}
 
 export function setTheme(sheetName): void {
     let elem = document.getElementById("app-theme");
@@ -35,11 +37,16 @@ export function downloadFile(fileUri): void {
 }
 
 export function instantiateErrorDialog(): void {
-    new MDCRipple(document.getElementById('reload-button')!);
+    const button = document.getElementById('reload-button');
+    const dialog = document.getElementById('reload-dialog');
+    const container = document.getElementById('reload-container');
+    const scrim = document.getElementById('reload-scrim');
 
-    var dialog = document.getElementById('reload-dialog')!;
-    var container = document.getElementById('reload-container')!;
-    var scrim = document.getElementById('reload-scrim')!;
+    if (!button || !dialog || !container || !scrim) {
+        return;
+    }
+
+    new MDCRipple(button);
 
     var mdcDialog = new MDCDialog(dialog);
     mdcDialog.escapeKeyAction = '';
