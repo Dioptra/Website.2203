@@ -1,5 +1,7 @@
 ## Ignore temporary files and build results specific to Website.2203
 
+.DS_Store
+
 Website.Client/wwwroot/css/*.css
 Website.Client/wwwroot/css/*.br
 Website.Client/wwwroot/css/*.gz
