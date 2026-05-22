@@ -54,3 +54,33 @@ export function scrollToTop() {
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
+
+export function reloadPage(): void {
+    location.reload();
+}
+
+export function setCookie(name: string, value: string, maxAgeDays: number): void {
+    const expires = maxAgeDays * 24 * 60 * 60;
+    const secure = location.protocol === 'https:' ? '; secure' : '';
+    document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; max-age=${expires}; path=/; samesite=lax${secure}`;
+}
+
+export function getCookie(name: string): string | null {
+    const cookieName = `${encodeURIComponent(name)}=`;
+    const cookies = document.cookie.split(';');
+
+    for (const cookie of cookies) {
+        const trimmed = cookie.trim();
+
+        if (trimmed.startsWith(cookieName)) {
+            return decodeURIComponent(trimmed.substring(cookieName.length));
+        }
+    }
+
+    return null;
+}
+
+export function deleteCookie(name: string): void {
+    const secure = location.protocol === 'https:' ? '; secure' : '';
+    document.cookie = `${encodeURIComponent(name)}=; max-age=0; path=/; samesite=lax${secure}`;
+}

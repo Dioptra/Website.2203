@@ -61,58 +61,62 @@
                                                         Icon="send" Label="Contact" @onclick="@OpenContactDialogAsync" />
                                 <p class="mdc-typography--body2"><a href="/terms-and-conditions" rel=" noopener">Terms
                                     and Conditions</a></p>
-                                </div>
+                                    <p class="mdc-typography--body2"><a href="/privacy-policy" rel=" noopener">Privacy
+                                        Policy</a></p>
+                                        <p class="mdc-typography--body2"><a href="" @onclick="ShowCookieSettings"
+                                                                                @onclick:preventDefault="true">Cookie settings</a></p>
+                                        </div>
 
-                                <div
-                                    class="mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-4-phone dw-footer-element dw-footer-address">
-                                    <div class="mdc-typography--body2">
-                                        <p>© @DateTime.Today.ToString("yyyy") Dioptra Limited</p>
-                                        <p>Preston Park House</p>
-                                        <p>South Road</p>
-                                        <p>Brighton</p>
-                                        <p>East Sussex BN1 6SB</p>
-                                        <p><em>Company Number: 13537855</em></p>
-                                        <p><em>VAT Number: 407546495</em></p>
+                                        <div
+                                            class="mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-4-phone dw-footer-element dw-footer-address">
+                                            <div class="mdc-typography--body2">
+                                                <p>© @DateTime.Today.ToString("yyyy") Dioptra Limited</p>
+                                                <p>Preston Park House</p>
+                                                <p>South Road</p>
+                                                <p>Brighton</p>
+                                                <p>East Sussex BN1 6SB</p>
+                                                <p><em>Company Number: 13537855</em></p>
+                                                <p><em>VAT Number: 407546495</em></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </footer>
                 </div>
-            </footer>
-        </div>
-    </CascadingValue>
+            </CascadingValue>
 
-    <CookieConsentBanner ColorClass="dw-yellow" />
+            <CookieConsentBanner ColorClass="dw-yellow" />
 
-    <MBDialog class="dw-dialog" EscapeKeyAction="" @ref="@ContactDialog" ScrimClickAction="" Title="Contact Dioptra">
+            <MBDialog class="dw-dialog" EscapeKeyAction="" @ref="@ContactDialog" ScrimClickAction="" Title="Contact Dioptra">
 
-        <Body>
-            <EditForm Model="@ContactMessage" OnValidSubmit="@ContactDialogSubmittedAsync">
+                <Body>
+                    <EditForm Model="@ContactMessage" OnValidSubmit="@ContactDialogSubmittedAsync">
 
-                <DataAnnotationsValidator />
+                        <DataAnnotationsValidator />
 
-                <MBTextField @bind-Value="@ContactMessage.Name" Label="Name" style="width: 100%; margin-top: 6px;"
-                             TextInputStyle="@MBTextInputStyle.Outlined" ValidationMessageFor="@(() => ContactMessage.Name)" />
+                        <MBTextField @bind-Value="@ContactMessage.Name" Label="Name" style="width: 100%; margin-top: 6px;"
+                                     TextInputStyle="@MBTextInputStyle.Outlined" ValidationMessageFor="@(() => ContactMessage.Name)" />
 
-                <MBTextField @bind-Value="@ContactMessage.Email" Label="Email" style="width: 100%; margin-top: 6px;"
-                             TextInputStyle="@MBTextInputStyle.Outlined" ValidationMessageFor="@(() => ContactMessage.Email)" />
+                        <MBTextField @bind-Value="@ContactMessage.Email" Label="Email" style="width: 100%; margin-top: 6px;"
+                                     TextInputStyle="@MBTextInputStyle.Outlined" ValidationMessageFor="@(() => ContactMessage.Email)" />
 
-                <MBTextField @bind-Value="@ContactMessage.Phone" Label="Phone Number" style="width: 100%; margin-top: 6px;"
-                             TextInputStyle="@MBTextInputStyle.Outlined" ValidationMessageFor="@(() => ContactMessage.Phone)" />
+                        <MBTextField @bind-Value="@ContactMessage.Phone" Label="Phone Number" style="width: 100%; margin-top: 6px;"
+                                     TextInputStyle="@MBTextInputStyle.Outlined" ValidationMessageFor="@(() => ContactMessage.Phone)" />
 
-                <MBTextArea @bind-Value="@ContactMessage.Message" Label="Message" Rows="5"
-                            style="width: 100%; margin-top: 6px;" TextInputStyle="@MBTextInputStyle.Outlined"
-                            ValidationMessageFor="@(() => ContactMessage.Message)" />
+                        <MBTextArea @bind-Value="@ContactMessage.Message" Label="Message" Rows="5"
+                                    style="width: 100%; margin-top: 6px;" TextInputStyle="@MBTextInputStyle.Outlined"
+                                    ValidationMessageFor="@(() => ContactMessage.Message)" />
 
-                <div class="mdc-layout-grid__cell--span-12" style="text-align: right;">
-                    <MBButton Label="Send" ButtonStyle="@MBButtonStyle.ContainedUnelevated"
-                              style="margin: 0.75em 0.25em 0.25em 0.25em;" type="submit" />
+                        <div class="mdc-layout-grid__cell--span-12" style="text-align: right;">
+                            <MBButton Label="Send" ButtonStyle="@MBButtonStyle.ContainedUnelevated"
+                                      style="margin: 0.75em 0.25em 0.25em 0.25em;" type="submit" />
 
-                    <MBButton Label="Cancel" ButtonStyle="@MBButtonStyle.Outlined" @onclick="@CloseContactDialogAsync"
-                              style="margin: 0.75em 0.25em 0.25em 0.25em;" type="button" />
-                </div>
+                            <MBButton Label="Cancel" ButtonStyle="@MBButtonStyle.Outlined" @onclick="@CloseContactDialogAsync"
+                                      style="margin: 0.75em 0.25em 0.25em 0.25em;" type="button" />
+                        </div>
 
-            </EditForm>
-        </Body>
-    </MBDialog>
+                    </EditForm>
+                </Body>
+            </MBDialog>

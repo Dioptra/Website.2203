@@ -92,6 +92,7 @@ builder.Services.AddMemoryCache();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddCookieConsentSupport();
 
 builder.Services.AddGBService(options =>
 {

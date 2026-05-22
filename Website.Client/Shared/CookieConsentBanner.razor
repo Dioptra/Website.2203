@@ -5,14 +5,27 @@
 
 @if (ShowBanner)
 {
-    <div class="mdc-layout-grid dw-cookie-alert mdc-elevation--z5 @ColorClass" role="alert">
+    <div class="mdc-layout-grid dw-cookie-alert mdc-elevation--z5 @ColorClass" role="dialog" aria-live="polite" aria-labelledby="cookie-consent-title">
         <div class="mdc-layout-grid__inner dw-max-width-content">
             <div class="mdc-layout-grid__cell--span-12 dw-cookie-alert-content">
-                <p>We only use cookies that are essential to show this website and for Google Analytics</p>
+                <p id="cookie-consent-title">We use strictly necessary storage to run this website and optional analytics cookies to understand how it is used.</p>
 
-                <MBButton ButtonStyle="@MBButtonStyle.ContainedRaised"
-                          Label="Clear"
-                          @onclick="AcceptCookie"/>
+                <MBCheckbox @bind-Value="AllowAnalytics"
+                            Label="Allow analytics cookies" />
+
+                <div class="dw-cookie-alert-actions">
+                    <MBButton ButtonStyle="@MBButtonStyle.Outlined"
+                              Label="Reject non-essential"
+                              @onclick="RejectNonEssentialAsync" />
+
+                    <MBButton ButtonStyle="@MBButtonStyle.ContainedRaised"
+                              Label="Save preferences"
+                              @onclick="SavePreferencesAsync" />
+
+                    <MBButton ButtonStyle="@MBButtonStyle.ContainedRaised"
+                              Label="Accept all"
+                              @onclick="AcceptAllAsync" />
+                </div>
             </div>
         </div>
     </div>

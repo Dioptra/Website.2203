@@ -1,5 +1,4 @@
-﻿using GoogleAnalytics.Blazor;
-using Material.Blazor;
+﻿using Material.Blazor;
 using Microsoft.AspNetCore.Components;
 
 namespace Website.Client;
@@ -14,7 +13,7 @@ public partial class WorkForUs : ComponentBase
 
 
     [Inject] private INotification Notifier { get; set; } = default!;
-    [Inject] private IGBAnalyticsManager AnalyticsManager { get; set; } = default!;
+    [Inject] private IConsentAwareAnalyticsManager AnalyticsManager { get; set; } = default!;
 
 
     private MBDialog RecruitmentEnquiryDialog { get; set; } = new();
@@ -72,7 +71,7 @@ public partial class WorkForUs : ComponentBase
     private async Task ClosegDialogAsync()
     {
         await AnalyticsManager.TrackEvent("Close Recruitment Dialog");
-        
+
         await RecruitmentEnquiryDialog.HideAsync();
     }
 

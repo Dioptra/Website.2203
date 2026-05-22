@@ -1,5 +1,6 @@
 @namespace Website.Client
 @rendermode InteractiveAuto
+@inherits ComponentBase
 
 <MBAnchor />
 
@@ -16,4 +17,31 @@
     </NotFound>
 </Router>
 
-<GBAnchor />
+@if (ShowAnalyticsAnchor)
+{
+    @AnalyticsAnchor
+}
+
+@code {
+    [Inject] private ICookieConsentStore CookieConsentStore { get; set; } = default!;
+
+    private RenderFragment AnalyticsAnchor => builder =>
+    {
+        builder.OpenComponent<GBAnchor>(0);
+        builder.CloseComponent();
+    };
+
+    private bool ShowAnalyticsAnchor { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        ShowAnalyticsAnchor = await CookieConsentStore.HasAnalyticsConsentAsync().ConfigureAwait(false);
+
+        await InvokeAsync(StateHasChanged).ConfigureAwait(false);
+    }
+}

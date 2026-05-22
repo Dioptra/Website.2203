@@ -33,7 +33,7 @@ public class ServerNotificationService : INotification
             var client = new HttpClient();
 
             var json = message.GetMessageCardJson(_serializerOptions);
-            
+
             var response = await client.PostAsync(_messagingWebhook, new StringContent(json, Encoding.UTF8, "application/json")).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
@@ -41,11 +41,11 @@ public class ServerNotificationService : INotification
                 throw new NotSupportedException($"Received failed result {response.StatusCode} when posting events to Microsoft Teams.");
             }
 
-            _logger.LogInformation($"Sent message to Teams using {_messagingWebhook}; received this response: {response.StatusCode}", message, response.StatusCode);
+            _logger.LogInformation("Sent message to Teams using {MessagingWebhook}; received this response: {StatusCode}", _messagingWebhook, response.StatusCode);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to send contact message to Teams", message);
+            _logger.LogError(ex, "Failed to send contact message to Teams");
         }
     }
 

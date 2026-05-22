@@ -1,10 +1,42 @@
 @using HttpSecurity.AspNet
+@using System.Text.Json
 @namespace Website.Server
 
+@inject IHttpContextAccessor HttpContextAccessor
 @inject IHttpSecurityService HttpSecurityService
+
+@code {
+    private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
+
+    private bool AllowNonEssentialAssets => TryGetConsent(out var consent) && consent is not null && consent.Version ==
+CookieConsentConstants.CurrentVersion && consent.Analytics;
+
+    private bool TryGetConsent(out CookieConsentSnapshot? consent)
+    {
+        consent = null;
+
+        var cookie = HttpContextAccessor.HttpContext?.Request.Cookies[CookieConsentConstants.CookieName];
+
+        if (string.IsNullOrWhiteSpace(cookie))
+        {
+            return false;
+        }
+
+        try
+        {
+            consent = JsonSerializer.Deserialize<CookieConsentSnapshot>(cookie, JsonOptions);
+            return consent is not null;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+}
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -13,11 +45,16 @@
     <title>Dioptra</title>
     <base href="/" />
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://use.typekit.net/zjb3qsk.css">
+    @if (AllowNonEssentialAssets)
+    {
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://use.typekit.net/zjb3qsk.css">
+    }
 
-    <link rel="stylesheet" type="text/css" href="_content/Material.Blazor/material.blazor.min.css" integrity="@HttpSecurityService.GetFileHashString("material.blazor.min.css")" />
-    <link rel="stylesheet" type="text/css" id="app-theme" href="_content/Website.Client/css/dioptra.min.css" integrity="@HttpSecurityService.GetFileHashString("dioptra.min.css")" />
+    <link rel="stylesheet" type="text/css" href="_content/Material.Blazor/material.blazor.min.css"
+          integrity="@HttpSecurityService.GetFileHashString("material.blazor.min.css")" />
+    <link rel="stylesheet" type="text/css" id="app-theme" href="_content/Website.Client/css/dioptra.min.css"
+          integrity="@HttpSecurityService.GetFileHashString("dioptra.min.css")" />
 
     <link rel="icon" type="image/png" href="_content/Website.Client/pwa/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="_content/Website.Client/pwa/favicon-32x32.png" sizes="32x32">
@@ -30,16 +67,14 @@
 
     <HeadOutlet />
 </head>
+
 <body class="mdc-typography">
     <Routes />
 
     <div id="blazor-error-ui">
         <div id="reload-dialog" class="mdc-dialog">
             <div id="reload-container" class="mdc-dialog__container">
-                <div class="mdc-dialog__surface"
-                     role="alertdialog"
-                     aria-modal="true"
-                     aria-labelledby="my-dialog-title"
+                <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
                      aria-describedby="my-dialog-content">
                     <h2 class="mdc-dialog__title" id="my-dialog-title">
                         <span class="material-icons-outlined">error</span> Website Error
@@ -53,7 +88,8 @@
                         </environment>
                     </div>
                     <div class="mdc-dialog__actions" tabindex="1">
-                        <button id="reload-button" type="button" class="mdc-button mdc-dialog__button mdc-button--raised" data-mdc-dialog-action="discard">
+                        <button id="reload-button" type="button"
+                                class="mdc-button mdc-dialog__button mdc-button--raised" data-mdc-dialog-action="discard">
                             <div class="mdc-button__ripple"></div>
                             <span class="mdc-button__label">Reload</span>
                         </button>
@@ -64,9 +100,19 @@
         </div>
     </div>
 
-    <script src="_content/GoogleAnalytics.Blazor/googleanalytics.blazor.js" integrity="@HttpSecurityService.GetFileHashString("googleanalytics.blazor.js")" nonce="@HttpSecurityService.GetNonce()"></script>
-    <script src="_content/Material.Blazor/material.blazor.min.js" integrity="@HttpSecurityService.GetFileHashString("material.blazor.min.js")" nonce="@HttpSecurityService.GetNonce()"></script>
-    <script src="_content/Website.Client/js/dioptra.min.js" integrity="@HttpSecurityService.GetFileHashString("dioptra.min.js")" nonce="@HttpSecurityService.GetNonce()"></script>
+    @if (AllowNonEssentialAssets)
+    {
+        <script src="_content/GoogleAnalytics.Blazor/googleanalytics.blazor.js"
+                integrity="@HttpSecurityService.GetFileHashString("googleanalytics.blazor.js")"
+                nonce="@HttpSecurityService.GetNonce()"></script>
+    }
+    <script src="_content/Material.Blazor/material.blazor.min.js"
+            integrity="@HttpSecurityService.GetFileHashString("material.blazor.min.js")"
+            nonce="@HttpSecurityService.GetNonce()"></script>
+    <script src="_content/Website.Client/js/dioptra.min.js"
+            integrity="@HttpSecurityService.GetFileHashString("dioptra.min.js")"
+            nonce="@HttpSecurityService.GetNonce()"></script>
     <script src="_framework/blazor.web.js" nonce="@HttpSecurityService.GetNonce()"></script>
 </body>
+
 </html>

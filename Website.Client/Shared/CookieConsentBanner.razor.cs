@@ -1,5 +1,5 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace Website.Client;
 
@@ -8,7 +8,9 @@ namespace Website.Client;
 /// </summary>
 public partial class CookieConsentBanner : ComponentBase
 {
-    [Inject] private ILocalStorageService LocalStorage { get; set; } = default!;
+    [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
+    [Inject] private ICookieConsentBannerController BannerController { get; set; } = default!;
+    [Inject] private ICookieConsentStore ConsentStore { get; set; } = default!;
 
 
     /// <summary>
@@ -16,13 +18,15 @@ public partial class CookieConsentBanner : ComponentBase
     /// </summary>
     [Parameter] public string ColorClass { get; set; } = "";
 
+    private bool AllowAnalytics { get; set; }
+
+    private bool ShowBanner { get; set; }
 
 
-    private const string CookieConsentKey = "CookieConsentKey";
-    private const string CookiesConsentedValue = "yes";
-    
-    
-    private bool ShowBanner { get; set; } = false;
+    protected override void OnInitialized()
+    {
+        BannerController.ShowRequested += OnShowRequested;
+    }
 
 
     /// <inheritdoc/>
@@ -30,20 +34,61 @@ public partial class CookieConsentBanner : ComponentBase
     {
         if (firstRender)
         {
-            var consentedValue = await LocalStorage.GetItemAsync<string>(CookieConsentKey).ConfigureAwait(false);
+            var consent = await ConsentStore.GetAsync().ConfigureAwait(false);
 
-            ShowBanner = consentedValue != CookiesConsentedValue;
+            if (consent is null)
+            {
+                ShowBanner = true;
+            }
+            else
+            {
+                AllowAnalytics = consent.Analytics;
+            }
 
             await InvokeAsync(StateHasChanged).ConfigureAwait(false);
         }
     }
 
 
-
-    private async Task AcceptCookie()
+    public void Dispose()
     {
-        await LocalStorage.SetItemAsync(CookieConsentKey, CookiesConsentedValue);
+        BannerController.ShowRequested -= OnShowRequested;
+    }
+
+
+    private void OnShowRequested()
+    {
+        ShowBanner = true;
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+
+    private async Task AcceptAllAsync()
+    {
+        AllowAnalytics = true;
+        await SaveAsync().ConfigureAwait(false);
+    }
+
+
+    private async Task RejectNonEssentialAsync()
+    {
+        AllowAnalytics = false;
+        await SaveAsync().ConfigureAwait(false);
+    }
+
+
+    private async Task SavePreferencesAsync()
+    {
+        await SaveAsync().ConfigureAwait(false);
+    }
+
+
+    private async Task SaveAsync()
+    {
+        await ConsentStore.SaveAsync(new CookieConsentSnapshot(CookieConsentConstants.CurrentVersion, AllowAnalytics, DateTimeOffset.UtcNow)).ConfigureAwait(false);
         ShowBanner = false;
         await InvokeAsync(StateHasChanged).ConfigureAwait(false);
+
+        await JSRuntime.InvokeVoidAsync("Website.General.reloadPage").ConfigureAwait(false);
     }
 }

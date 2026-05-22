@@ -55,6 +55,7 @@
 		<OutputStaticAssetsScripts Include="$(ProjectDir)wwwroot\js\dioptra.js;wwwroot\js\dioptra.min.js" />
 
 		<Content Remove="@(OutputStaticAssetsScripts)" />
+		<Content Remove="wwwroot\js\*temp.js" />
 		<Content Include="@(OutputStaticAssetsScripts)" />
 	</ItemGroup>
 

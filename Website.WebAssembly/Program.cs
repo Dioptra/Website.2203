@@ -22,6 +22,7 @@ builder.Services.AddScoped<INotification, WebAssemblyNotificationService>();
 builder.Services.AddMBServices();
 
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddCookieConsentSupport();
 
 Log.Logger = new LoggerConfiguration()
 #if DEBUG
