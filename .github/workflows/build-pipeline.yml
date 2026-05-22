@@ -1,0 +1,142 @@
+name: Build Pipeline
+
+on:
+  workflow_call:
+    inputs:
+      dated-tag:
+        description: Full dated version tag
+        required: true
+        type: string
+      image-name:
+        description: ACR repository name for the Website container
+        required: true
+        type: string
+      create-github-release:
+        description: Whether to create a GitHub release after a successful build
+        required: false
+        type: boolean
+        default: false
+      release-tag:
+        description: Git tag name for the GitHub release
+        required: false
+        type: string
+        default: ""
+    secrets:
+      AZURE_DOCKER_REGISTRY_LOGIN_SERVER:
+        required: true
+      AZURE_DOCKER_REGISTRY_USERNAME:
+        required: true
+      AZURE_DOCKER_REGISTRY_PASSWORD:
+        required: true
+      NUGET_AUTH_TOKEN:
+        required: true
+
+env:
+  WEBSITE_CSPROJ: ./Website/Website/Website.csproj
+  GITHUB_MATERIA_FEED: https://nuget.pkg.github.com/materia-technologies-inc/index.json
+
+jobs:
+  build-website:
+    name: Build Website (amd64 + arm64)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set isolated Docker config
+        run: |
+          JOB_CONFIG="${RUNNER_TEMP:-/tmp}/.docker-${GITHUB_RUN_ID}-${GITHUB_JOB}"
+          mkdir -p "$JOB_CONFIG"
+          echo '{"auths":{}}' > "$JOB_CONFIG/config.json"
+          echo "DOCKER_CONFIG=$JOB_CONFIG" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Install .NET 10 SDK
+        run: |
+          curl -fsSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
+          chmod +x dotnet-install.sh
+          ./dotnet-install.sh --channel 10.0 --quality ga --install-dir $HOME/.dotnet
+          echo "$HOME/.dotnet" >> $GITHUB_PATH
+          echo "DOTNET_ROOT=$HOME/.dotnet" >> $GITHUB_ENV
+
+      - name: Authenticate to GitHub Packages
+        run: |
+          if dotnet nuget list source | grep -q "github-materia"; then
+            dotnet nuget update source "github-materia" \
+              --username github-actions \
+              --password "${{ secrets.NUGET_AUTH_TOKEN }}" \
+              --store-password-in-clear-text
+          else
+            dotnet nuget add source "${{ env.GITHUB_MATERIA_FEED }}" \
+              --name "github-materia" \
+              --username github-actions \
+              --password "${{ secrets.NUGET_AUTH_TOKEN }}" \
+              --store-password-in-clear-text
+          fi
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Log in to ACR
+        uses: docker/login-action@v4
+        with:
+          registry: ${{ secrets.AZURE_DOCKER_REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.AZURE_DOCKER_REGISTRY_USERNAME }}
+          password: ${{ secrets.AZURE_DOCKER_REGISTRY_PASSWORD }}
+
+      - name: Publish Website container (amd64)
+        run: >
+          dotnet publish ${{ env.WEBSITE_CSPROJ }}
+          --os linux
+          --arch x64
+          --configuration Release
+          --self-contained
+          -maxcpucount:1
+          -nodeReuse:false
+          -p:PublishProfile=DefaultContainer
+          -p:Version=${{ inputs.dated-tag }}
+          -p:ContainerRegistry=${{ secrets.AZURE_DOCKER_REGISTRY_LOGIN_SERVER }}
+          -p:ContainerRepository=${{ inputs.image-name }}
+          -p:ContainerImageTag=${{ inputs.dated-tag }}-amd64
+
+      - name: Publish Website container (arm64)
+        run: >
+          dotnet publish ${{ env.WEBSITE_CSPROJ }}
+          --os linux
+          --arch arm64
+          --configuration Release
+          --self-contained
+          -maxcpucount:1
+          -nodeReuse:false
+          -p:PublishProfile=DefaultContainer
+          -p:Version=${{ inputs.dated-tag }}
+          -p:ContainerRegistry=${{ secrets.AZURE_DOCKER_REGISTRY_LOGIN_SERVER }}
+          -p:ContainerRepository=${{ inputs.image-name }}
+          -p:ContainerImageTag=${{ inputs.dated-tag }}-arm64
+
+      - name: Create and push Website multi-arch manifest
+        run: |
+          docker buildx imagetools create \
+            -t ${{ secrets.AZURE_DOCKER_REGISTRY_LOGIN_SERVER }}/${{ inputs.image-name }}:${{ inputs.dated-tag }} \
+            ${{ secrets.AZURE_DOCKER_REGISTRY_LOGIN_SERVER }}/${{ inputs.image-name }}:${{ inputs.dated-tag }}-amd64 \
+            ${{ secrets.AZURE_DOCKER_REGISTRY_LOGIN_SERVER }}/${{ inputs.image-name }}:${{ inputs.dated-tag }}-arm64
+
+      - name: Prune local Docker layer cache
+        if: always()
+        run: |
+          docker buildx prune --force --keep-storage 2GB 2>/dev/null || true
+          docker system prune -f 2>/dev/null || true
+
+  create-release:
+    name: Create release
+    needs: [build-website]
+    if: inputs.create-github-release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          name: Release ${{ inputs.release-tag }}
+          tag: ${{ inputs.release-tag }}
