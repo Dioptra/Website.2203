@@ -41,7 +41,7 @@ jobs:
       create-github-release: true
       release-tag: ${{ needs.build-tags.outputs.tag }}
     secrets:
-      AZURE_DOCKER_REGISTRY_LOGIN_SERVER: ${{ secrets.AZURE_DOCKER_REGISTRY_LOGIN_SERVER }}
-      AZURE_DOCKER_REGISTRY_USERNAME: ${{ secrets.AZURE_DOCKER_REGISTRY_USERNAME }}
-      AZURE_DOCKER_REGISTRY_PASSWORD: ${{ secrets.AZURE_DOCKER_REGISTRY_PASSWORD }}
-      NUGET_AUTH_TOKEN: ${{ secrets.MATERIA_NUGET_AUTH_TOKEN }}
+      REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+      MATERIA_NUGET_AUTH_TOKEN: ${{ secrets.MATERIA_NUGET_AUTH_TOKEN }}

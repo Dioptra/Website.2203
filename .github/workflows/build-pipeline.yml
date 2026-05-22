@@ -22,13 +22,13 @@ on:
         type: string
         default: ""
     secrets:
-      AZURE_DOCKER_REGISTRY_LOGIN_SERVER:
+      REGISTRY_LOGIN_SERVER:
         required: true
-      AZURE_DOCKER_REGISTRY_USERNAME:
+      REGISTRY_USERNAME:
         required: true
-      AZURE_DOCKER_REGISTRY_PASSWORD:
+      REGISTRY_PASSWORD:
         required: true
-      NUGET_AUTH_TOKEN:
+      MATERIA_NUGET_AUTH_TOKEN:
         required: true
 
 env:
@@ -65,13 +65,13 @@ jobs:
           if dotnet nuget list source | grep -q "github-materia"; then
             dotnet nuget update source "github-materia" \
               --username github-actions \
-              --password "${{ secrets.NUGET_AUTH_TOKEN }}" \
+              --password "${{ secrets.MATERIA_NUGET_AUTH_TOKEN }}" \
               --store-password-in-clear-text
           else
             dotnet nuget add source "${{ env.GITHUB_MATERIA_FEED }}" \
               --name "github-materia" \
               --username github-actions \
-              --password "${{ secrets.NUGET_AUTH_TOKEN }}" \
+              --password "${{ secrets.MATERIA_NUGET_AUTH_TOKEN }}" \
               --store-password-in-clear-text
           fi
 
@@ -81,9 +81,9 @@ jobs:
       - name: Log in to ACR
         uses: docker/login-action@v4
         with:
-          registry: ${{ secrets.AZURE_DOCKER_REGISTRY_LOGIN_SERVER }}
-          username: ${{ secrets.AZURE_DOCKER_REGISTRY_USERNAME }}
-          password: ${{ secrets.AZURE_DOCKER_REGISTRY_PASSWORD }}
+          registry: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Publish Website container (amd64)
         run: >
@@ -96,7 +96,7 @@ jobs:
           -nodeReuse:false
           -p:PublishProfile=DefaultContainer
           -p:Version=${{ inputs.dated-tag }}
-          -p:ContainerRegistry=${{ secrets.AZURE_DOCKER_REGISTRY_LOGIN_SERVER }}
+          -p:ContainerRegistry=${{ secrets.REGISTRY_LOGIN_SERVER }}
           -p:ContainerRepository=${{ inputs.image-name }}
           -p:ContainerImageTag=${{ inputs.dated-tag }}-amd64
 
@@ -111,16 +111,16 @@ jobs:
           -nodeReuse:false
           -p:PublishProfile=DefaultContainer
           -p:Version=${{ inputs.dated-tag }}
-          -p:ContainerRegistry=${{ secrets.AZURE_DOCKER_REGISTRY_LOGIN_SERVER }}
+          -p:ContainerRegistry=${{ secrets.REGISTRY_LOGIN_SERVER }}
           -p:ContainerRepository=${{ inputs.image-name }}
           -p:ContainerImageTag=${{ inputs.dated-tag }}-arm64
 
       - name: Create and push Website multi-arch manifest
         run: |
           docker buildx imagetools create \
-            -t ${{ secrets.AZURE_DOCKER_REGISTRY_LOGIN_SERVER }}/${{ inputs.image-name }}:${{ inputs.dated-tag }} \
-            ${{ secrets.AZURE_DOCKER_REGISTRY_LOGIN_SERVER }}/${{ inputs.image-name }}:${{ inputs.dated-tag }}-amd64 \
-            ${{ secrets.AZURE_DOCKER_REGISTRY_LOGIN_SERVER }}/${{ inputs.image-name }}:${{ inputs.dated-tag }}-arm64
+            -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ inputs.image-name }}:${{ inputs.dated-tag }} \
+            ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ inputs.image-name }}:${{ inputs.dated-tag }}-amd64 \
+            ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ inputs.image-name }}:${{ inputs.dated-tag }}-arm64
 
       - name: Prune local Docker layer cache
         if: always()
