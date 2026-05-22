@@ -34,7 +34,6 @@ on:
 env:
   WEBSITE_CSPROJ: ./Website/Website/Website.csproj
   GITHUB_MATERIA_FEED: https://nuget.pkg.github.com/materia-technologies-inc/index.json
-  REGISTRY_NAME: dioptraregistry
 
 jobs:
   build-website:
@@ -97,7 +96,7 @@ jobs:
           -nodeReuse:false
           -p:PublishProfile=DefaultContainer
           -p:Version=${{ inputs.dated-tag }}
-          -p:ContainerRegistry=${{ env.REGISTRY_NAME }}
+          -p:ContainerRegistry=${{ secrets.REGISTRY_LOGIN_SERVER }}
           -p:ContainerRepository=${{ inputs.image-name }}
           -p:ContainerImageTag=${{ inputs.dated-tag }}-amd64
 
@@ -112,7 +111,7 @@ jobs:
           -nodeReuse:false
           -p:PublishProfile=DefaultContainer
           -p:Version=${{ inputs.dated-tag }}
-          -p:ContainerRegistry=${{ env.REGISTRY_NAME }}
+          -p:ContainerRegistry=${{ secrets.REGISTRY_LOGIN_SERVER }}
           -p:ContainerRepository=${{ inputs.image-name }}
           -p:ContainerImageTag=${{ inputs.dated-tag }}-arm64
 
