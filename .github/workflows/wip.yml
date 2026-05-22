@@ -37,7 +37,7 @@ jobs:
     uses: ./.github/workflows/build-pipeline.yml
     with:
       dated-tag: ${{ needs.build-tags.outputs.dated-tag }}
-      image-name: website-2203-blazor-server-wip
+      image-name: website-2203-wip
     secrets:
       REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
       REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
