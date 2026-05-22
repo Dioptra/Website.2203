@@ -2,7 +2,7 @@
   "tasks": {
     "build": "dotnet build Website.2203.slnx",
     "rebuild": "dotnet clean Website.2203.slnx && dotnet build Website.2203.slnx --no-incremental",
-    "aspire": "lsof -ti :22169 | xargs kill -9 2>/dev/null; cd AspireAppHost && dotnet run",
-    "kill-aspire": "lsof -ti :22169 | xargs kill -9 2>/dev/null; echo 'aspire killed'"
+    "aspire": "deno run --allow-env --allow-read --allow-run scripts/aspire.ts",
+    "kill-aspire": "deno run --allow-env --allow-read --allow-run scripts/kill-aspire.ts"
   }
 }
