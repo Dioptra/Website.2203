@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using System.Text.Json;
 
 namespace Website.Server;
 
@@ -22,6 +23,21 @@ public class CspReportingController : Controller
     {
         await Task.CompletedTask;
         Log.Warning("CSP violation: " + request);
+        return Ok();
+    }
+
+
+    /// <summary>
+    /// Receives CSP report-to payloads.
+    /// </summary>
+    /// <param name="report"></param>
+    /// <returns></returns>
+    [HttpPost("ToReport")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ToReport([FromBody] JsonElement report)
+    {
+        await Task.CompletedTask;
+        Log.Warning("CSP report-to violation: {Report}", report.GetRawText());
         return Ok();
     }
 }

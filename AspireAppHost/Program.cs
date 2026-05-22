@@ -4,6 +4,6 @@ const int ServerAppPort = 5101;
 
 var _server = builder.AddProject<Projects.Website_Server>("website", options => options.ExcludeLaunchProfile = true)
     .WithEnvironment("ASPNETCORE_ENVIRONMENT", "Development")
-    .WithHttpsEndpoint(targetPort: ServerAppPort, port: ServerAppPort, name: "https", isProxied: false);
+    .WithHttpEndpoint(targetPort: ServerAppPort, port: ServerAppPort, name: "http", isProxied: false);
 
 builder.Build().Run();
