@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace Website.Client;
 
@@ -8,7 +7,6 @@ namespace Website.Client;
 /// </summary>
 public partial class CookieConsentBanner : ComponentBase
 {
-    [Inject] private IJSRuntime JSRuntime { get; set; } = default!;
     [Inject] private ICookieConsentBannerController BannerController { get; set; } = default!;
     [Inject] private ICookieConsentStore ConsentStore { get; set; } = default!;
 
@@ -88,7 +86,5 @@ public partial class CookieConsentBanner : ComponentBase
         await ConsentStore.SaveAsync(new CookieConsentSnapshot(CookieConsentConstants.CurrentVersion, AllowAnalytics, DateTimeOffset.UtcNow)).ConfigureAwait(false);
         ShowBanner = false;
         await InvokeAsync(StateHasChanged).ConfigureAwait(false);
-
-        await JSRuntime.InvokeVoidAsync("Website.General.reloadPage").ConfigureAwait(false);
     }
 }
