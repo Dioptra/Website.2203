@@ -1,6 +1,7 @@
 using Blazored.LocalStorage;
 using GoogleAnalytics.Blazor;
 using Material.Blazor;
+using Microsoft.AspNetCore.Hosting;
 using System.Net;
 using Website.Client;
 using Website.Components;
@@ -19,6 +20,19 @@ var operationalProbePort = int.TryParse(builder.Configuration["OperationalProbes
 var operationalProbeAddress = IPAddress.TryParse(operationalProbeHost, out var configuredOperationalProbeAddress)
     ? configuredOperationalProbeAddress
     : IPAddress.Loopback;
+var operationalProbeUrl = $"http://{operationalProbeAddress}:{operationalProbePort}";
+
+var configuredServerUrls = builder.Configuration[WebHostDefaults.ServerUrlsKey]
+    ?.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+    .ToList()
+    ?? [];
+
+if (!configuredServerUrls.Contains(operationalProbeUrl, StringComparer.OrdinalIgnoreCase))
+{
+    configuredServerUrls.Add(operationalProbeUrl);
+}
+
+builder.WebHost.UseUrls(configuredServerUrls.ToArray());
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -38,11 +52,6 @@ builder.Services.AddGBService(options =>
         { Utilities.EventCategory, Utilities.DialogActions },
         { Utilities.NonInteraction, true },
     };
-});
-
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    serverOptions.Listen(operationalProbeAddress, operationalProbePort);
 });
 
 var app = builder.Build();
