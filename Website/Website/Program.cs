@@ -2,6 +2,7 @@ using Blazored.LocalStorage;
 using GoogleAnalytics.Blazor;
 using Material.Blazor;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using System.Net;
 using Website.Client;
 using Website.Components;
@@ -20,19 +21,17 @@ var operationalProbePort = int.TryParse(builder.Configuration["OperationalProbes
 var operationalProbeAddress = IPAddress.TryParse(operationalProbeHost, out var configuredOperationalProbeAddress)
     ? configuredOperationalProbeAddress
     : IPAddress.Loopback;
-var operationalProbeUrl = $"http://{operationalProbeAddress}:{operationalProbePort}";
-
-var configuredServerUrls = builder.Configuration[WebHostDefaults.ServerUrlsKey]
-    ?.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-    .ToList()
-    ?? [];
-
-if (!configuredServerUrls.Contains(operationalProbeUrl, StringComparer.OrdinalIgnoreCase))
+builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    configuredServerUrls.Add(operationalProbeUrl);
-}
-
-builder.WebHost.UseUrls(configuredServerUrls.ToArray());
+    // Bind the operational probe listener (default 0.0.0.0:8081 in containers via OperationalProbes__Host)
+    // ADDITIVELY, alongside the main app endpoint that comes from Kestrel:Endpoints config
+    // (Kestrel__Endpoints__Http__Url=http://+:8080). Using ConfigureKestrel.Listen instead of UseUrls
+    // avoids the UseUrls-vs-Kestrel:Endpoints conflict that left port 8081 unbound, breaking estates /livez.
+    serverOptions.Listen(operationalProbeAddress, operationalProbePort, listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http1;
+    });
+});
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
