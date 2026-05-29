@@ -9,6 +9,11 @@
       "args": ["run", "--project", "${workspaceFolder}/AspireAppHost/AspireAppHost.csproj", "--no-build"],
       "cwd": "${workspaceFolder}/AspireAppHost",
       "preLaunchTask": "Build Solution",
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+http://localhost:(\\d+)",
+        "uriFormat": "http://127.0.0.1:%s"
+      },
       "env": {
         "DOTNET_ROOT": "/Users/simonziegler/.dotnet",
         "ASPNETCORE_ENVIRONMENT": "Development"
