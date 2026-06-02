@@ -20,7 +20,7 @@ public static class PackageInformation
         else
         {
             var parts = versionString.Split("--");
-            Version = parts[2];
+            Version = StripVersionMetadata(parts[2]);
 
             var dateParts = GetParts(parts[0], "-");
             var timeParts = GetParts(parts[1], "-");
@@ -118,5 +118,46 @@ public static class PackageInformation
     public static readonly string BuildTimeString;
 
 
-    private static int[] GetParts(string dateOrTime, string separator) => dateOrTime.Split(separator).Select(x => Convert.ToInt32(x)).ToArray();
+    private static string StripVersionMetadata(string version)
+    {
+        var trimmedVersion = version.Trim();
+        var metadataIndex = trimmedVersion.IndexOf('+');
+
+        return metadataIndex >= 0
+            ? trimmedVersion[..metadataIndex]
+            : trimmedVersion;
+    }
+
+
+    private static int[] GetParts(string dateOrTime, string separator)
+    {
+        var rawParts = dateOrTime.Split(separator);
+        var parsedParts = new int[rawParts.Length];
+
+        for (var index = 0; index < rawParts.Length; index++)
+        {
+            parsedParts[index] = ParseLeadingInteger(rawParts[index]);
+        }
+
+        return parsedParts;
+    }
+
+
+    private static int ParseLeadingInteger(string value)
+    {
+        var trimmedValue = value.Trim();
+        var digitsLength = 0;
+
+        while (digitsLength < trimmedValue.Length && char.IsDigit(trimmedValue[digitsLength]))
+        {
+            digitsLength++;
+        }
+
+        if (digitsLength == 0)
+        {
+            throw new FormatException($"'{value}' does not start with a numeric component.");
+        }
+
+        return Convert.ToInt32(trimmedValue[..digitsLength]);
+    }
 }
