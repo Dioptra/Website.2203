@@ -1,4 +1,4 @@
-const ports = [5000, 19142, 20007, 21127, 22169];
+const ports = [5000, 5101, 19142, 20007, 21127, 22169];
 const lsofPath = "/usr/sbin/lsof";
 const dotnetPath = "/usr/local/share/dotnet/dotnet";
 const pathValue = "/usr/local/share/dotnet:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
@@ -41,7 +41,7 @@ const openInDefaultBrowser = async (url: string) => {
 
     await process.status;
   } catch {
-    // Keep Aspire running even if the browser launch fails.
+    // Keep service running even if the browser launch fails.
   }
 };
 
@@ -81,6 +81,7 @@ const forwardStream = async (stream: ReadableStream<Uint8Array> | null, writer: 
   }
 };
 
+// Kill any existing processes on the ports we need
 for (const port of ports) {
   const lookup = new Deno.Command(lsofPath, {
     args: ["-ti", `:${port}`],
@@ -100,10 +101,34 @@ for (const port of ports) {
   }
 }
 
-const run = new Deno.Command(dotnetPath, {
-  args: ["run"],
-  cwd: "AspireAppHost",
+// Build the solution first to ensure all assets are generated
+console.log("Building solution...");
+const buildCmd = new Deno.Command(dotnetPath, {
+  args: ["build", "Website.2203.slnx"],
   env: { PATH: pathValue },
+  stdout: "inherit",
+  stderr: "inherit",
+});
+
+const buildStatus = await buildCmd.output();
+if (buildStatus.code !== 0) {
+  console.error("Build failed!");
+  Deno.exit(1);
+}
+
+// Start the Website project directly instead of through Aspire orchestration
+// This is simpler for local development and avoids OTLP infrastructure requirements
+const websitePort = 5101;
+console.log(`\nStarting Website on port ${websitePort}...\n`);
+const run = new Deno.Command(dotnetPath, {
+  args: ["run", "--no-build"],
+  cwd: "Website/Website",
+  env: { 
+    PATH: pathValue,
+    ASPNETCORE_ENVIRONMENT: "Development",
+    ASPNETCORE_URLS: `http://+:${websitePort}`,
+    Kestrel__Endpoints__Http__Url: `http://+:${websitePort}`,
+  },
   stdin: "inherit",
   stdout: "piped",
   stderr: "piped",
