@@ -48,7 +48,7 @@ jobs:
           echo '{"auths":{}}' > "$JOB_CONFIG/config.json"
           echo "DOCKER_CONFIG=$JOB_CONFIG" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
